@@ -7,7 +7,7 @@
 ## 文件来源
 
 - **CDN 地址**: <https://cdn.jsdelivr.net/gh/hhhackor/AppRhymeApi@main/custom_api.evc>
-- **当前文件**: `legacy/custom_api.evc`（8.8 KB）
+- **当前文件**: `legacy/apprhyme_custom_api.evc`（8.8 KB）
 - **用途**: 为 AppRhyme 提供酷我音乐和网易云音乐的播放信息获取能力
 
 ## EVC 格式结构

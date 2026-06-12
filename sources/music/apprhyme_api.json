@@ -4,7 +4,7 @@
   "description": "从 custom_api.evc 提取的音乐源 API 配置。AppRhyme 是一个音乐聚合应用，支持酷我音乐和网易云音乐的播放信息获取。",
   "source": {
     "type": "evc",
-    "originalFile": "legacy/custom_api.evc",
+    "originalFile": "legacy/apprhyme_custom_api.evc",
     "cdnUrl": "https://cdn.jsdelivr.net/gh/hhhackor/AppRhymeApi@main/custom_api.evc",
     "platform": "AppRhyme (Dart/Flutter)",
     "encodedFormat": "EVC (Encoded Value Container)",
