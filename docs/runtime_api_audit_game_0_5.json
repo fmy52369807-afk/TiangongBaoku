@@ -1,0 +1,82 @@
+{
+  "generatedAt": "2026-06-11T12:53:20.754Z",
+  "category": "game",
+  "keyword": "魂斗罗",
+  "offset": 0,
+  "limit": 5,
+  "deep": true,
+  "total": 3,
+  "ok": 0,
+  "byPhase": {
+    "entries": 2,
+    "search": 1
+  },
+  "results": [
+    {
+      "sourceId": "src_0363",
+      "sourceName": "霸王游戏（优）",
+      "category": "game",
+      "status": "ok",
+      "ok": false,
+      "phase": "entries",
+      "keyword": "魂斗罗",
+      "searchStatus": 200,
+      "searchError": "",
+      "item": {
+        "name": "魂斗罗(美版)",
+        "author": "射击  魂斗罗\n\n\t\t魂斗罗(美版)",
+        "itemUrl": "https://www.yikm.net/play?id=4137"
+      },
+      "detailStatus": 200,
+      "detail": {
+        "name": "魂斗罗(美版)",
+        "tocUrl": "https://www.yikm.net/play?id=4137",
+        "hasIntro": true
+      },
+      "entriesStatus": 200,
+      "entries": 0,
+      "fetchedTocPages": 1,
+      "partial": false,
+      "error": "no_entries"
+    },
+    {
+      "sourceId": "src_0364",
+      "sourceName": "霸王街机（优）",
+      "category": "game",
+      "status": "ok",
+      "ok": false,
+      "phase": "entries",
+      "keyword": "魂斗罗",
+      "searchStatus": 200,
+      "searchError": "",
+      "item": {
+        "name": "魂斗罗(美版)",
+        "author": "射击  魂斗罗\n\n\t\t魂斗罗(美版)",
+        "itemUrl": "https://www.yikm.net/play?id=4137"
+      },
+      "detailStatus": 200,
+      "detail": {
+        "name": "魂斗罗(美版)",
+        "tocUrl": "https://www.yikm.net/play?id=4137",
+        "hasIntro": true
+      },
+      "entriesStatus": 200,
+      "entries": 0,
+      "fetchedTocPages": 1,
+      "partial": false,
+      "error": "no_entries"
+    },
+    {
+      "sourceId": "src_0365",
+      "sourceName": "盒子游戏（优）",
+      "category": "game",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "魂斗罗",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天工宝库</title>
+<link rel="stylesheet" href="/css/app.css?v=20260612-audio2">
+
+</head>
+<body>
+<div class="drawer-mask" id="drawerMask"></div>
+<main class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 64 64" role="img">
+          <path class="ink-wash" d="M12 32c0-13 10-23 24-23 9 0 17 6 18 15 2 12-7 27-23 29-12 1-20-7-21-18-.1-1-.1-2 .2-3z"/>
+          <path class="ink-stroke" d="M20 23h24M32 15v33M23 36h18M25 47c7-3 13-8 18-15"/>
+          <rect class="seal" x="39" y="40" width="12" height="12" rx="2"/>
+          <path class="seal-line" d="M42 44h6M45 42v8"/>
+        </svg>
+      </div>
+      <div>
+        <h1>天工宝库</h1>
+        <p id="serverState">正在连接服务...</p>
+      </div>
+    </div>
+    <div class="side-section">
+      <p class="side-title">内容分类</p>
+      <div class="cat-list" id="categoryList"></div>
+    </div>
+    <div class="side-section">
+      <p class="side-title">源状态</p>
+      <div class="status-list" id="statusList"></div>
+    </div>
+    <div class="source-manage-entry">
+      <button class="btn primary manage-source-btn" id="manageSourceButton" type="button">
+        管理源
+      </button>
+      <p id="sourceManageHint">按分类查看全部源，可自由启用或禁用。</p>
+    </div>
+  </aside>
+
+  <section class="workbench">
+    <header class="topbar">
+      <button class="mobile-menu" id="openNav" title="打开源列表">☰</button>
+      <form class="search-box" id="searchForm">
+        <input id="bookKeyword" autocomplete="off" placeholder="输入书名或作者，例如 剑来">
+        <select class="btn" id="maxResults" title="最多结果数">
+          <option value="20">20 条</option>
+          <option value="50">50 条</option>
+          <option value="100">100 条</option>
+        </select>
+        <button class="btn primary" id="searchButton" type="submit">搜索</button>
+      </form>
+      <button class="btn icon" id="themeButton" title="切换主题">◐</button>
+    </header>
+
+    <div class="filters">
+      <div class="seg" id="modeTabs">
+        <button class="active" data-mode="books" type="button">搜索</button>
+        <button data-mode="sources" type="button">搜源</button>
+        <button data-mode="history" type="button">历史</button>
+        <button data-mode="favorites" type="button">收藏</button>
+      </div>
+      <label class="check"><input type="checkbox" id="currentSourceOnly">仅搜索选中源</label>
+      <span class="chapter-meta" id="activeFilterText">全部分类</span>
+    </div>
+
+    <div class="results-wrap" id="resultsWrap">
+      <div class="summary" id="summary"></div>
+      <div id="results"></div>
+    </div>
+  </section>
+
+  <aside class="reader" id="reader">
+    <div class="reader-header">
+      <div class="reader-title">
+        <h2 id="readerTitle">选择内容开始</h2>
+        <p id="readerSubTitle">按分类打开详情、列表、阅读、播放或下载。</p>
+      </div>
+      <button class="btn icon" id="closeReader" title="关闭阅读面板">×</button>
+    </div>
+    <div class="reader-tabs" id="readerTabs">
+      <button class="active" data-tab="detail" type="button">详情</button>
+      <button data-tab="toc" type="button">列表</button>
+      <button data-tab="chapter" type="button">内容</button>
+    </div>
+    <div class="reader-body" id="readerBody"></div>
+  </aside>
+</main>
+<section class="audio-float" id="audioFloat" aria-live="polite"></section>
+<div class="toast" id="toast"></div>
+
+<script src="/js/api-client.js"></script>
+<script src="/vendor/hls.min.js"></script>
+<script src="/js/payload-renderers.js?v=20260612-audio2"></script>
+<script src="/js/audio-player.js?v=20260612-audio2"></script>
+<script src="/js/main.js?v=20260612-audio2"></script>
+
+</body>
+</html>

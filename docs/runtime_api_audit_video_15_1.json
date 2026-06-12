@@ -1,0 +1,57 @@
+{
+  "generatedAt": "2026-06-11T12:37:57.696Z",
+  "category": "video",
+  "keyword": "斗罗大陆",
+  "offset": 15,
+  "limit": 1,
+  "deep": true,
+  "total": 1,
+  "ok": 1,
+  "byPhase": {
+    "ok": 1
+  },
+  "results": [
+    {
+      "sourceId": "src_0362",
+      "sourceName": "文才影视（TVBox）",
+      "category": "video",
+      "status": "ok",
+      "ok": true,
+      "phase": "ok",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "item": {
+        "name": "斗罗大陆2：绝世唐门",
+        "author": "梁达伟",
+        "itemUrl": "https://api.zeqaht.com/api.php/provide/vod?ac=detail&ids=103321"
+      },
+      "detailStatus": 200,
+      "detail": {
+        "name": "斗罗大陆2：绝世唐门",
+        "tocUrl": "https://api.zeqaht.com/api.php/provide/vod?ac=detail&ids=103321",
+        "hasIntro": true
+      },
+      "entriesStatus": 200,
+      "entries": 156,
+      "fetchedTocPages": 1,
+      "partial": false,
+      "firstEntry": {
+        "index": 0,
+        "name": "1",
+        "url": "https://ppvod01.6g9ba6.com/splitOut/20251107/1128480/V20251107135450237551128480/index.m3u8"
+      },
+      "payloadStatus": 200,
+      "payload": {
+        "type": "video",
+        "textLength": 91,
+        "urlCount": 1,
+        "mediaUrl": "https://ppvod01.6g9ba6.com/splitOut/20251107/1128480/V20251107135450237551128480/index.m3u8",
+        "validation": {
+          "ok": true
+        }
+      },
+      "error": ""
+    }
+  ]
+}

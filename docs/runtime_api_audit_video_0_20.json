@@ -1,0 +1,298 @@
+{
+  "generatedAt": "2026-06-11T12:39:37.724Z",
+  "category": "video",
+  "keyword": "斗罗大陆",
+  "offset": 0,
+  "limit": 20,
+  "deep": true,
+  "total": 16,
+  "ok": 3,
+  "byPhase": {
+    "search": 13,
+    "ok": 3
+  },
+  "results": [
+    {
+      "sourceId": "src_0347",
+      "sourceName": "茶杯狐狸（优+++）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "魔王",
+      "searchStatus": 200,
+      "searchError": "30950000:error:0A000119:SSL routines:tls_get_more_records:decryption failed or bad record mac:openssl\\ssl\\record\\methods\\tls_common.c:869:\n",
+      "error": "30950000:error:0A000119:SSL routines:tls_get_more_records:decryption failed or bad record mac:openssl\\ssl\\record\\methods\\tls_common.c:869:\n"
+    },
+    {
+      "sourceId": "src_0348",
+      "sourceName": "爱看影视（优++）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "澳门往事",
+      "searchStatus": 200,
+      "searchError": "Request timeout",
+      "error": "Request timeout"
+    },
+    {
+      "sourceId": "src_0349",
+      "sourceName": "番茄短剧（优++）",
+      "category": "video",
+      "status": "ok",
+      "ok": true,
+      "phase": "ok",
+      "keyword": "断亲后",
+      "searchStatus": 200,
+      "searchError": "",
+      "item": {
+        "name": "断亲后哥哥们哭着求原谅",
+        "author": "断亲后哥哥们哭着求原谅\n        已完结",
+        "itemUrl": "https://www.shanhuzs.com/fqsandt/13670.html"
+      },
+      "detailStatus": 200,
+      "detail": {
+        "name": "断亲后哥哥们哭着求原谅",
+        "tocUrl": "https://www.shanhuzs.com/fqsandt/13670.html",
+        "hasIntro": true
+      },
+      "entriesStatus": 200,
+      "entries": 100,
+      "fetchedTocPages": 1,
+      "partial": false,
+      "firstEntry": {
+        "index": 0,
+        "name": "短剧",
+        "url": "https://www.shanhuzs.com/fqsantp/5.html"
+      },
+      "payloadStatus": 200,
+      "payload": {
+        "type": "video",
+        "textLength": 4257,
+        "urlCount": 52,
+        "mediaUrl": "https://app2.zstv47.com?sc=wap_jztv3&m.shanhuzs.com&srcPlay=home",
+        "validation": {
+          "ok": true
+        }
+      },
+      "error": ""
+    },
+    {
+      "sourceId": "src_0350",
+      "sourceName": "稀饭影视（优++）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "Client network socket disconnected before secure TLS connection was established",
+      "error": "Client network socket disconnected before secure TLS connection was established"
+    },
+    {
+      "sourceId": "src_0351",
+      "sourceName": "短剧合集（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "萌宝",
+      "searchStatus": 200,
+      "searchError": "write EPROTO 30950000:error:0A000458:SSL routines:ssl3_read_bytes:tlsv1 unrecognized name:openssl\\ssl\\record\\rec_layer_s3.c:918:SSL alert number 112\n",
+      "error": "write EPROTO 30950000:error:0A000458:SSL routines:ssl3_read_bytes:tlsv1 unrecognized name:openssl\\ssl\\record\\rec_layer_s3.c:918:SSL alert number 112\n"
+    },
+    {
+      "sourceId": "src_0352",
+      "sourceName": "月趣动漫（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗破",
+      "searchStatus": 200,
+      "searchError": "Request timeout",
+      "error": "Request timeout"
+    },
+    {
+      "sourceId": "src_0353",
+      "sourceName": "稀饭动漫（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "碧蓝之海",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0354",
+      "sourceName": "西瓜卡通（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": true,
+      "phase": "ok",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "item": {
+        "name": "斗罗大陆（4K）【国语】",
+        "author": "战斗\n\n          穿越\n\n        唐家三少 [国漫]\n       斗罗大陆（4K）【国语】",
+        "itemUrl": "https://cn.xgcartoon.com/detail/douluodaluguoyu-tangjiasanshao"
+      },
+      "detailStatus": 200,
+      "detail": {
+        "name": "斗罗大陆（4K）【国语】",
+        "tocUrl": "https://cn.xgcartoon.com/detail/douluodaluguoyu-tangjiasanshao",
+        "hasIntro": true
+      },
+      "entriesStatus": 200,
+      "entries": 263,
+      "fetchedTocPages": 1,
+      "partial": false,
+      "firstEntry": {
+        "index": 0,
+        "name": "第 265 集\n              263",
+        "url": "https://cn.xgcartoon.com/user/page_direct?cartoon_id=douluodaluguoyu-tangjiasanshao&chapter_id=anodJoaNkn"
+      },
+      "payloadStatus": 200,
+      "payload": {
+        "type": "video",
+        "textLength": 109,
+        "urlCount": 1,
+        "mediaUrl": "https://pframe.xgcartoon.com/player.htm?vid=d12aa607-a16e-4aff-a478-22665e02bdab&autoplay=false",
+        "validation": {
+          "ok": true
+        }
+      },
+      "error": ""
+    },
+    {
+      "sourceId": "src_0355",
+      "sourceName": "盗随动漫（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0356",
+      "sourceName": "聪明视频（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "我的妈妈我的家",
+      "searchStatus": 200,
+      "searchError": "blocked_by_site",
+      "error": "blocked_by_site"
+    },
+    {
+      "sourceId": "src_0357",
+      "sourceName": "网飞猫网（优+）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0358",
+      "sourceName": "优质资源（优）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0359",
+      "sourceName": "榴莲影视（优）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "30950000:error:0A000119:SSL routines:tls_get_more_records:decryption failed or bad record mac:openssl\\ssl\\record\\methods\\tls_common.c:869:\n",
+      "error": "30950000:error:0A000119:SSL routines:tls_get_more_records:decryption failed or bad record mac:openssl\\ssl\\record\\methods\\tls_common.c:869:\n"
+    },
+    {
+      "sourceId": "src_0360",
+      "sourceName": "艾格动漫（优）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0361",
+      "sourceName": "矮贼吧网（优）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0362",
+      "sourceName": "文才影视（TVBox）",
+      "category": "video",
+      "status": "ok",
+      "ok": true,
+      "phase": "ok",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "item": {
+        "name": "斗罗大陆2：绝世唐门",
+        "author": "梁达伟",
+        "itemUrl": "https://api.zeqaht.com/api.php/provide/vod?ac=detail&ids=103321"
+      },
+      "detailStatus": 200,
+      "detail": {
+        "name": "斗罗大陆2：绝世唐门",
+        "tocUrl": "https://api.zeqaht.com/api.php/provide/vod?ac=detail&ids=103321",
+        "hasIntro": true
+      },
+      "entriesStatus": 200,
+      "entries": 156,
+      "fetchedTocPages": 1,
+      "partial": false,
+      "firstEntry": {
+        "index": 0,
+        "name": "1",
+        "url": "https://ppvod01.6g9ba6.com/splitOut/20251107/1128480/V20251107135450237551128480/index.m3u8"
+      },
+      "payloadStatus": 200,
+      "payload": {
+        "type": "video",
+        "textLength": 91,
+        "urlCount": 1,
+        "mediaUrl": "https://ppvod01.6g9ba6.com/splitOut/20251107/1128480/V20251107135450237551128480/index.m3u8",
+        "validation": {
+          "ok": true
+        }
+      },
+      "error": ""
+    }
+  ]
+}

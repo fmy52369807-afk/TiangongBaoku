@@ -1,0 +1,135 @@
+{
+  "generatedAt": "2026-06-11T12:53:33.723Z",
+  "category": "special",
+  "keyword": "斗罗大陆",
+  "offset": 0,
+  "limit": 10,
+  "deep": false,
+  "total": 10,
+  "ok": 0,
+  "byPhase": {
+    "search": 10
+  },
+  "results": [
+    {
+      "sourceId": "src_0366",
+      "sourceName": "坚果云盘（优++）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0367",
+      "sourceName": "百度网盘（优++）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "no_search_result",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0368",
+      "sourceName": "百度贴吧（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0369",
+      "sourceName": "吾爱破解（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "系统",
+      "searchStatus": 200,
+      "searchError": "socket hang up",
+      "error": "socket hang up"
+    },
+    {
+      "sourceId": "src_0370",
+      "sourceName": "酷安应用（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "阅读",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0371",
+      "sourceName": "微博书源（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "https://m.weibo.cn/detail/48561192202448",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0372",
+      "sourceName": "微博评论（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0373",
+      "sourceName": "优品文档（导+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "旅行",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    },
+    {
+      "sourceId": "src_0374",
+      "sourceName": "书单推荐（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "书单",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    },
+    {
+      "sourceId": "src_0375",
+      "sourceName": "超星网站（优+）",
+      "category": "special",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "rules_no_match",
+      "error": "rules_no_match"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "generatedAt": "2026-06-11T12:18:06.262Z",
+  "category": "video",
+  "keyword": "斗罗大陆",
+  "offset": 11,
+  "limit": 1,
+  "deep": true,
+  "total": 1,
+  "ok": 0,
+  "byPhase": {
+    "search": 1
+  },
+  "results": [
+    {
+      "sourceId": "src_0370",
+      "sourceName": "优质资源（优）",
+      "category": "video",
+      "status": "ok",
+      "ok": false,
+      "phase": "search",
+      "keyword": "斗罗大陆",
+      "searchStatus": 200,
+      "searchError": "",
+      "error": "no_search_result"
+    }
+  ]
+}

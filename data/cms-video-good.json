@@ -1,0 +1,13 @@
+[
+  {
+    "label": "????",
+    "base": "https://api.zuidapi.com/api.php/provide/vod",
+    "ok": true,
+    "name": "?????? ??? ??? ????",
+    "id": 84506,
+    "direct": "https://v10.zuidazym3u8.com/yyv10/202407/24/5yDvB3mH0J15/video/index.m3u8",
+    "playFrom": "zuidam3u8",
+    "sample": "HD$https://v10.zuidazym3u8.com/yyv10/202407/24/5yDvB3mH0J15/video/index.m3u8",
+    "reason": ""
+  }
+]

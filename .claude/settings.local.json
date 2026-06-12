@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/split_sources.js)",
+      "Bash(node scripts/clean_sources.js --dry-run)",
+      "Bash(node scripts/clean_sources.js)",
+      "Bash(node scripts/build.js)",
+      "Bash(node -e ' *)",
+      "Bash(npm install *)",
+      "Bash(timeout 5 node index.js)",
+      "Read(//tmp/**)",
+      "Bash(taskkill //F //IM node.exe)"
+    ]
+  }
+}

@@ -1,0 +1,1 @@
+https://cdn.jsdelivr.net/gh/hhhackor/AppRhymeApi@main/custom_api.evc

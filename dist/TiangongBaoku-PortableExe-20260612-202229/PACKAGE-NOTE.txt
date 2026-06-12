@@ -1,0 +1,4 @@
+﻿天工宝库 portable executable package
+Built: 2026-06-12 20:22:34
+Includes bundled Node.js runtime.
+Run StartTiangongBaoku.exe to launch.

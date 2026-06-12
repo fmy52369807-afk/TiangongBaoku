@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e ' *)",
+      "Bash(java -version)",
+      "Bash(mkdir -p e:/html/yuedu/server/java)",
+      "Bash(ls *.jar)",
+      "Bash(ls *.java)",
+      "Bash(netstat -ano)",
+      "Bash(tasklist)",
+      "Bash(taskkill //F //PID 30544)",
+      "Bash(ls -la dist/)",
+      "Bash(ls .gitignore)",
+      "Bash(node -e \"var idx=JSON.parse\\(require\\('fs'\\).readFileSync\\('sources/index.json','utf-8'\\)\\);console.log\\('总源数:',idx.length\\);var cats={};idx.forEach\\(function\\(e\\){cats[e.category]=\\(cats[e.category]||0\\)+1}\\);Object.entries\\(cats\\).sort\\(function\\(a,b\\){return b[1]-a[1]}\\).forEach\\(function\\(c\\){console.log\\('  '+c[0]+': '+c[1]\\)}\\)\")",
+      "Bash(git --version)"
+    ]
+  }
+}
