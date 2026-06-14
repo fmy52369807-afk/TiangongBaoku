@@ -1,7 +1,9 @@
 use std::{
     env,
+    fs::OpenOptions,
+    io::Write,
     net::TcpStream,
-    path::PathBuf,
+    path::{Path, PathBuf},
     process::{Child, Command, Stdio},
     sync::{Arc, Mutex},
     thread,
@@ -29,13 +31,38 @@ fn wait_for_server(port: u16, timeout: Duration) -> bool {
     false
 }
 
-fn bundled_node(root: &std::path::Path) -> Option<PathBuf> {
+fn release_resource_root(resource_dir: PathBuf) -> PathBuf {
+    let nsis_root = resource_dir.join("_up_");
+    if nsis_root.exists() {
+        nsis_root
+    } else {
+        resource_dir
+    }
+}
+
+fn log_desktop(app_data_dir: &Path, message: impl AsRef<str>) {
+    let log_dir = app_data_dir.join("logs");
+    if std::fs::create_dir_all(&log_dir).is_err() {
+        return;
+    }
+
+    if let Ok(mut file) = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(log_dir.join("desktop.log"))
+    {
+        let _ = writeln!(file, "{}", message.as_ref());
+    }
+}
+
+fn bundled_node(root: &Path) -> Option<PathBuf> {
     let candidate = root.join("runtime").join("node").join("node.exe");
     candidate.exists().then_some(candidate)
 }
 
 fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
     if TcpStream::connect(("127.0.0.1", 3456)).is_ok() {
+        log_desktop(&app_data_dir, "Backend already running on 127.0.0.1:3456");
         return None;
     }
 
@@ -46,23 +73,54 @@ fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
         .or_else(|| env::var("TIANGONG_NODE").ok().map(PathBuf::from))
         .unwrap_or_else(|| PathBuf::from("node"));
 
-    let child = Command::new(node)
+    log_desktop(
+        &app_data_dir,
+        format!(
+            "Starting backend: root={}, node={}, server_dir={}, db_path={}",
+            root.display(),
+            node.display(),
+            server_dir.display(),
+            db_dir.join("yuedu.db").display()
+        ),
+    );
+
+    let child = Command::new(&node)
         .arg("index.js")
-        .current_dir(server_dir)
+        .current_dir(&server_dir)
         .env("PORT", "3456")
         .env("NODE_ENV", "development")
         .env("DB_PATH", db_dir.join("yuedu.db"))
         .env("SOURCES_PATH", root.join("sources"))
         .stdout(Stdio::null())
         .stderr(Stdio::null())
-        .spawn()
-        .ok();
+        .spawn();
 
-    if child.is_some() {
-        let _ = wait_for_server(3456, Duration::from_secs(12));
+    let child = match child {
+        Ok(child) => child,
+        Err(error) => {
+            log_desktop(
+                &app_data_dir,
+                format!(
+                    "Failed to spawn backend: error={}, node={}, server_dir_exists={}",
+                    error,
+                    node.display(),
+                    server_dir.exists()
+                ),
+            );
+            return None;
+        }
+    };
+
+    if wait_for_server(3456, Duration::from_secs(20)) {
+        log_desktop(&app_data_dir, "Backend ready on 127.0.0.1:3456");
+    } else {
+        log_desktop(
+            &app_data_dir,
+            "Backend did not become ready within 20 seconds",
+        );
     }
 
-    child
+    Some(child)
 }
 
 pub fn run() {
@@ -75,7 +133,7 @@ pub fn run() {
             let root = if cfg!(debug_assertions) {
                 dev_repo_root()
             } else {
-                app.path().resource_dir()?
+                release_resource_root(app.path().resource_dir()?)
             };
             let app_data_dir = app.path().app_data_dir()?;
             let child = start_server(root, app_data_dir);
