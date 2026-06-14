@@ -1,12 +1,12 @@
 /**
  * Auto-generated source data for the 阅读+音乐 源管理器
- * Built at: 2026-06-12T12:21:53.816Z
+ * Built at: 2026-06-14T06:34:14.198Z
  * Total sources: 394
  * DO NOT EDIT MANUALLY — run "node scripts/build.js" to regenerate
  */
 window.SOURCE_DATA = {
   "version": "2.0",
-  "builtAt": "2026-06-12T12:21:53.816Z",
+  "builtAt": "2026-06-14T06:34:14.198Z",
   "totalSources": 394,
   "categories": [
     {
@@ -216,14 +216,14 @@ window.SOURCE_DATA = {
     },
     {
       "id": "src_0012",
-      "name": "幻梦轻说（优++）",
+      "name": "幻梦轻说（优+++）",
       "group": "小说 书源",
       "category": "novel",
       "url": "https://www.huanmengacg.com",
       "type": 0,
       "enabled": true,
-      "weight": 0,
-      "comment": "\nQQ资源群：992706162\n\nTG交流群：https://t.me/huanmengnovel\n\n由于一直疯狂被人举报免费书源、软件、QQ群，所以QQ群以后长期禁言\n\n幻梦轻小说全网最齐全的轻小",
+      "weight": 100,
+      "comment": "幻梦轻小说API书源\n\nTG交流群：https://t.me/huanmengnovel\n\n由于一直疯狂被人举报免费书源、软件、QQ群，所以QQ群以后长期禁言\n\n幻梦轻小说全网最齐全的轻小说网，访问速",
       "status": "ok",
       "file": "novel/free_novel.json",
       "index": 11

@@ -4,6 +4,7 @@
 
 const { fetchUrl } = require('../engine/httpClient');
 const config = require('../config');
+const cheerio = require('cheerio');
 const { tryJson, isBadValue } = require('./utils');
 const { normalizeUrlMaybe, extractUrls } = require('./url-utils');
 
@@ -30,6 +31,156 @@ function fallbackComicImageUrls(raw, entryUrl) {
         .filter(url => /\.(jpg|jpeg|png|webp|gif|avif)(?:[?#][^\s]*)?$/i.test(url))
         .filter(url => !isBadComicImageUrl(url));
     return [...new Set(urls)];
+}
+
+function isAntbywComicSource(sourceOrUrl) {
+    const text = typeof sourceOrUrl === 'string'
+        ? sourceOrUrl
+        : [sourceOrUrl?.bookSourceUrl, sourceOrUrl?.searchUrl, sourceOrUrl?.bookSourceName].filter(Boolean).join(' ');
+    return /antbyw\.com|jameson_manhua/i.test(String(text || ''));
+}
+
+function fallbackAntbywEntries(html, baseUrl, startIndex = 0) {
+    if (!isAntbywComicSource(baseUrl) && !/jameson_manhua/i.test(String(html || ''))) return [];
+    const $ = cheerio.load(String(html || ''));
+    const byKey = new Map();
+    $('a[href*="jameson_manhua"][href*="a=read"][href*="zjid="], a[href*="a=read"][href*="zjid="][href*="kuid="]').each((_, el) => {
+        const href = ($(el).attr('href') || '').replace(/&amp;/g, '&');
+        const url = normalizeAntbywUrl(href, baseUrl);
+        if (!url) return;
+        const name = cleanAntbywChapterName(
+            $(el).attr('title')
+            || $(el).text()
+            || $(el).closest('li, dd, tr, div').text()
+            || `第 ${byKey.size + 1} 章`
+        );
+        const key = antbywReadKey(url);
+        const existing = byKey.get(key);
+        if (existing && antbywChapterNameScore(existing.name) >= antbywChapterNameScore(name)) return;
+        byKey.set(key, {
+            index: 0,
+            name,
+            url,
+            isVip: false,
+            isVolume: false,
+            updateTime: '',
+        });
+    });
+    const entries = Array.from(byKey.values()).map((entry, index) => ({ ...entry, index: startIndex + index }));
+    return entries;
+}
+
+function cleanAntbywChapterName(value) {
+    const text = String(value || '').replace(/\s+/g, ' ').trim();
+    return text.slice(0, 80) || '未命名章节';
+}
+
+function normalizeAntbywUrl(url, baseUrl) {
+    const text = String(url || '').replace(/&amp;/g, '&').trim();
+    if (!text) return '';
+    try {
+        return new URL(text, baseUrl || 'https://www.antbyw.com/').href;
+    } catch {
+        return normalizeUrlMaybe(text, baseUrl) || '';
+    }
+}
+
+function antbywReadKey(url) {
+    try {
+        const parsed = new URL(url);
+        const kuid = parsed.searchParams.get('kuid') || '';
+        const zjid = parsed.searchParams.get('zjid') || '';
+        return `${parsed.origin}${parsed.pathname}?kuid=${kuid}&zjid=${zjid}`;
+    } catch {
+        return String(url || '');
+    }
+}
+
+function antbywChapterNameScore(name) {
+    const text = String(name || '').trim();
+    if (/^(?:阅读|开始阅读|立即阅读)$/i.test(text)) return 0;
+    if (/第\s*\d+|第[一二三四五六七八九十百千万零〇]+|卷|话|回|章|篇/i.test(text)) return 3;
+    return text.length > 2 ? 2 : 1;
+}
+
+function extractAntbywReadUrls(raw, baseUrl) {
+    if (!isAntbywComicSource(baseUrl) && !/jameson_manhua/i.test(String(raw || ''))) return [];
+    const urls = [];
+    const text = String(raw || '').replace(/&amp;/g, '&');
+    for (const match of text.matchAll(/href=["']([^"']*jameson_manhua[^"']*a=read[^"']*zjid=[^"']+)["']/gi)) {
+        const url = normalizeAntbywUrl(match[1], baseUrl);
+        if (url) urls.push(url);
+    }
+    for (const match of text.matchAll(/(?:\/plugin\.php|\bplugin\.php)\?id=jameson_manhua[^"'<>\\\s]*a=read[^"'<>\\\s]*zjid=[^"'<>\\\s]*/gi)) {
+        const url = normalizeAntbywUrl(match[0], baseUrl);
+        if (url) urls.push(url);
+    }
+    return [...new Set(urls)];
+}
+
+function extractAntbywImageUrls(raw, entryUrl) {
+    if (!isAntbywComicSource(entryUrl) && !/imgmh\d*\.antbyw\.com|let\s+urls\s*=/i.test(String(raw || ''))) return [];
+    const urls = [];
+    const text = String(raw || '');
+    for (const match of text.matchAll(/(?:let|var|const)\s+urls\s*=\s*(\[[\s\S]*?\])\s*;?/gi)) {
+        const parsed = tryJson(match[1]);
+        if (Array.isArray(parsed)) urls.push(...parsed.filter(item => typeof item === 'string'));
+    }
+    urls.push(...extractUrls(text, entryUrl).filter(url => /imgmh\d*\.antbyw\.com/i.test(url)));
+    return filterComicImageUrls(urls, entryUrl, 'comic-contain chapterImages');
+}
+
+function extractAntbywPageUrls(raw, currentUrl) {
+    const $ = cheerio.load(String(raw || '').replace(/&amp;/g, '&'));
+    const urls = [];
+    $('.pg.page a[href], .pg a[href], a[href*="a=read"][href*="page="]').each((_, el) => {
+        const href = $(el).attr('href') || '';
+        const url = normalizeAntbywUrl(href, currentUrl);
+        if (url && /a=read/i.test(url) && /page=\d+/i.test(url)) urls.push(url);
+    });
+    return [...new Set(urls)].sort((a, b) => antbywPageNumber(a) - antbywPageNumber(b));
+}
+
+function antbywPageNumber(url) {
+    try {
+        return Number(new URL(url).searchParams.get('page') || 1);
+    } catch {
+        return Number((String(url || '').match(/[?&]page=(\d+)/i) || [])[1] || 1);
+    }
+}
+
+async function fetchAntbywPagedImages(source, raw, entryUrl, maxPages = 80) {
+    if (!isAntbywComicSource(source) && !isAntbywComicSource(entryUrl) && !/jameson_manhua/i.test(String(raw || ''))) {
+        return [];
+    }
+    const firstReadUrl = /a=read/i.test(String(entryUrl || ''))
+        ? entryUrl
+        : extractAntbywReadUrls(raw, entryUrl)[0];
+    if (!firstReadUrl) return [];
+
+    const headers = {
+        'User-Agent': 'Mozilla/5.0',
+        Referer: entryUrl,
+    };
+    const visited = new Set();
+    const queue = [firstReadUrl];
+    const imageUrls = [];
+    let firstRaw = /a=read/i.test(String(entryUrl || '')) ? raw : '';
+
+    while (queue.length && visited.size < maxPages) {
+        const currentUrl = queue.shift();
+        if (!currentUrl || visited.has(currentUrl)) continue;
+        visited.add(currentUrl);
+        let pageRaw = currentUrl === firstReadUrl && firstRaw ? firstRaw : '';
+        if (!pageRaw) {
+            pageRaw = await fetchUrl(currentUrl, { headers }, config.requestTimeout);
+        }
+        imageUrls.push(...extractAntbywImageUrls(pageRaw, currentUrl));
+        for (const nextUrl of extractAntbywPageUrls(pageRaw, currentUrl)) {
+            if (!visited.has(nextUrl) && !queue.includes(nextUrl)) queue.push(nextUrl);
+        }
+    }
+    return filterComicImageUrls(imageUrls, firstReadUrl, 'comic-contain chapterImages');
 }
 
 function fallbackStructuredComicImageUrls(raw, entryUrl) {
@@ -183,7 +334,7 @@ function isLikelyComicPageImage(url, entryUrl, rawLooksLikeChapterPayload) {
 }
 
 function isBadComicImageUrl(url) {
-    return /(logo|favicon|avatar|icon|banner|cover|thumb|thumbnail|poster|qrcode|qr-code|wechat|weixin|app-download|download-app|appdl|loading|load\.gif|\/(?:acg|bl)\.gif|placeholder|default|empty|rank|recommend|hot|category|menu|nav|sprite|assets\/images\/logo|bookcover|coverimg|cover_img|posterimg)/i.test(String(url || ''));
+    return /(logo|favicon|avatar|icon|banner|cover|thumb|thumbnail|poster|qrcode|qr-code|wechat|weixin|app-download|download-app|appdl|loading|loader|ajax-loader|load\.gif|\/(?:acg|bl)\.gif|placeholder|default|empty|rank|recommend|hot|category|menu|nav|back_btn|title_back|sprite|assets\/images\/logo|bookcover|coverimg|cover_img|posterimg)/i.test(String(url || ''));
 }
 
 function isSameSiteHomepageAsset(url, entryUrl) {
@@ -199,6 +350,11 @@ function isSameSiteHomepageAsset(url, entryUrl) {
 module.exports = {
     filterComicImageUrls,
     normalizeKnownComicImageHost,
+    isAntbywComicSource,
+    fallbackAntbywEntries,
+    extractAntbywReadUrls,
+    extractAntbywImageUrls,
+    fetchAntbywPagedImages,
     fallbackComicImageUrls,
     fallbackStructuredComicImageUrls,
     collectTargetedComicImageUrls,

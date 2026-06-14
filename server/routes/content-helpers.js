@@ -61,6 +61,9 @@ const {
 
 const {
     filterComicImageUrls,
+    isAntbywComicSource,
+    fallbackAntbywEntries,
+    fetchAntbywPagedImages,
     fallbackComicImageUrls,
     fallbackStructuredComicImageUrls,
     fallbackYydsmhImageUrls,
@@ -91,35 +94,42 @@ const {
 
 // --- Source loading (with TTL cache) ---
 
-const _cache = { index: null, sources: new Map(), ts: 0, ttl: 30000 };
+const _cache = { index: null, sources: new Map(), indexMtimeMs: 0 };
 
 function loadIndex() {
-    const now = Date.now();
-    if (_cache.index && now - _cache.ts < _cache.ttl) return _cache.index;
-    _cache.index = JSON.parse(fs.readFileSync(path.join(config.sourcesPath, 'index.json'), 'utf-8'));
-    _cache.ts = now;
+    const indexPath = path.join(config.sourcesPath, 'index.json');
+    if (!fs.existsSync(indexPath)) {
+        throw new Error('sources/index.json not found. Run node scripts/build.js');
+    }
+    const mtimeMs = fs.statSync(indexPath).mtimeMs;
+    if (_cache.index && _cache.indexMtimeMs === mtimeMs) return _cache.index;
+    _cache.index = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
+    _cache.indexMtimeMs = mtimeMs;
     _cache.sources.clear();
     return _cache.index;
 }
 
 function loadSource(sourceId) {
-    if (_cache.sources.has(sourceId)) return _cache.sources.get(sourceId);
     const entry = loadIndex().find(item => item.id === sourceId);
     if (!entry) {
         _cache.sources.set(sourceId, null);
         return null;
     }
-    const fileData = JSON.parse(fs.readFileSync(path.join(config.sourcesPath, entry.file), 'utf-8'));
+    const sourcePath = path.join(config.sourcesPath, entry.file);
+    const mtimeMs = fs.existsSync(sourcePath) ? fs.statSync(sourcePath).mtimeMs : 0;
+    const cached = _cache.sources.get(sourceId);
+    if (cached && cached.fileMtimeMs === mtimeMs) return cached.value;
+    const fileData = JSON.parse(fs.readFileSync(sourcePath, 'utf-8'));
     const source = fileData[entry.index];
     const result = source ? { entry, source } : null;
-    _cache.sources.set(sourceId, result);
+    _cache.sources.set(sourceId, { fileMtimeMs: mtimeMs, value: result });
     return result;
 }
 
 function invalidateSourceCache() {
     _cache.index = null;
     _cache.sources.clear();
-    _cache.ts = 0;
+    _cache.indexMtimeMs = 0;
 }
 
 // --- TOC / entry helpers ---
@@ -289,6 +299,12 @@ async function fetchEntriesPage(source, adapter, tocUrl, sessionData, startIndex
         if (videoEntries.length) entries = videoEntries;
     }
     if (!entries.some(item => item.url)) entries = fallbackMangaSearcherEntries(html, tocUrl);
+    if (isAntbywComicSource(source) || isAntbywComicSource(tocUrl)) {
+        const antbywEntries = fallbackAntbywEntries(html, tocUrl, startIndex);
+        if (antbywEntries.length && (!entries.some(item => /a=read/i.test(item.url || '')) || antbywEntries.length > entries.filter(item => item.url && !item.isVolume).length)) {
+            entries = antbywEntries;
+        }
+    }
     if (!entries.some(item => item.url)) entries = fallbackEntries(html, tocUrl);
     if (!entries.some(item => item.url)) entries = fallbackAudioEntries(source, html, tocUrl, startIndex);
     entries = entries.map(item => ({ ...item, url: normalizeComicEntryUrl(item.url, tocUrl) }));
@@ -328,9 +344,113 @@ function mergeEntries(pages) {
     return merged;
 }
 
+function decodeLegadoDataUrl(url) {
+    const match = String(url || '').match(/^data:([^;,]+)?;base64,([^,]+)(?:,([\s\S]+))?$/i);
+    if (!match) return null;
+    let meta = {};
+    if (match[3]) {
+        try {
+            meta = JSON.parse(match[3]);
+        } catch {
+            meta = {};
+        }
+    }
+    return {
+        kind: match[1] || '',
+        value: Buffer.from(match[2], 'base64').toString('utf-8'),
+        meta,
+    };
+}
+
+function isFanqieDataUrl(url, kind) {
+    const decoded = decodeLegadoDataUrl(url);
+    if (!decoded) return null;
+    if (kind && decoded.kind !== kind) return null;
+    if (decoded.meta && decoded.meta.type && decoded.meta.type !== 'fqnovel') return null;
+    return decoded.value ? decoded : null;
+}
+
+function makeFanqieDataUrl(kind, value) {
+    return `data:${kind};base64,${Buffer.from(String(value || '')).toString('base64')},{"type":"fqnovel"}`;
+}
+
+function fanqieChapterLists(data) {
+    const root = tryJson(data) || data || {};
+    const payload = root.data || root;
+    if (Array.isArray(payload.item_data_list)) return [payload.item_data_list];
+    if (Array.isArray(payload.chapterListWithVolume)) return payload.chapterListWithVolume;
+    if (Array.isArray(payload.chapter_list)) return [payload.chapter_list];
+    if (Array.isArray(payload.chapterList)) return [payload.chapterList];
+    return [];
+}
+
+async function fetchFanqieDirectoryEntries(bookId, startIndex = 0) {
+    const raw = await fetchUrl(`https://fanqienovel.com/api/reader/directory/detail?bookId=${encodeURIComponent(bookId)}`, {
+        headers: {
+            Referer: 'https://fanqienovel.com/',
+        },
+    }, config.requestTimeout);
+    const lists = fanqieChapterLists(raw);
+    const entries = [];
+    lists.forEach((list) => {
+        (Array.isArray(list) ? list : []).forEach((chapter) => {
+            const itemId = chapter.itemId || chapter.item_id || chapter.id;
+            const name = chapter.title || chapter.ChapterName || chapter.name || '';
+            if (!itemId || !name) return;
+            entries.push({
+                index: startIndex + entries.length,
+                name: cleanText(name),
+                url: makeFanqieDataUrl('item_id', itemId),
+                updateTime: cleanText(chapter.firstPassTime || chapter.first_pass_time || chapter.updateTime || ''),
+                isVip: Boolean(chapter.needPay || chapter.isChapterLock || chapter.is_vip),
+                isVolume: false,
+            });
+        });
+    });
+    return entries;
+}
+
+function extractFanqieContent(raw) {
+    const parsed = tryJson(raw);
+    const data = parsed && (parsed.data && (parsed.data.data || parsed.data) || parsed);
+    return cleanText(data && (data.content || data.content_text || data.text) || '');
+}
+
+async function fetchFanqieContentByItemId(itemId) {
+    const urls = [
+        `https://fq-book.netsite.cc/content?item_id=${encodeURIComponent(itemId)}`,
+        `https://fqgo.52dns.cc/content?item_id=${encodeURIComponent(itemId)}`,
+        `https://fqxs.ns114.cc/content?item_id=${encodeURIComponent(itemId)}`,
+        `https://api.52dns.cc/content?item_id=${encodeURIComponent(itemId)}`,
+    ];
+    let lastRaw = '';
+    for (const url of urls) {
+        try {
+            const raw = await fetchUrl(url, {}, config.requestTimeout);
+            lastRaw = raw || lastRaw;
+            const content = extractFanqieContent(raw);
+            if (content) {
+                return { raw, content };
+            }
+        } catch {}
+    }
+    return { raw: lastRaw, content: '' };
+}
+
 // --- Payload content ---
 
 async function fetchPayloadContent(source, rule, startUrl, context, maxPages = 8) {
+    const fanqieItem = isFanqieDataUrl(startUrl, 'item_id');
+    if (fanqieItem) {
+        const fetched = await fetchFanqieContentByItemId(fanqieItem.value);
+        return {
+            raw: fetched.raw,
+            content: fetched.content,
+            fetchedContentPages: fetched.raw ? 1 : 0,
+            nextContentUrls: [],
+        };
+    }
+
     const visited = new Set();
     let currentUrl = startUrl;
     let rawCombined = '';
@@ -363,6 +483,42 @@ async function fetchPayloadContent(source, rule, startUrl, context, maxPages = 8
 
 // --- Search ---
 
+const fiveSingCoverCache = new Map();
+
+function cleanSearchField(value, rule) {
+    const text = cleanText(value);
+    return isBadValue(text, rule) ? '' : text;
+}
+
+function isPlaceholderCover(url) {
+    return /(?:^|\/\/)1t\.click\/HNK\b/i.test(String(url || ''));
+}
+
+async function fetchFiveSingSearchCover(source, itemUrl) {
+    const url = String(itemUrl || '');
+    if (!isFiveSingSource(source) || !/^https?:\/\/5sing\.kugou\.com\//i.test(url)) return '';
+    if (fiveSingCoverCache.has(url)) return fiveSingCoverCache.get(url);
+    let cover = '';
+    try {
+        const html = await fetchUrl(url, {
+            headers: {
+                ...parseSourceHeader(source.header),
+                Referer: cleanSourceUrl(source.bookSourceUrl) || 'http://5sing.kugou.com/',
+            },
+        }, config.requestTimeout);
+        const $ = cheerio.load(String(html || ''));
+        cover = normalizeCoverForSource(
+            source,
+            $('.user_tx img').attr('src') || $('meta[property="og:image"]').attr('content') || '',
+            url
+        );
+    } catch {
+        cover = '';
+    }
+    fiveSingCoverCache.set(url, cover);
+    return cover;
+}
+
 async function searchSource(entry, keyword, searchTimeout) {
     const loaded = loadSource(entry.id);
     if (!loaded || !loaded.source.searchUrl) return { status: 'skipped', error: 'missing_search_url', count: 0 };
@@ -392,7 +548,7 @@ async function searchSource(entry, keyword, searchTimeout) {
         const emptyError = classifyEmptySearch(raw);
         return { status: 'failed', error: emptyError, count: 0, listError: '规则未匹配' };
     }
-    const items = list.slice(0, 30).map(item => {
+    let items = await Promise.all(list.slice(0, 30).map(async (item, offset) => {
         const itemContext = { ...ruleContext, result: item };
         const rawUrl = runRule(item, rule.bookUrl, itemContext);
         let itemUrl = buildUrl(String(rawUrl || ''), {
@@ -402,23 +558,29 @@ async function searchSource(entry, keyword, searchTimeout) {
         if (isAudioLikeCategory(entry.category) && (isBadValue(itemUrl, rule.bookUrl) || (entry.category === 'music' && isFuciyuanSource(source)))) {
             itemUrl = fallbackAudioItemUrl(source, item, searchTarget.url || cleanSourceUrl(source.bookSourceUrl));
         }
+        let coverUrl = normalizeCoverForSource(source, runRule(item, rule.coverUrl, itemContext), searchTarget.url);
+        if (isPlaceholderCover(coverUrl)) coverUrl = '';
+        if (!coverUrl && isFiveSingSource(source) && offset < 10) {
+            coverUrl = await fetchFiveSingSearchCover(source, itemUrl);
+        }
         return adapter.normalizeItem({
             sourceId: entry.id,
             sourceName: entry.name,
             category: entry.category,
             type: categoryProfile(entry.category).payloadKind,
-            name: cleanText(runRule(item, rule.name, itemContext)),
-            author: cleanText(runRule(item, rule.author, itemContext)),
+            name: cleanSearchField(runRule(item, rule.name, itemContext), rule.name),
+            author: cleanSearchField(runRule(item, rule.author, itemContext), rule.author),
             itemUrl,
-            coverUrl: normalizeCoverForSource(source, runRule(item, rule.coverUrl, itemContext), searchTarget.url),
-            intro: cleanText(runRule(item, rule.intro, itemContext)).slice(0, 240),
-            kind: cleanText(runRule(item, rule.kind, itemContext)),
-            lastChapter: cleanText(runRule(item, rule.lastChapter, itemContext)),
+            coverUrl,
+            intro: cleanSearchField(runRule(item, rule.intro, itemContext), rule.intro).slice(0, 240),
+            kind: cleanSearchField(runRule(item, rule.kind, itemContext), rule.kind),
+            lastChapter: cleanSearchField(runRule(item, rule.lastChapter, itemContext), rule.lastChapter),
             raw: Buffer.from(stringifyForRaw(item)).toString('base64'),
             adapterTags: adapter.tags,
             warnings: adapter.warnings,
         });
-    }).filter(item => adapter.validateSearchItem(item).ok);
+    }));
+    items = items.filter(item => adapter.validateSearchItem(item).ok);
     return { status: 'ok', items, adapter };
 }
 
@@ -427,6 +589,19 @@ async function searchSource(entry, keyword, searchTimeout) {
 async function fetchAllEntries(source, adapter, decodedUrl, sessionData, options = {}) {
     const maxPages = Math.min(Math.max(options.maxPages || 20, 1), 160);
     const budgetMs = Math.min(Math.max(options.budgetMs || 45000, 8000), 90000);
+    const fanqieBook = isFanqieDataUrl(decodedUrl, 'book_id');
+    if (fanqieBook) {
+        const entries = adapter.normalizeEntries(await fetchFanqieDirectoryEntries(fanqieBook.value, 0));
+        return {
+            entries,
+            fetchedTocPages: entries.length ? 1 : 0,
+            failedPages: [],
+            nextTocUrl: '',
+            nextTocUrls: [],
+            variables: sessionData.variables || {},
+        };
+    }
+
     const visited = new Set();
     const queue = [decodedUrl];
     const pages = [];
@@ -505,6 +680,11 @@ async function resolvePayloadContent(entry, source, adapter, decodedUrl, rule, s
     let urls = extractUrls(content, decodedUrl);
     if (entry.category === 'comic') {
         urls = filterComicImageUrls(urls, decodedUrl, content);
+        const antbywUrls = raw ? await fetchAntbywPagedImages(source, raw, decodedUrl, 80) : [];
+        if (antbywUrls.length) {
+            urls = antbywUrls;
+            content = urls.map(url => `<img src="${url}">`).join('\n');
+        }
         const yydsmhUrls = raw ? await fallbackYydsmhImageUrls(raw, decodedUrl) : [];
         if (yydsmhUrls.length) {
             urls = yydsmhUrls;

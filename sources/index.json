@@ -155,14 +155,14 @@
   },
   {
     "id": "src_0012",
-    "name": "幻梦轻说（优++）",
+    "name": "幻梦轻说（优+++）",
     "group": "小说 书源",
     "category": "novel",
     "url": "https://www.huanmengacg.com",
     "type": 0,
     "enabled": true,
-    "weight": 0,
-    "comment": "\nQQ资源群：992706162\n\nTG交流群：https://t.me/huanmengnovel\n\n由于一直疯狂被人举报免费书源、软件、QQ群，所以QQ群以后长期禁言\n\n幻梦轻小说全网最齐全的轻小",
+    "weight": 100,
+    "comment": "幻梦轻小说API书源\n\nTG交流群：https://t.me/huanmengnovel\n\n由于一直疯狂被人举报免费书源、软件、QQ群，所以QQ群以后长期禁言\n\n幻梦轻小说全网最齐全的轻小说网，访问速",
     "status": "ok",
     "file": "novel/free_novel.json",
     "index": 11

@@ -1,0 +1,1665 @@
+{
+  "generatedAt": "2026-06-14T06:58:05.532Z",
+  "input": "data/tvbox-subscriptions-12586.json",
+  "subscriptionCount": 10,
+  "configCount": 4,
+  "convertedCount": 0,
+  "errors": [
+    {
+      "name": "饭太硬",
+      "url": "http://www.饭太硬.net/tv",
+      "reason": "json_parse_failed:tv:Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+    },
+    {
+      "name": "饭太硬（备用）",
+      "url": "http://www.饭太硬.art/tv",
+      "reason": "json_parse_failed:tv:Unexpected token '�', \"����\u0000\u0010JFIF\"... is not valid JSON"
+    },
+    {
+      "name": "摸鱼儿",
+      "url": "http://我不是.摸鱼儿.top",
+      "reason": "json_parse_failed:我不是.摸鱼儿.top:Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+    },
+    {
+      "name": "潇洒",
+      "url": "https://9877.kstore.space/ONE/one.json",
+      "reason": "json_parse_failed:one.json:Unexpected non-whitespace character after JSON at position 34 (line 1 column 35)"
+    },
+    {
+      "name": "小虎斑",
+      "url": "http://hb.小虎斑.site:25252/仅供测试",
+      "reason": "json_parse_failed:仅供测试:Unexpected token '<', \"<!doctype \"... is not valid JSON"
+    },
+    {
+      "name": "南风",
+      "url": "https://gh-proxy.com/https://raw.githubusercontent.com/yoursmile66/TVBox/refs/heads/main/XC.json",
+      "reason": "json_parse_failed:XC.json:Unexpected non-whitespace character after JSON at position 15 (line 1 column 16)"
+    }
+  ],
+  "configs": [
+    {
+      "name": "小米",
+      "url": "https://gh-proxy.org/https://raw.githubusercontent.com/ggrrttyyiii/CatVodSpider/refs/heads/main/json/demo.json",
+      "spider": "https://zl.wpscdn.cn/2026/06/12/space_img/b7934f7a-4520-4180-bee6-cf8edfab64be.png;md5;5d388b3e0176de94a63e8c85dff7321a",
+      "siteCount": 34,
+      "cmsConvertible": [],
+      "spiderRequired": [
+        {
+          "key": "豆豆",
+          "name": "🎬豆瓣┃精选 仅供测试 备用：https://zzzy.shop/tv/",
+          "type": 3,
+          "api": "csp_Douban",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "config",
+          "name": "⚙️Cookie┃配置 修了很多 偷窃贩卖后果自负",
+          "type": 3,
+          "api": "csp_Config",
+          "searchable": false,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Netfixtv",
+          "name": "🚀臻臻┃网盘4K",
+          "type": 3,
+          "api": "csp_Duopan",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Netfixtv2",
+          "name": "🛸指南┃网盘4K",
+          "type": 3,
+          "api": "csp_Duopan",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Wogg",
+          "name": "🧸玩偶┃网盘4K",
+          "type": 3,
+          "api": "csp_Wogg",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Duopan",
+          "name": "☁️蜡笔┃网盘4K",
+          "type": 3,
+          "api": "csp_Duopan",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "天天",
+          "name": "🚀秒播┃1080P",
+          "type": 3,
+          "api": "csp_AppRJ",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Wwys",
+          "name": "🌾农民┃1080P",
+          "type": 3,
+          "api": "csp_Wwys",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Music",
+          "name": "🎵音乐┃在线",
+          "type": 3,
+          "api": "csp_Music",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "88看球",
+          "name": "🏀叭叭┃体育",
+          "type": 3,
+          "api": "csp_Kanqiu",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "瓜子",
+          "name": "🏀瓜子┃体育",
+          "type": 3,
+          "api": "csp_GuaziTY",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Bili",
+          "name": "📺哔哩┃哔哩",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "葫芦",
+          "name": "🪽葫芦┃1080P",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "新首发",
+          "name": "👻标清┃1080P",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "四叶草",
+          "name": "🍀幸运┃1080P",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "爱营",
+          "name": "💥爱影┃1080P",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "3QQQ",
+          "name": "🍅大鹅┃1080P",
+          "type": 3,
+          "api": "csp_App3Q",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_SaoHuo",
+          "name": "🔥火火┃1080P",
+          "type": 3,
+          "api": "csp_SaoHuo",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "麦田",
+          "name": "🌾麦田┃1080P",
+          "type": 3,
+          "api": "csp_AppV6",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "听心99",
+          "name": "🦉欣欣┃1080P",
+          "type": 3,
+          "api": "csp_App99",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "追番达人99",
+          "name": "🐎追番┃1080P",
+          "type": 3,
+          "api": "csp_App99",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "咕噜99",
+          "name": "👀咕噜丨APP",
+          "type": 3,
+          "api": "csp_App99",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "剧圈99",
+          "name": "🫎剧圈丨APP",
+          "type": 3,
+          "api": "csp_App99",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "顾我99",
+          "name": "🖼️顾我丨APP",
+          "type": 3,
+          "api": "csp_App99",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "荐片",
+          "name": "🧲荐片┃1080P",
+          "type": 3,
+          "api": "csp_Jianpian",
+          "searchable": true,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Huya",
+          "name": "🎮虎牙┃1080P",
+          "type": 3,
+          "api": "csp_Huya",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Douyu",
+          "name": "🎮斗鱼┃1080P",
+          "type": 3,
+          "api": "csp_Douyu",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_duanju",
+          "name": "🔥短剧┃1080P",
+          "type": 3,
+          "api": "csp_DuanJu",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Gz360",
+          "name": "🍉瓜子┃1080P",
+          "type": 3,
+          "api": "csp_Gz360",
+          "searchable": true,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Jpys",
+          "name": "🥇金牌┃1080P",
+          "type": 3,
+          "api": "csp_Jpys",
+          "searchable": true,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_MiSou",
+          "name": "🔍米搜┃盘搜",
+          "type": 3,
+          "api": "csp_MiSou",
+          "searchable": true,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_TingBook",
+          "name": "📖听书┃娱乐",
+          "type": 3,
+          "api": "csp_TingBook",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Aid",
+          "name": "🚑 急救┃知识",
+          "type": 3,
+          "api": "csp_FirstAid",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "push_agent",
+          "name": "📤 推送┃播放",
+          "type": 3,
+          "api": "csp_Push",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        }
+      ],
+      "unsupported": []
+    },
+    {
+      "name": "肥猫",
+      "url": "http://肥猫.net/tv",
+      "spider": "http://hello.xn--z7x900a.net/PandaQ260515.png;md5;b81a5747f91e7169bdc7e3f68bd995e0",
+      "siteCount": 50,
+      "cmsConvertible": [],
+      "spiderRequired": [
+        {
+          "key": "豆瓣",
+          "name": "🐼┃公众号：我不是肥猫┃",
+          "type": 3,
+          "api": "csp_Douban",
+          "searchable": false,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "豆瓣预告",
+          "name": "🐼┃豆瓣┃预告",
+          "type": 3,
+          "api": "csp_YGP",
+          "searchable": false,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "config",
+          "name": "🐼┃配置┃中心",
+          "type": 3,
+          "api": "csp_Config",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "living",
+          "name": "🐼┃游戏┃直播",
+          "type": 3,
+          "api": "csp_Living",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_FeiMaoUC",
+          "name": "⚡┃闪电┃优汐",
+          "type": 3,
+          "api": "csp_Duopan",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Duopan",
+          "name": "🖍︎┃蜡笔┃影视",
+          "type": 3,
+          "api": "csp_Duopan",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Netfixtv",
+          "name": "💌┃️至臻┃影视",
+          "type": 3,
+          "api": "csp_Duopan",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "潮流",
+          "name": "🏜┃潮流┃APP",
+          "type": 3,
+          "api": "csp_AppRJ",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "肥猫",
+          "name": "🐼┃肥猫┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "干饭",
+          "name": "🍚┃干饭┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "光盘",
+          "name": "📀┃光盘┃APP",
+          "type": 3,
+          "api": "csp_AppQi",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "行动",
+          "name": "😌┃行动┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "再来",
+          "name": "✌️┃再来┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "一碗",
+          "name": "🥣┃一碗┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "猫抓",
+          "name": "🐱┃猫抓┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "仓鼠",
+          "name": "🐹┃耗子┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "蔬菜",
+          "name": "🫛┃蔬菜┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "黑猫",
+          "name": "🐼┃黑猫┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "兔子",
+          "name": "🐇┃兔子┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "永永",
+          "name": "♾️┃永永┃APP",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "火猫",
+          "name": "😻┃火猫┃APP",
+          "type": 3,
+          "api": "csp_AppNox",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_AppSymx",
+          "name": "🏔┃️木兮┃APP",
+          "type": 3,
+          "api": "csp_Symx",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_AppJg",
+          "name": "🍧┃坚果┃APP",
+          "type": 3,
+          "api": "csp_AppJg",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "3Q",
+          "name": "3️⃣┃3Q┃APP",
+          "type": 3,
+          "api": "csp_App3Q",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Jpys",
+          "name": "🥇️┃金牌┃影视",
+          "type": 3,
+          "api": "csp_Jpys",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Wwys",
+          "name": "🌾️┃农民┃影视",
+          "type": 3,
+          "api": "csp_Wwys",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "荐片",
+          "name": "🎬┃荐片┃影视",
+          "type": 3,
+          "api": "csp_Jianpian",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_SaoHuo",
+          "name": "🔥┃火火┃影视",
+          "type": 3,
+          "api": "csp_SaoHuo",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Gz360",
+          "name": "🍉┃瓜子┃影视",
+          "type": 3,
+          "api": "csp_Gz360",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_LiteApple",
+          "name": "🍎┃苹果┃影视",
+          "type": 3,
+          "api": "csp_LiteApple",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "厂长",
+          "name": "🏭┃厂长┃影视",
+          "type": 3,
+          "api": "csp_Czsapp",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_AppXY",
+          "name": "🎀️┃星牙┃短剧",
+          "type": 3,
+          "api": "https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/XYDJ.py",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "📺┃︎剧王┃短剧",
+          "name": "📺┃剧王┃短剧",
+          "type": 3,
+          "api": "https://git.yylx.win/raw.githubusercontent.com/PizazzGY/NewTVBox/main/movie/py/JWDJ.py",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_SP360",
+          "name": "📺┃360┃官源",
+          "type": 3,
+          "api": "csp_SP360",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Bili",
+          "name": "🅱┃️哔哩┃合集",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Dm84",
+          "name": "🤣┃动漫┃巴士",
+          "type": 3,
+          "api": "csp_Dm84",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "丫丫",
+          "name": "🐷┃丫丫┃动漫",
+          "type": 3,
+          "api": "csp_AppGet",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_FirstAid",
+          "name": "🚑┃急救┃教学",
+          "type": 3,
+          "api": "csp_FirstAid",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "酷狗",
+          "name": "🐾┃酷狗┃音乐",
+          "type": 3,
+          "api": "csp_Kugou",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MTV",
+          "name": "🎧┃明星┃MV",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "看球",
+          "name": "⚾┃看球┃直播",
+          "type": 3,
+          "api": "csp_Kanqiu",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "drpy_js_310直播",
+          "name": "🏀┃体育┃直播",
+          "type": 3,
+          "api": "https://gitlab.com/fantaiying/ext/-/raw/main/drpy2.min.js",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "米搜",
+          "name": "🌖┃米搜┃网盘",
+          "type": 3,
+          "api": "csp_MiSou",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_PanSearch",
+          "name": "🚃┃盘搜┃网盘",
+          "type": 3,
+          "api": "csp_PanSearch",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "儿童",
+          "name": "📚┃儿童┃启蒙",
+          "type": 3,
+          "api": "https://gh-proxy.net/https://raw.githubusercontent.com/fantaiying7/EXT/refs/heads/main/drpy2.min.js",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_少儿",
+          "name": "📚┃少儿┃教育",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_小学",
+          "name": "📚┃小学┃课堂",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_初中",
+          "name": "📚┃初中┃课堂",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_高中",
+          "name": "📚┃高中┃课堂",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "push_agent",
+          "name": "关注公众号：肥猫宝贝",
+          "type": 3,
+          "api": "csp_Push",
+          "searchable": false,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        }
+      ],
+      "unsupported": []
+    },
+    {
+      "name": "王二小",
+      "url": "https://9280.kstore.vip/newwex.json",
+      "spider": "https://nos.netease.com/ysf/657103b89c5c7dda0a68a2517ef92464.jar;md5;a4410b3a6d9eb221f4694bd46873b829",
+      "siteCount": 83,
+      "cmsConvertible": [],
+      "spiderRequired": [
+        {
+          "key": "NewDouBan",
+          "name": "🐮【王二小放牛娃】🐮",
+          "type": 3,
+          "api": "csp_NewDouBanGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Doubana",
+          "name": "🐮【更新日期:20260614】🐮",
+          "type": 3,
+          "api": "csp_NewDouBanGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Doubana",
+          "name": "⬇️【网盘类先扫码】⬇️",
+          "type": 3,
+          "api": "csp_NewDouBanGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Wexconfig",
+          "name": "🐮配置┃中心🐮",
+          "type": 3,
+          "api": "csp_WexConfigGuard",
+          "searchable": false,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "二小",
+          "name": "💓‍指南┃4K💓‍",
+          "type": 3,
+          "api": "csp_NewErXiaoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "玩偶",
+          "name": "💓‍玩偶┃4K💓‍",
+          "type": 3,
+          "api": "csp_NewWoggGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewZhiZhen",
+          "name": "💓至臻┃4K💓",
+          "type": 3,
+          "api": "csp_NewZhiZhenGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewGuanYing",
+          "name": "💓观影┃4K💓",
+          "type": 3,
+          "api": "csp_NewGuanYingGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewJuTou",
+          "name": "💓剧透┃4K💓",
+          "type": 3,
+          "api": "csp_NewJuTouGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewHuBan",
+          "name": "💓虎斑┃4K💓",
+          "type": 3,
+          "api": "csp_NewHuBanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewMuOu",
+          "name": "💓木偶┃4K💓",
+          "type": 3,
+          "api": "csp_NewMuOuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewDuoDuo",
+          "name": "💓多多┃4K💓",
+          "type": 3,
+          "api": "csp_NewDuoDuoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "原盘",
+          "name": "💓‍原盘┃4K💓‍",
+          "type": 3,
+          "api": "csp_New4KZnGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "NewPanMe123",
+          "name": "💓123┃4K💓",
+          "type": 3,
+          "api": "csp_NewPanMe123Guard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "盘他",
+          "name": "💓‍盘他┃4K💓‍",
+          "type": 3,
+          "api": "csp_NewPanTaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexHanXiaoQuan",
+          "name": "💥韩剧┃秒播💥",
+          "type": 3,
+          "api": "csp_WexHanXiaoQuanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexGuaZi",
+          "name": "💥瓜子┃秒播💥",
+          "type": 3,
+          "api": "csp_WexGuaZiGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "賤賤",
+          "name": "💥贱片┃秒播💥",
+          "type": 3,
+          "api": "csp_WexJianPianGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexWenCai",
+          "name": "💥文才┃秒播💥",
+          "type": 3,
+          "api": "csp_WexWenCaiGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexDuBoKu",
+          "name": "💥独播┃秒播💥",
+          "type": 3,
+          "api": "csp_WexDuBoKuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexYueYue",
+          "name": "💥闪电┃秒播💥",
+          "type": 3,
+          "api": "csp_WexYueYueGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexYiYs",
+          "name": "💥伊影┃秒播💥",
+          "type": 3,
+          "api": "csp_WexYiYsGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexReBo",
+          "name": "💥热播┃秒播💥",
+          "type": 3,
+          "api": "csp_WexReBoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexBoBo",
+          "name": "🎇伯伯┃秒播🎇",
+          "type": 3,
+          "api": "csp_WexBoBoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexBtTwo",
+          "name": "🎇鼻涕┃秒播🎇",
+          "type": 3,
+          "api": "csp_WexBtTwoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "新6V",
+          "name": "🎇新6V┃磁力🎇",
+          "type": 3,
+          "api": "csp_WexXb6vGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexIkanBot",
+          "name": "🎇爱看┃采集🎇",
+          "type": 3,
+          "api": "csp_WexIkanBotGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "LiveHuYa",
+          "name": "🐯‍虎牙┃直播🐯‍",
+          "type": 3,
+          "api": "csp_LiveHuYaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "LiveDouYu",
+          "name": "🐳斗鱼┃直播🐳",
+          "type": 3,
+          "api": "csp_LiveDouYuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "LiveBiLi",
+          "name": "🅱️哔哩┃直播🅱️",
+          "type": 3,
+          "api": "csp_LiveBiLiGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "DuanJuHaoKan",
+          "name": "🍉短剧┃好看🍉",
+          "type": 3,
+          "api": "csp_DuanJuHaoKanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "DuanJuQiMiao",
+          "name": "🍉短剧┃小猫🍉",
+          "type": 3,
+          "api": "csp_DuanJuQiMiaoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "DuanJuHeMa",
+          "name": "🍉短剧┃小马🍉",
+          "type": 3,
+          "api": "csp_DuanJuHeMaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "DuanJuXingYa",
+          "name": "🍉短剧┃星星🍉",
+          "type": 3,
+          "api": "csp_DuanJuXingYaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "DuanJuWeiGuan",
+          "name": "🍉短剧┃小薇🍉",
+          "type": 3,
+          "api": "csp_DuanJuWeiGuanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "AnimeMoDu",
+          "name": "🤡魔都┃动漫🤡",
+          "type": 3,
+          "api": "csp_AnimeMoDuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "AnimeAoWuGuard",
+          "name": "🤡嗷呜┃动漫🤡",
+          "type": 3,
+          "api": "csp_AnimeAoWuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "AnimeFanChaGuard",
+          "name": "🤡饭茶┃动漫🤡",
+          "type": 3,
+          "api": "csp_AnimeFanChaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "AnimeMiaoWuGuard",
+          "name": "🤡喵呜┃动漫🤡",
+          "type": 3,
+          "api": "csp_AnimeMiaoWuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "BookShiJie",
+          "name": "🎃‍极品┃听书🎃",
+          "type": 3,
+          "api": "csp_BookShiJieGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "BookYueTing",
+          "name": "🎃‍悦庭┃听书🎃",
+          "type": 3,
+          "api": "csp_BookYueTingGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Book23TingShu",
+          "name": "🎃‍爱上┃听书🎃",
+          "type": 3,
+          "api": "csp_Book23TingShuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "ChildrenDuoDuo",
+          "name": "👼多多┃儿歌👼",
+          "type": 3,
+          "api": "csp_ChildrenDuoDuoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "ChildrenBaoBao",
+          "name": "👼宝宝┃儿歌👼",
+          "type": 3,
+          "api": "csp_ChildrenBaoBaoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "ChildrenBeiWa",
+          "name": "👼贝贝┃儿歌👼",
+          "type": 3,
+          "api": "csp_ChildrenBeiWaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "ChildrenTuTu",
+          "name": "👼兔兔┃儿歌👼",
+          "type": 3,
+          "api": "csp_ChildrenTuTuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "WexTangDou",
+          "name": "💃跳舞┃教学💃",
+          "type": 3,
+          "api": "csp_WexTangDouGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MusicLiYuan",
+          "name": "🎎戏曲┃秒播🎎",
+          "type": 3,
+          "api": "csp_MusicLiYuanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MusicQingTing",
+          "name": "🎼蜻蜓┃电台🎼",
+          "type": 3,
+          "api": "csp_MusicQingTingGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MusicIKtv",
+          "name": "🎼KTV┃音乐🎼",
+          "type": 3,
+          "api": "csp_MusicIKtvGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "Music163",
+          "name": "🎼易听┃音乐🎼",
+          "type": 3,
+          "api": "csp_Music163Guard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MusicKuWo",
+          "name": "🎼酷听┃音乐🎼",
+          "type": 3,
+          "api": "csp_MusicKuWoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MusicLunHui",
+          "name": "🎼轮回┃舞曲🎼",
+          "type": 3,
+          "api": "csp_MusicLunHuiGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "bilibiliys",
+          "name": "🅱‍哔哩┃影视🅱‍",
+          "type": 3,
+          "api": "csp_NewBiLiYSGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "bilibili",
+          "name": "🅱‍哔哩┃合集🅱‍",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "bilixiqu",
+          "name": "🅱‍哔哩┃戏曲🅱‍",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "biliych",
+          "name": "🅱‍哔哩┃歌曲🅱‍",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "少儿教育",
+          "name": "📚少儿┃教育📚",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "小学课堂",
+          "name": "📚小学┃课堂📚",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "初中课堂",
+          "name": "📚初中┃课堂📚",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "高中教育",
+          "name": "📚高中┃课堂📚",
+          "type": 3,
+          "api": "csp_BiliGuard",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SportGuaZi",
+          "name": "🌐瓜子┃体育🌐",
+          "type": 3,
+          "api": "csp_SportGuaZiGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SportKanQiuTong",
+          "name": "🌐球通┃体育🌐",
+          "type": 3,
+          "api": "csp_SportKanQiuTongGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SportKanqiu",
+          "name": "🌐八八┃体育🌐",
+          "type": 3,
+          "api": "csp_SportKanqiuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SportWwe",
+          "name": "🌐WWE┃体育🌐",
+          "type": 3,
+          "api": "csp_SportWweGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "emby",
+          "name": "🀄️emby┃4K🀄️",
+          "type": 3,
+          "api": "csp_EmbyGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "AList",
+          "name": "👁️Alist┃DIY👁️",
+          "type": 3,
+          "api": "csp_AListGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "webdav",
+          "name": "👁️WebDav┃DIY👁️",
+          "type": 3,
+          "api": "csp_WebDAVGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyQuark",
+          "name": "💓我的┃夸克💓‍",
+          "type": 3,
+          "api": "csp_MyQuarkGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyBaiDu",
+          "name": "💓我的┃百度💓‍",
+          "type": 3,
+          "api": "csp_MyBaiDuGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyUcPan",
+          "name": "💓我的┃UC💓‍",
+          "type": 3,
+          "api": "csp_MyUcPanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyGuangYa",
+          "name": "💓我的┃光鸭💓‍",
+          "type": 3,
+          "api": "csp_MyGuangYaGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyPan189",
+          "name": "💓我的┃天翼💓‍",
+          "type": 3,
+          "api": "csp_MyPan189Guard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyPan115",
+          "name": "💓我的┃115💓‍",
+          "type": 3,
+          "api": "csp_MyPan115Guard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MyPan123",
+          "name": "💓我的┃123💓‍",
+          "type": 3,
+          "api": "csp_MyPan123Guard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SoTySo",
+          "name": "🎠给力┃天逸🎠",
+          "type": 3,
+          "api": "csp_SoTySoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SoBaiDuSo",
+          "name": "🎠给力┃百度🎠",
+          "type": 3,
+          "api": "csp_SoBaiDuSoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SoHaiYin",
+          "name": "🎠海音┃综合🎠",
+          "type": 3,
+          "api": "csp_SoHaiYinGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SoTjSo",
+          "name": "🎠太极┃综合🎠",
+          "type": 3,
+          "api": "csp_SoTjSoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SoAiPan",
+          "name": "🎠给力┃综合🎠",
+          "type": 3,
+          "api": "csp_SoAiPanGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "So97So",
+          "name": "🎠九七┃综合🎠",
+          "type": 3,
+          "api": "csp_So97SoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "SoZhaoPanSo",
+          "name": "🎠找盘┃综合🎠",
+          "type": 3,
+          "api": "csp_SoZhaoPanSoGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "push_agent",
+          "name": "推送",
+          "type": 3,
+          "api": "csp_PushGuard",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        }
+      ],
+      "unsupported": []
+    },
+    {
+      "name": "戏曲音乐",
+      "url": "https://12586.kstore.space/666/api.json",
+      "spider": "https://z.qiqiv.cn/666/spider.jar",
+      "siteCount": 9,
+      "cmsConvertible": [],
+      "spiderRequired": [
+        {
+          "key": "本地包下载",
+          "name": "💞本地包｜0610",
+          "type": 3,
+          "api": "csp_Market",
+          "searchable": false,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "戏 曲",
+          "name": "🎈国粹戏曲",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "相声小品",
+          "name": "🏮相声小品",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "潮 汕",
+          "name": "🥨潮汕",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "演唱会",
+          "name": "🎸演唱会",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "MTV",
+          "name": "🎧明星┃MV",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "哔哩哔哩",
+          "name": "🅱️哔哩大全",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "csp_Bili短剧",
+          "name": "🅱️哔哩短剧",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": false,
+          "quickSearch": false,
+          "reason": "catvod_runtime_required"
+        },
+        {
+          "key": "影视解说",
+          "name": "🎬影视解说",
+          "type": 3,
+          "api": "csp_Bili",
+          "searchable": true,
+          "quickSearch": true,
+          "reason": "catvod_runtime_required"
+        }
+      ],
+      "unsupported": []
+    }
+  ]
+}

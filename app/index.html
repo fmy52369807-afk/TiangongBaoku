@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>天工宝库</title>
-<link rel="stylesheet" href="/css/app.css?v=20260612-audio2">
+<link rel="stylesheet" href="/css/app.css?v=20260614-close-reader1">
 
 </head>
 <body>
@@ -53,12 +53,14 @@
         </select>
         <button class="btn primary" id="searchButton" type="submit">搜索</button>
       </form>
+      <button class="btn playlist-entry" id="playlistButton" type="button" title="打开歌单">歌单</button>
+      <button class="btn back-home" id="backHomeButton" type="button">返回搜索</button>
       <button class="btn icon" id="themeButton" title="切换主题">◐</button>
     </header>
 
     <div class="filters">
       <div class="seg" id="modeTabs">
-        <button class="active" data-mode="books" type="button">搜索</button>
+        <button data-mode="books" type="button">搜索</button>
         <button data-mode="sources" type="button">搜源</button>
         <button data-mode="history" type="button">历史</button>
         <button data-mode="favorites" type="button">收藏</button>
@@ -93,10 +95,25 @@
 <div class="toast" id="toast"></div>
 
 <script src="/js/api-client.js"></script>
+<script src="/js/category-meta.js?v=20260613-arch1"></script>
+<script src="/js/status-meta.js?v=20260613-ui1"></script>
+<script src="/js/ui-storage.js?v=20260613-ui1"></script>
+<script src="/js/app-state.js?v=20260614-workbench1"></script>
 <script src="/vendor/hls.min.js"></script>
 <script src="/js/payload-renderers.js?v=20260612-audio2"></script>
-<script src="/js/audio-player.js?v=20260612-audio2"></script>
-<script src="/js/main.js?v=20260612-audio2"></script>
+<script src="/js/layout-ui.js?v=20260614-close-reader1"></script>
+<script src="/js/source-filters.js?v=20260613-split2"></script>
+<script src="/js/user-library.js?v=20260613-split2"></script>
+<script src="/js/app-shell.js?v=20260614-workbench1"></script>
+<script src="/js/results-panel.js?v=20260614-workbench1"></script>
+<script src="/js/reader-modes.js?v=20260614-reader-scope1"></script>
+<script src="/js/reader-panel.js?v=20260614-close-reader1"></script>
+<script src="/js/book-actions.js?v=20260613-split2"></script>
+<script src="/js/audio-player.js?v=20260614-audio-playlist1"></script>
+<script src="/js/reader-actions.js?v=20260614-close-reader1"></script>
+<script src="/js/app-events.js?v=20260614-close-reader1"></script>
+<script src="/js/main.js?v=20260613-visual3"></script>
+<script src="/js/app-bootstrap.js?v=20260614-workbench2"></script>
 
 </body>
 </html>

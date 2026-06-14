@@ -3,10 +3,10 @@
  */
 const http = require('http');
 const https = require('https');
-const net = require('net');
 const zlib = require('zlib');
 const { URL } = require('url');
 const config = require('../config');
+const { assertPublicNetworkHost } = require('../net-policy');
 
 /**
  * Fetch a URL and return the response body as string.
@@ -65,6 +65,14 @@ function _doFetch(urlStr, opts, redirectCount, resolve, reject) {
         return reject(new Error(validationError));
     }
 
+    assertPublicNetworkHost(parsedUrl.hostname, {
+        allowPrivateNetworkFetch: config.allowPrivateNetworkFetch,
+    }).then(() => {
+        requestUrl(parsedUrl, urlStr, opts, redirectCount, resolve, reject);
+    }).catch(reject);
+}
+
+function requestUrl(parsedUrl, urlStr, opts, redirectCount, resolve, reject) {
     const client = parsedUrl.protocol === 'https:' ? https : http;
 
     const reqOptions = {
@@ -163,48 +171,7 @@ function validateFetchUrl(parsedUrl) {
         return 'Only HTTP and HTTPS URLs are allowed';
     }
 
-    if (config.allowPrivateNetworkFetch) return null;
-
-    const hostname = parsedUrl.hostname.toLowerCase();
-    if (hostname === 'localhost' || hostname.endsWith('.localhost')) {
-        return 'Private network URLs are not allowed';
-    }
-
-    const ipType = net.isIP(hostname);
-    if (ipType === 4 && isPrivateIpv4(hostname)) {
-        return 'Private network URLs are not allowed';
-    }
-    if (ipType === 6 && isPrivateIpv6(hostname)) {
-        return 'Private network URLs are not allowed';
-    }
-
     return null;
-}
-
-function isPrivateIpv4(ip) {
-    const parts = ip.split('.').map(Number);
-    const [a, b] = parts;
-
-    return (
-        a === 0 ||
-        a === 10 ||
-        a === 127 ||
-        (a === 169 && b === 254) ||
-        (a === 172 && b >= 16 && b <= 31) ||
-        (a === 192 && b === 168) ||
-        a >= 224
-    );
-}
-
-function isPrivateIpv6(ip) {
-    const normalized = ip.toLowerCase();
-    return (
-        normalized === '::1' ||
-        normalized === '::' ||
-        normalized.startsWith('fc') ||
-        normalized.startsWith('fd') ||
-        normalized.startsWith('fe80:')
-    );
 }
 
 let _iconv = null;

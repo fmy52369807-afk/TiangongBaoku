@@ -16,11 +16,13 @@ function normalizeAudioTrack(track = {}) {
   const mediaUrl = String(track.mediaUrl || '').trim();
   return {
     mediaUrl,
+    originalUrl: track.originalUrl || mediaUrl,
     title: track.title || '音频节目',
     album: track.album || (track.kind === 'music' ? '音乐' : '听书'),
     cover: track.cover || '',
     links: track.links && track.links.length ? track.links : (mediaUrl ? [mediaUrl] : []),
     kind: track.kind || 'audio',
+    hls: Boolean(track.hls) || /\.m3u8(?:[?#].*)?$/i.test(mediaUrl),
   };
 }
 
@@ -65,6 +67,37 @@ function clearAudioPlaylist() {
   toast('歌单已清空');
 }
 
+function getPlayablePlaylistIndex(preferredIndex = 0) {
+  const playlist = state.audioPlaylist || [];
+  if (!playlist.length) return -1;
+  const currentIndex = findAudioTrackIndex(normalizeAudioTrack(state.audioPlayer));
+  if (currentIndex >= 0) return currentIndex;
+  return Math.min(Math.max(preferredIndex, 0), playlist.length - 1);
+}
+
+function openAudioPlaylist() {
+  if (!(state.audioPlaylist || []).length) {
+    toast('歌单为空，先在音频详情里加入歌单');
+    return;
+  }
+  const index = getPlayablePlaylistIndex(0);
+  state.audioPlayer = normalizeAudioTrack(state.audioPlaylist[index]);
+  updateMediaSession(state.audioPlayer);
+  renderAudioFloat();
+  els.audioFloat.classList.add('show');
+  els.audioFloat.classList.add('audio-playlist-opened');
+  if (!els.audioFloat.classList.contains('audio-fullscreen')) restoreAudioFloatPosition();
+}
+
+function playAudioPlaylist() {
+  const index = getPlayablePlaylistIndex(0);
+  if (index < 0) {
+    toast('歌单为空，先加入音频');
+    return;
+  }
+  playAudioTrack(index);
+}
+
 function playAudioTrack(index) {
   const track = state.audioPlaylist[index];
   if (!track) return;
@@ -104,6 +137,7 @@ function renderAudioFloat(preservePlayback = false) {
   const full = els.audioFloat.classList.contains('audio-fullscreen');
   els.audioFloat.innerHTML = `
     <div class="audio-float-shell">
+      <div class="audio-aura" aria-hidden="true"></div>
       <div class="audio-float-head" data-audio-drag-handle="1">
         <div class="audio-float-title">
           <span>${esc(kind)} · 后台播放</span>
@@ -126,7 +160,7 @@ function renderAudioFloat(preservePlayback = false) {
             <strong>${esc(player.title)}</strong>
             <em>${esc(player.album || kind)}</em>
           </div>
-          <audio class="audio-float-control" controls autoplay src="${esc(player.mediaUrl)}" onplay="this.closest('.audio-float-shell')?.classList.add('is-playing')" onpause="this.closest('.audio-float-shell')?.classList.remove('is-playing')" onended="playNextAudioTrack()"></audio>
+          <audio class="audio-float-control" controls autoplay ${player.hls ? `data-hls-src="${esc(player.mediaUrl)}"` : `src="${esc(player.mediaUrl)}"`} onplay="this.closest('.audio-float-shell')?.classList.add('is-playing')" onpause="this.closest('.audio-float-shell')?.classList.remove('is-playing')" onended="playNextAudioTrack()"></audio>
           <div class="audio-float-actions">
             ${renderResourceActions(player.links || [player.mediaUrl], '音频')}
           </div>
@@ -134,7 +168,10 @@ function renderAudioFloat(preservePlayback = false) {
         <aside class="audio-playlist">
           <div class="audio-playlist-head">
             <strong>歌单</strong>
-            <button class="btn ghost" data-audio-action="clear-playlist" type="button" ${playlist.length ? '' : 'disabled'}>清空</button>
+            <div class="audio-playlist-tools">
+              <button class="btn ghost" data-audio-action="play-playlist" type="button" ${playlist.length ? '' : 'disabled'}>播放歌单</button>
+              <button class="btn ghost" data-audio-action="clear-playlist" type="button" ${playlist.length ? '' : 'disabled'}>清空</button>
+            </div>
           </div>
           <div class="audio-playlist-list">
             ${playlist.length ? playlist.map((item, index) => `
@@ -152,6 +189,7 @@ function renderAudioFloat(preservePlayback = false) {
     </div>
   `;
   mountAudioDragHandle();
+  if (typeof mountHlsPlayers === 'function') mountHlsPlayers(els.audioFloat);
   const nextAudio = els.audioFloat.querySelector('audio');
   if (nextAudio && previousSrc && previousSrc === nextAudio.src) {
     nextAudio.currentTime = previousTime;
@@ -239,6 +277,6 @@ function updateMediaSession(player) {
 function closeAudioPlayer() {
   const audio = els.audioFloat.querySelector('audio');
   if (audio) audio.pause();
-  els.audioFloat.classList.remove('show', 'audio-fullscreen', 'dragging');
+  els.audioFloat.classList.remove('show', 'audio-fullscreen', 'dragging', 'audio-playlist-opened');
   els.audioFloat.innerHTML = '';
 }

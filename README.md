@@ -19,21 +19,33 @@ npm start
 ├── app/                             # 📱 前端 SPA (三栏布局)
 │   ├── index.html                   #   主页面 (浅色/深色主题)
 │   ├── css/
-│   │   ├── app.css                  #   应用样式
-│   │   └── style.css                #   通用样式
+│   │   └── app.css                  #   应用样式
 │   ├── js/
-│   │   ├── main.js                  #   主入口 & 全局状态
-│   │   ├── app.js                   #   路由 & 搜索逻辑
 │   │   ├── api-client.js            #   API 调用封装
-│   │   ├── api.js                   #   旧版 API 兼容
-│   │   ├── auth.js                  #   登录/注册
-│   │   ├── reader.js                #   阅读器 (详情/目录/正文)
+│   │   ├── category-meta.js         #   分类展示配置 (由 shared/categories.json 生成)
+│   │   ├── status-meta.js           #   状态展示配置
+│   │   ├── ui-storage.js            #   UI 偏好本地存储
+│   │   ├── app-state.js             #   全局状态
+│   │   ├── app-shell.js             #   应用外壳与导航
+│   │   ├── layout-ui.js             #   布局渲染
+│   │   ├── source-filters.js        #   源筛选
+│   │   ├── user-library.js          #   最近阅读与收藏
+│   │   ├── results-panel.js         #   搜索结果与详情面板
+│   │   ├── reader-modes.js          #   滑动/翻页阅读模式
+│   │   ├── reader-panel.js          #   阅读器面板
+│   │   ├── book-actions.js          #   书籍详情与收藏动作
+│   │   ├── reader-actions.js        #   目录与章节动作
+│   │   ├── app-events.js            #   页面事件绑定
+│   │   ├── app-bootstrap.js         #   启动流程
 │   │   ├── payload-renderers.js     #   多媒体渲染器
 │   │   ├── audio-player.js          #   音频播放器
-│   │   ├── storage.js               #   本地收藏管理
+│   │   ├── main.js                  #   兼容入口占位
 │   │   └── data.js                  #   源数据包 (构建生成)
 │   └── vendor/
 │       └── hls.min.js               #   HLS 视频支持
+│
+├── shared/
+│   └── categories.json              #   前后端共享分类展示配置
 │
 ├── server/                          # 🖥️ Express 后端
 │   ├── index.js                     #   服务入口
@@ -52,8 +64,8 @@ npm start
 │   └── routes/
 │       ├── auth.js                  #   注册 / 登录 / 用户信息
 │       ├── sources.js               #   源浏览 / 分类
-│       ├── search.js                #   跨源搜索 (并行)
-│       ├── content.js               #   内容路由 (搜索/详情/目录/正文)
+│       ├── search.js                #   旧版跨源搜索 (有界并发)
+│       ├── content.js               #   内容路由 (搜索/详情/目录/正文，有界并发)
 │       ├── reader.js                #   旧版阅读器路由
 │       ├── music.js                 #   音乐搜索 / 播放 / 酷我 / 网易云
 │       ├── favorites.js             #   收藏管理
@@ -71,6 +83,7 @@ npm start
 │
 ├── scripts/                         # 🛠️ 运维工具
 │   ├── build.js                     #   构建前端数据包
+│   ├── build_category_meta.js       #   生成前端分类配置脚本
 │   ├── split_sources.js             #   拆分源文件
 │   ├── audit_all_sources.js         #   批量审计源可用性
 │   ├── audit_runtime_api.js         #   运行时 API 审计
@@ -185,6 +198,15 @@ npm run build
 # 审计所有源
 node ../scripts/audit_all_sources.js
 ```
+
+常用环境变量：
+
+| 变量 | 默认值 | 说明 |
+|------|--------|------|
+| `PORT` | `3456` | 服务端口 |
+| `DB_PATH` | `server/data/yuedu.db` | SQLite 数据库路径 |
+| `REQUEST_TIMEOUT_MS` | `15000` | 上游请求超时 |
+| `SEARCH_CONCURRENCY` | `8` | 跨源搜索最大并发数 |
 
 ## 许可
 

@@ -27,11 +27,16 @@ function renderComicImage(url, referer, title, index = 0) {
 
 function renderAudioPayload(payload, urls) {
   const mediaUrl = cleanMediaUrls([payload.mediaUrl, ...urls], 'audio')[0];
+  const hls = isHlsVideoUrl(mediaUrl);
+  const playUrl = hls ? proxyHlsUrl(mediaUrl, payload.entryUrl || mediaUrl) : mediaUrl;
   const title = payload.title || payload.name || state.currentBook?.toc?.[state.currentChapterIndex]?.name || state.currentBook?.info?.name || '音频节目';
   const album = state.currentBook?.info?.name || state.currentBook?.item?.name || '听书';
   const cover = state.currentBook?.info?.coverUrl || state.currentBook?.item?.coverUrl || '';
   const links = urls.length ? urls : (mediaUrl ? [mediaUrl] : []);
-  state.audioPlayer = { mediaUrl, title, album, cover, links, kind: state.currentBook?.item?.category || 'audio' };
+  const validationMessage = !mediaUrl && payload.validation?.ok === false
+    ? (payload.validation.message || payload.validation.reason || 'missing_audio_url')
+    : '';
+  state.audioPlayer = { mediaUrl: playUrl, originalUrl: mediaUrl, title, album, cover, links, kind: state.currentBook?.item?.category || 'audio', hls };
   return `
     <section class="audio-card">
       ${cover ? `<img class="audio-art" src="${esc(cover)}" alt="${esc(album || title)}" onerror="this.replaceWith(audioCoverFallback())">` : '<div class="audio-art placeholder">听</div>'}
@@ -41,7 +46,7 @@ function renderAudioPayload(payload, urls) {
         <p>${esc(album)}</p>
       </div>
       <div class="audio-actions">
-        ${mediaUrl ? `<button class="btn primary" data-action="open-audio-player" type="button">打开播放浮窗</button><button class="btn" data-action="add-current-audio-to-playlist" type="button">加入歌单</button>` : '<div class="empty compact">没有解析到可播放音频</div>'}
+        ${mediaUrl ? `<button class="btn primary" data-action="open-audio-player" type="button">打开播放浮窗</button><button class="btn" data-action="add-current-audio-to-playlist" type="button">加入歌单</button>` : `<div class="empty compact">${esc(validationMessage || '没有解析到可播放音频')}</div>`}
         ${renderResourceActions(links, '音频')}
       </div>
     </section>
@@ -152,7 +157,7 @@ function cleanMediaUrls(urls, type) {
   return list.filter(url => {
     if (!/^https?:\/\//i.test(url)) return false;
     if (type === 'images') return /\.(jpg|jpeg|png|webp|gif|avif)(\?|$)/i.test(url);
-    if (type === 'audio') return /\.(mp3|m4a|aac|flac|wav|ogg)(\?|$)/i.test(url) || /(audio|music|stream|media|cdn|oss|cos)/i.test(url);
+    if (type === 'audio') return /\.(mp3|m4a|aac|flac|wav|ogg|m3u8)(?:[?#]|$)/i.test(url) || /(audio|music|stream|media|cdn|oss|cos|sound|hls)/i.test(url);
     if (type === 'video') return isDirectVideoUrl(url) || isVideoPageUrl(url);
     return !/(search|detail|rank|comment|module|novel|api\/|\/api)/i.test(url);
   });
@@ -186,26 +191,26 @@ function proxyHlsUrl(url, referer = '') {
 }
 
 function mountHlsPlayers(root = document) {
-  const videos = root.querySelectorAll('video[data-hls-src]');
-  videos.forEach(video => {
-    const src = video.dataset.hlsSrc;
-    if (!src || video.dataset.hlsMounted === '1') return;
-    video.dataset.hlsMounted = '1';
-    if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = src;
+  const medias = root.querySelectorAll('video[data-hls-src], audio[data-hls-src]');
+  medias.forEach(media => {
+    const src = media.dataset.hlsSrc;
+    if (!src || media.dataset.hlsMounted === '1') return;
+    media.dataset.hlsMounted = '1';
+    if (media.canPlayType('application/vnd.apple.mpegurl')) {
+      media.src = src;
       return;
     }
     if (window.Hls && window.Hls.isSupported()) {
       const hls = new window.Hls({ enableWorker: true, lowLatencyMode: false });
       hls.loadSource(src);
-      hls.attachMedia(video);
-      video._hls = hls;
+      hls.attachMedia(media);
+      media._hls = hls;
       hls.on(window.Hls.Events.ERROR, (_, data) => {
         if (!data || !data.fatal) return;
         const error = document.createElement('div');
         error.className = 'error';
-        error.textContent = '视频播放失败：' + (data.details || data.type || 'hls_error');
-        video.insertAdjacentElement('afterend', error);
+        error.textContent = 'HLS 播放失败：' + (data.details || data.type || 'hls_error');
+        media.insertAdjacentElement('afterend', error);
         hls.destroy();
       });
       return;
@@ -213,7 +218,7 @@ function mountHlsPlayers(root = document) {
     const error = document.createElement('div');
     error.className = 'error';
     error.textContent = '当前浏览器缺少 HLS 播放支持';
-    video.insertAdjacentElement('afterend', error);
+    media.insertAdjacentElement('afterend', error);
   });
 }
 

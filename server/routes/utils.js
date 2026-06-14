@@ -129,6 +129,8 @@ function isBadValue(value, rule) {
     if (!val) return true;
     if (rule && val === String(rule).trim()) return true;
     if (val.startsWith('[JS_RULE]')) return true;
+    if (/^\[object\s+Object\]$/i.test(val)) return true;
+    if (/^(undefined|null|NaN)$/i.test(val)) return true;
     if (val.includes('{{') || val.includes('}}') || val.includes('{$')) return true;
     if (val.includes('@content') || val.includes('@text')) return true;
     if (/^<!doctype|^<html/i.test(val) && val.length > 5000) return true;
@@ -220,6 +222,18 @@ function syncVariables(context) {
     return {};
 }
 
+async function mapWithConcurrency(items, limit, mapper) {
+    const concurrency = Math.max(1, Math.min(Number(limit) || 1, items.length || 1));
+    let nextIndex = 0;
+    const workers = Array.from({ length: concurrency }, async () => {
+        while (nextIndex < items.length) {
+            const index = nextIndex++;
+            await mapper(items[index], index);
+        }
+    });
+    await Promise.all(workers);
+}
+
 function extractMeta(html, name) {
     const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const patterns = [
@@ -263,6 +277,7 @@ module.exports = {
     stringifyForRaw,
     valueFromContext,
     syncVariables,
+    mapWithConcurrency,
     extractMeta,
     extractTitle,
 };

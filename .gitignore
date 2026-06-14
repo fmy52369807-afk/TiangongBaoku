@@ -3,10 +3,23 @@ node_modules/
 server/node_modules/
 
 # Local database files
+data/*.db
+data/*.db-*
+data/*.sqlite
+data/*.sqlite-*
 server/data/*.db
 server/data/*.db-*
 server/data/*.sqlite
 server/data/*.sqlite-*
+data/tmp-*.log
+
+# Generated reports and local route backups
+docs/source_check_report.json
+*.bak
+*.bak[0-9]*
+.npm-cache/
+.playwright-cli/
+output/
 
 # Logs
 *.log

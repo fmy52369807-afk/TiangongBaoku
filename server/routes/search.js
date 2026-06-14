@@ -2,8 +2,6 @@
  * Search routes — cross-source search via proxying source websites
  */
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
 const config = require('../config');
 const {
     buildUrl,
@@ -14,6 +12,8 @@ const {
     runRule,
     runRuleList,
 } = require('../engine/legadoEngine');
+const { mapWithConcurrency } = require('./utils');
+const { loadIndex, loadSource } = require('./content-helpers');
 
 const router = express.Router();
 
@@ -30,15 +30,6 @@ function isFailedExtraction(val, rule) {
 function cleanExtracted(val, rule) {
     if (isFailedExtraction(val, rule)) return '';
     return val || '';
-}
-
-function loadIndex() {
-    const indexPath = path.join(config.sourcesPath, 'index.json');
-    return JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
-}
-function loadSourceFile(filePath) {
-    const fullPath = path.join(config.sourcesPath, filePath);
-    return JSON.parse(fs.readFileSync(fullPath, 'utf-8'));
 }
 
 // POST /api/search
@@ -76,11 +67,10 @@ router.post('/', async (req, res) => {
         const errors = [];
         const results = [];
 
-        // Run all searches in parallel for speed
-        const searchPromises = targets.map(entry => (async () => {
+        await mapWithConcurrency(targets, config.searchConcurrency, async (entry) => {
             try {
-                const fileData = loadSourceFile(entry.file);
-                const source = fileData[entry.index];
+                const loaded = loadSource(entry.id);
+                const source = loaded && loaded.source;
                 if (!source || !source.searchUrl) return;
 
                 const context = createContext(source, {
@@ -158,9 +148,7 @@ router.post('/', async (req, res) => {
             } catch (err) {
                 errors.push({ sourceId: entry.id, name: entry.name, error: err.message });
             }
-        })());
-
-        await Promise.all(searchPromises);
+        });
 
         // Limit total results
         let remaining = maxResults;

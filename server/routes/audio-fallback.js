@@ -34,6 +34,32 @@ function isMiguSource(source) {
     return /app\.u\.nf\.migu\.cn|migu\.cn|MORIN/i.test(`${source?.bookSourceUrl || ''} ${source?.searchUrl || ''} ${source?.jsLib || ''}`);
 }
 
+function miguRestrictionMessage(raw) {
+    const parsed = tryJson(raw);
+    if (!parsed || typeof parsed !== 'object') return '';
+    return cleanText(
+        parsed?.data?.dialogInfo?.text
+        || parsed?.data?.auditionsTooltips
+        || parsed?.data?.cannotMessage
+        || parsed?.message
+        || parsed?.info
+        || ''
+    );
+}
+
+async function fetchMiguRestrictionMessage(entryUrl) {
+    const url = normalizeMiguListenUrl(entryUrl);
+    if (!url) return '';
+    try {
+        const raw = await fetchUrl(url, {
+            headers: miguListenHeaders(),
+        }, config.requestTimeout);
+        return miguRestrictionMessage(raw);
+    } catch {
+        return '';
+    }
+}
+
 // --- Audio TOC URL repair ---
 
 function repairAudioTocUrl(tocUrl, itemUrl) {
@@ -247,20 +273,29 @@ function fallbackAudioItemUrl(source, item, baseUrl) {
 // --- Platform-specific audio fetchers ---
 
 async function fetchMiguAudioUrl(entryUrl) {
-    const url = String(entryUrl || '').split(',{')[0].trim();
-    if (!/^https?:\/\/app\.u\.nf\.migu\.cn\//i.test(url)) return '';
+    const url = normalizeMiguListenUrl(entryUrl);
+    if (!url) return '';
     try {
         const raw = await fetchUrl(url, {
-            headers: {
-                'User-Agent': 'stagefright/1.2 (Linux;Android 15)',
-                channel: '014000D',
-            },
+            headers: miguListenHeaders(),
         }, config.requestTimeout);
         const parsed = tryJson(raw);
         return parsed?.data?.url || parsed?.url || '';
     } catch {
         return '';
     }
+}
+
+function normalizeMiguListenUrl(entryUrl) {
+    const url = String(entryUrl || '').split(',{')[0].trim();
+    return /^https?:\/\/app\.u\.nf\.migu\.cn\//i.test(url) ? url : '';
+}
+
+function miguListenHeaders() {
+    return {
+        'User-Agent': 'stagefright/1.2 (Linux;Android 15)',
+        channel: '014000D',
+    };
 }
 
 async function fetchFiveSingAudioUrl(entryUrl) {
@@ -317,4 +352,6 @@ module.exports = {
     fallbackAudioItemUrl,
     fetchMiguAudioUrl,
     fetchFiveSingAudioUrl,
+    miguRestrictionMessage,
+    fetchMiguRestrictionMessage,
 };

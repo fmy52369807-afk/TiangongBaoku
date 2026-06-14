@@ -29,6 +29,7 @@ const {
     decodeSession,
     stringifyForRaw,
     syncVariables,
+    mapWithConcurrency,
 } = require('./utils');
 
 const {
@@ -54,12 +55,19 @@ const {
 } = require('./video-fallback');
 
 const {
+    isMiguSource,
+    miguRestrictionMessage,
+    fetchMiguRestrictionMessage,
+} = require('./audio-fallback');
+
+const {
     loadIndex,
     loadSource,
     fetchEntriesPage,
     fetchDetail,
     searchSource,
     fetchAllEntries,
+    fetchPayloadContent,
     resolvePayloadContent,
 } = require('./content-helpers');
 
@@ -94,7 +102,7 @@ router.post('/search', async (req, res) => {
         const results = [];
         const errors = [];
         const sourceReports = [];
-        await Promise.all(targets.map(async (entry, index) => {
+        await mapWithConcurrency(targets, config.searchConcurrency, async (entry, index) => {
             const report = { index, sourceId: entry.id, name: entry.name, category: entry.category, status: 'pending', count: 0, error: '' };
             sourceReports.push(report);
             try {
@@ -115,7 +123,7 @@ router.post('/search', async (req, res) => {
                 report.error = err.message;
                 errors.push({ sourceId: entry.id, name: entry.name, error: err.message });
             }
-        }));
+        });
 
         const limited = results.map(group => ({ ...group, count: group.items.length }));
         const nextSourceOffset = pageStart + sourceLimit;
@@ -247,7 +255,8 @@ router.all('/payload', async (req, res) => {
         let raw = '';
         let content = '';
         const directVideoUrl = entry.category === 'video' && /\.(?:mp4|m3u8|webm|mov)(?:[?#].*)?$/i.test(decodedUrl);
-        if (rule.content && !directVideoUrl) {
+        const directAudioUrl = isAudioLikeCategory(entry.category) && /\.(?:mp3|m4a|aac|flac|wav|ogg|m3u8)(?:[?#].*)?$/i.test(decodedUrl);
+        if (rule.content && !directVideoUrl && !directAudioUrl) {
             const maxPages = Math.min(Math.max(numericRequestParam(req, 'maxPages', 8) || 8, 1), 40);
             const fetched = await fetchPayloadContent(source, rule, decodedUrl, context, maxPages);
             raw = fetched.raw;
@@ -255,7 +264,7 @@ router.all('/payload', async (req, res) => {
             context.fetchedContentPages = fetched.fetchedContentPages;
             context.nextContentUrls = fetched.nextContentUrls;
         }
-        if (directVideoUrl) content = decodedUrl;
+        if (directVideoUrl || directAudioUrl) content = decodedUrl;
         const resolved = await resolvePayloadContent(entry, source, adapter, decodedUrl, rule, sessionData, context, raw, content);
         content = resolved.content;
         const mode = resolved.mode;
@@ -273,13 +282,17 @@ router.all('/payload', async (req, res) => {
             urls: (entry.category === 'game' || entry.category === 'special') && /^https?:\/\//i.test(decodedUrl)
                 ? unique([...urls, decodedUrl])
                 : urls,
-            mediaUrl: urls.find(url => /\.(mp3|m4a|aac|flac|wav|ogg|mp4|m3u8)(\?|$)/i.test(url)) || (/^https?:\/\//i.test(String(content).trim()) ? String(content).trim() : ''),
+            mediaUrl: urls.find(url => /\.(mp3|m4a|aac|flac|wav|ogg|mp4|m3u8)(?:[?#]|$)/i.test(url)) || (/^https?:\/\//i.test(String(content).trim()) ? String(content).trim() : ''),
             rawLength: raw.length,
             fetchedContentPages: context.fetchedContentPages || 0,
             nextContentUrls: context.nextContentUrls || [],
             session: encodeSession({ variables: syncVariables(context), rawContext: sessionData.rawContext || null }),
         });
         response.validation = adapter.validatePayload(response);
+        if (isAudioLikeCategory(entry.category) && response.validation?.ok === false && isMiguSource(source)) {
+            const message = miguRestrictionMessage(raw) || await fetchMiguRestrictionMessage(decodedUrl);
+            if (message) response.validation = { ok: false, reason: 'migu_restricted', message };
+        }
         if (entry.category === 'video' && response.mediaUrl && /\.(?:m3u8|mp4|webm|mov)(?:[?#].*)?$/i.test(response.mediaUrl)) {
             const mediaProbe = await probeDirectMediaUrl(response.mediaUrl, {
                 ...parseSourceHeader(source.header),

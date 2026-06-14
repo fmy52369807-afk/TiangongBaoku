@@ -2,36 +2,30 @@
  * HTTP proxy and media helper functions for content routes.
  */
 
-const net = require('net');
 const http = require('http');
 const https = require('https');
 const config = require('../config');
+const { isBlockedNetworkHost, assertPublicNetworkHost } = require('../net-policy');
 
-function isBlockedProxyHost(hostname) {
-    const host = String(hostname || '').toLowerCase();
-    if (host === 'localhost' || host.endsWith('.localhost')) return true;
-    const ipType = net.isIP(host);
-    if (ipType === 4) {
-        const [a, b] = host.split('.').map(Number);
-        return a === 0 || a === 10 || a === 127 || (a === 169 && b === 254) || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || a >= 224;
-    }
-    if (ipType === 6) {
-        return host === '::1' || host === '::' || host.startsWith('fc') || host.startsWith('fd') || host.startsWith('fe80:');
-    }
-    return false;
+const isBlockedProxyHost = isBlockedNetworkHost;
+
+async function assertPublicProxyTarget(hostname) {
+    await assertPublicNetworkHost(hostname, {
+        allowPrivateNetworkFetch: config.allowPrivateNetworkFetch,
+    });
 }
 
-function fetchBinary(url, headers = {}, timeout = 15000, redirects = 0) {
+async function fetchBinary(url, headers = {}, timeout = 15000, redirects = 0) {
+    if (redirects > 5) throw new Error('Too many redirects');
+    let parsed;
+    try {
+        parsed = new URL(url);
+    } catch {
+        throw new Error('Invalid URL');
+    }
+    if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error('Only HTTP/HTTPS URLs are allowed');
+    await assertPublicProxyTarget(parsed.hostname);
     return new Promise((resolve, reject) => {
-        if (redirects > 5) return reject(new Error('Too many redirects'));
-        let parsed;
-        try {
-            parsed = new URL(url);
-        } catch {
-            return reject(new Error('Invalid URL'));
-        }
-        if (!['http:', 'https:'].includes(parsed.protocol)) return reject(new Error('Only HTTP/HTTPS URLs are allowed'));
-        if (!config.allowPrivateNetworkFetch && isBlockedProxyHost(parsed.hostname)) return reject(new Error('Private network URLs are not allowed'));
         const client = parsed.protocol === 'https:' ? https : http;
         const req = client.request({
             hostname: parsed.hostname,
@@ -146,6 +140,7 @@ function contentTypeFromMediaUrl(url, fallback = '') {
 
 module.exports = {
     isBlockedProxyHost,
+    assertPublicProxyTarget,
     fetchBinary,
     probeDirectMediaUrl,
     contentTypeFromUrl,

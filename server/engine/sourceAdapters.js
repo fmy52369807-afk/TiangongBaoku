@@ -213,7 +213,9 @@ function isImageUrl(url) {
 }
 
 function isPlayableAudioUrl(url) {
-    return /\.(mp3|m4a|aac|flac|wav|ogg)(\?|$)/i.test(String(url || ''));
+    const text = String(url || '');
+    return /\.(mp3|m4a|aac|flac|wav|ogg|m3u8)(?:[?#]|$)/i.test(text)
+        || /\/hls(?:\.m3u8)?(?:[?#]|$)/i.test(text);
 }
 
 function isPlayableVideoUrl(url) {

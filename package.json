@@ -1,0 +1,24 @@
+{
+  "name": "yuedu",
+  "version": "1.0.0",
+  "description": "一站式阅读、漫画、音乐、影视内容聚合引擎。基于 Legado 书源格式，提供跨源搜索、在线阅读、多媒体播放的全栈 Web 应用。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fmy52369807-afk/TiangongBaoku.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/fmy52369807-afk/TiangongBaoku/issues"
+  },
+  "homepage": "https://github.com/fmy52369807-afk/TiangongBaoku#readme"
+}

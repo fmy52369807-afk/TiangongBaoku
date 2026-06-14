@@ -10,17 +10,7 @@ const path = require('path');
 
 const SOURCES_DIR = path.join(__dirname, '..', 'sources');
 const OUTPUT_FILE = path.join(__dirname, '..', 'app', 'js', 'data.js');
-
-// Category display config
-const CATEGORY_CONFIG = {
-    novel:  { icon: '📖', label: '小说',   order: 1 },
-    comic:  { icon: '🎨', label: '漫画',   order: 2 },
-    audio:  { icon: '🎧', label: '听书',   order: 3 },
-    music:  { icon: '🎵', label: '音乐',   order: 4 },
-    video:  { icon: '🎬', label: '影视',   order: 5 },
-    game:   { icon: '🎮', label: '游戏',   order: 6 },
-    special:{ icon: '🔧', label: '工具',   order: 7 },
-};
+const CATEGORY_CONFIG = require('../shared/categories.json');
 
 console.log('🔨 Building app data...');
 
@@ -37,6 +27,7 @@ console.log(`  Index: ${index.length} entries`);
 // Build category summary
 const categorySummary = {};
 for (const [key, config] of Object.entries(CATEGORY_CONFIG)) {
+    if (key === 'all' || key === 'other') continue;
     const entries = index.filter(e => e.category === key);
     categorySummary[key] = {
         key: key,
