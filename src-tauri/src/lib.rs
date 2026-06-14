@@ -29,6 +29,11 @@ fn wait_for_server(port: u16, timeout: Duration) -> bool {
     false
 }
 
+fn bundled_node(root: &std::path::Path) -> Option<PathBuf> {
+    let candidate = root.join("runtime").join("node").join("node.exe");
+    candidate.exists().then_some(candidate)
+}
+
 fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
     if TcpStream::connect(("127.0.0.1", 3456)).is_ok() {
         return None;
@@ -37,7 +42,9 @@ fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
     let server_dir = root.join("server");
     let db_dir = app_data_dir.join("data");
     let _ = std::fs::create_dir_all(&db_dir);
-    let node = env::var("TIANGONG_NODE").unwrap_or_else(|_| "node".to_string());
+    let node = bundled_node(&root)
+        .or_else(|| env::var("TIANGONG_NODE").ok().map(PathBuf::from))
+        .unwrap_or_else(|| PathBuf::from("node"));
 
     let child = Command::new(node)
         .arg("index.js")

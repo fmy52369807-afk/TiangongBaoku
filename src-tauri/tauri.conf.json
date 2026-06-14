@@ -42,6 +42,7 @@
     ],
     "resources": [
       "../app",
+      "../runtime",
       "../sources",
       "../shared",
       "../server/config.js",
