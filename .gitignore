@@ -31,6 +31,7 @@ yarn-error.log*
 dist/*.zip
 dist/*/runtime/
 *.exe
+src-tauri/target/
 
 # Runtime and editor files
 .env

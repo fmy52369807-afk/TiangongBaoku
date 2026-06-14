@@ -1,0 +1,19 @@
+[package]
+name = "tiangong-baoku"
+version = "0.1.0"
+description = "Tiangong Baoku desktop shell"
+authors = ["Tiangong Baoku"]
+license = "ISC"
+repository = "https://github.com/fmy52369807-afk/TiangongBaoku"
+edition = "2021"
+
+[lib]
+name = "tiangong_baoku_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", default-features = false, features = ["wry", "common-controls-v6"] }
+tauri-plugin-shell = "2"

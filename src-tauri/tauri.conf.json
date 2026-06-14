@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "天工宝库",
+  "version": "0.1.0",
+  "identifier": "com.tiangong.baoku",
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "frontendDist": "../app"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "天工宝库",
+        "url": "http://127.0.0.1:3456",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 1040,
+        "minHeight": 680,
+        "resizable": true,
+        "fullscreen": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "category": "Utility",
+    "shortDescription": "天工宝库",
+    "longDescription": "一站式阅读、漫画、音乐、影视内容聚合工具。",
+    "copyright": "Copyright © 2026 Tiangong Baoku",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ],
+    "resources": [
+      "../app",
+      "../sources",
+      "../shared",
+      "../server/config.js",
+      "../server/index.js",
+      "../server/net-policy.js",
+      "../server/db",
+      "../server/engine",
+      "../server/java",
+      "../server/middleware",
+      "../server/node_modules",
+      "../server/routes",
+      "../server/package.json",
+      "../server/package-lock.json"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "downloadBootstrapper"
+      },
+      "nsis": {
+        "installerIcon": "icons/icon.ico",
+        "installMode": "perMachine",
+        "displayLanguageSelector": true,
+        "languages": ["SimpChinese", "English"]
+      },
+      "wix": {
+        "language": ["zh-CN", "en-US"]
+      }
+    }
+  }
+}
