@@ -1,13 +1,13 @@
 /**
  * Auto-generated source data for the 阅读+音乐 源管理器
- * Built at: 2026-06-14T06:34:14.198Z
- * Total sources: 394
+ * Built at: 2026-06-14T13:34:31.642Z
+ * Total sources: 393
  * DO NOT EDIT MANUALLY — run "node scripts/build.js" to regenerate
  */
 window.SOURCE_DATA = {
   "version": "2.0",
-  "builtAt": "2026-06-14T06:34:14.198Z",
-  "totalSources": 394,
+  "builtAt": "2026-06-14T13:34:31.642Z",
+  "totalSources": 393,
   "categories": [
     {
       "key": "novel",
@@ -21,7 +21,7 @@ window.SOURCE_DATA = {
       "icon": "🎨",
       "label": "漫画",
       "order": 2,
-      "count": 51
+      "count": 50
     },
     {
       "key": "audio",
@@ -3968,20 +3968,6 @@ window.SOURCE_DATA = {
     },
     {
       "id": "src_0280",
-      "name": "如漫画网（优+）",
-      "group": "漫画 书源",
-      "category": "comic",
-      "url": "http://m.rumanhua1.com/",
-      "type": 2,
-      "enabled": true,
-      "weight": 0,
-      "comment": "//9.1 by: 游客\n//12.1酷安转义字符解密\nhttps://m.dumanwu.com/\nhttps://m.rumanhua.com/",
-      "status": "ok",
-      "file": "comic/free_comic.json",
-      "index": 8
-    },
-    {
-      "id": "src_0281",
       "name": "好看漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -3992,10 +3978,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 9
+      "index": 8
     },
     {
-      "id": "src_0282",
+      "id": "src_0281",
       "name": "武芊漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4006,10 +3992,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 10
+      "index": 9
     },
     {
-      "id": "src_0283",
+      "id": "src_0282",
       "name": "光社漫畫（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4020,10 +4006,10 @@ window.SOURCE_DATA = {
       "comment": "可能有cf盾\nDisabled by Codex source audit on 2026-06-12: confirmed unavailable or invalid payload.",
       "status": "disabled",
       "file": "comic/free_comic.json",
-      "index": 11
+      "index": 10
     },
     {
-      "id": "src_0284",
+      "id": "src_0283",
       "name": "漫画搬运（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4034,10 +4020,10 @@ window.SOURCE_DATA = {
       "comment": "by:xsw8093\n\n发布页\nhttps://antbyw.github.io/\n--https://www.antbyw.com/plugin.php?id=jameson_manhua&a=re",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 12
+      "index": 11
     },
     {
-      "id": "src_0285",
+      "id": "src_0284",
       "name": "开心漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4048,14 +4034,28 @@ window.SOURCE_DATA = {
       "comment": "//2025.10.6  夜明空\n//源社区：https://ycoo.net\nDisabled by Codex source audit on 2026-06-12: confirmed unav",
       "status": "disabled",
       "file": "comic/free_comic.json",
-      "index": 13
+      "index": 12
     },
     {
-      "id": "src_0286",
+      "id": "src_0285",
       "name": "新爱漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
       "url": "https://xapi.xinmanhua.net#♤Haxc",
+      "type": 2,
+      "enabled": true,
+      "weight": 0,
+      "comment": "",
+      "status": "ok",
+      "file": "comic/free_comic.json",
+      "index": 13
+    },
+    {
+      "id": "src_0286",
+      "name": "爱优漫吧（优+）",
+      "group": "漫画 书源",
+      "category": "comic",
+      "url": "https://m.iyouman.com",
       "type": 2,
       "enabled": true,
       "weight": 0,
@@ -4069,7 +4069,7 @@ window.SOURCE_DATA = {
       "name": "爱优漫吧（优+）",
       "group": "漫画 书源",
       "category": "comic",
-      "url": "https://m.iyouman.com",
+      "url": "https://m.iyouman.com/",
       "type": 2,
       "enabled": true,
       "weight": 0,
@@ -4080,20 +4080,6 @@ window.SOURCE_DATA = {
     },
     {
       "id": "src_0288",
-      "name": "爱优漫吧（优+）",
-      "group": "漫画 书源",
-      "category": "comic",
-      "url": "https://m.iyouman.com/",
-      "type": 2,
-      "enabled": true,
-      "weight": 0,
-      "comment": "",
-      "status": "ok",
-      "file": "comic/free_comic.json",
-      "index": 16
-    },
-    {
-      "id": "src_0289",
       "name": "曼哈漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4104,10 +4090,10 @@ window.SOURCE_DATA = {
       "comment": "//2025.4.16 ◎夜泽川◎\n纯英文",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 17
+      "index": 16
     },
     {
-      "id": "src_0290",
+      "id": "src_0289",
       "name": "曼哈漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4118,10 +4104,10 @@ window.SOURCE_DATA = {
       "comment": "//2025.2.5 By Buding",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 18
+      "index": 17
     },
     {
-      "id": "src_0291",
+      "id": "src_0290",
       "name": "酷看漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4132,10 +4118,10 @@ window.SOURCE_DATA = {
       "comment": "// Error: 挂梯不可用",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 19
+      "index": 18
     },
     {
-      "id": "src_0292",
+      "id": "src_0291",
       "name": "吉站漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4146,10 +4132,10 @@ window.SOURCE_DATA = {
       "comment": "//2025.1.7by.◎辞晨◎\nDisabled by Codex source audit on 2026-06-12: confirmed unavailable or invalid pay",
       "status": "disabled",
       "file": "comic/free_comic.json",
-      "index": 20
+      "index": 19
     },
     {
-      "id": "src_0293",
+      "id": "src_0292",
       "name": "包子漫画（优+）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4160,10 +4146,10 @@ window.SOURCE_DATA = {
       "comment": "// Error: 发现目录失效\n\n作者🍟\nDisabled by Codex source audit on 2026-06-12: confirmed unavailable or invali",
       "status": "disabled",
       "file": "comic/free_comic.json",
-      "index": 21
+      "index": 20
     },
     {
-      "id": "src_0294",
+      "id": "src_0293",
       "name": "永远漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4174,10 +4160,10 @@ window.SOURCE_DATA = {
       "comment": "// Error: 搜索失效\nDisabled by Codex source audit on 2026-06-12: confirmed unavailable or invalid payloa",
       "status": "disabled",
       "file": "comic/free_comic.json",
-      "index": 22
+      "index": 21
     },
     {
-      "id": "src_0295",
+      "id": "src_0294",
       "name": "全免漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4188,10 +4174,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 23
+      "index": 22
     },
     {
-      "id": "src_0296",
+      "id": "src_0295",
       "name": "全免漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4202,10 +4188,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 24
+      "index": 23
     },
     {
-      "id": "src_0297",
+      "id": "src_0296",
       "name": "网络漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4216,10 +4202,10 @@ window.SOURCE_DATA = {
       "comment": "// Error: 搜索失效",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 25
+      "index": 24
     },
     {
-      "id": "src_0298",
+      "id": "src_0297",
       "name": "霓虹漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4230,10 +4216,10 @@ window.SOURCE_DATA = {
       "comment": "感谢酷安大佬 “莫宁哦” 做的源\n纯英文",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 26
+      "index": 25
     },
     {
-      "id": "src_0299",
+      "id": "src_0298",
       "name": "酷看漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4244,10 +4230,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 27
+      "index": 26
     },
     {
-      "id": "src_0300",
+      "id": "src_0299",
       "name": "爱看漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4258,10 +4244,10 @@ window.SOURCE_DATA = {
       "comment": "可能需要魔法",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 28
+      "index": 27
     },
     {
-      "id": "src_0301",
+      "id": "src_0300",
       "name": "爱看漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4272,10 +4258,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 29
+      "index": 28
     },
     {
-      "id": "src_0302",
+      "id": "src_0301",
       "name": "爱看漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4286,10 +4272,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 30
+      "index": 29
     },
     {
-      "id": "src_0303",
+      "id": "src_0302",
       "name": "裤裤漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4300,10 +4286,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 31
+      "index": 30
     },
     {
-      "id": "src_0304",
+      "id": "src_0303",
       "name": "奇漫屋子（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4314,10 +4300,10 @@ window.SOURCE_DATA = {
       "comment": "",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 32
+      "index": 31
     },
     {
-      "id": "src_0305",
+      "id": "src_0304",
       "name": "滴答漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4328,10 +4314,10 @@ window.SOURCE_DATA = {
       "comment": "// Error: 需要魔法\n\n//2025.2.4 By Buding",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 33
+      "index": 32
     },
     {
-      "id": "src_0306",
+      "id": "src_0305",
       "name": "漫红漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4342,10 +4328,10 @@ window.SOURCE_DATA = {
       "comment": "纯英文",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 34
+      "index": 33
     },
     {
-      "id": "src_0307",
+      "id": "src_0306",
       "name": "星际漫画（优）",
       "group": "漫画 书源",
       "category": "comic",
@@ -4356,10 +4342,10 @@ window.SOURCE_DATA = {
       "comment": "加载缓慢",
       "status": "ok",
       "file": "comic/free_comic.json",
-      "index": 35
+      "index": 34
     },
     {
-      "id": "src_0308",
+      "id": "src_0307",
       "name": "哔哩漫画（优+++）",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4373,7 +4359,7 @@ window.SOURCE_DATA = {
       "index": 0
     },
     {
-      "id": "src_0309",
+      "id": "src_0308",
       "name": "腾讯漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4387,7 +4373,7 @@ window.SOURCE_DATA = {
       "index": 1
     },
     {
-      "id": "src_0310",
+      "id": "src_0309",
       "name": "腾讯漫画 ",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4401,7 +4387,7 @@ window.SOURCE_DATA = {
       "index": 2
     },
     {
-      "id": "src_0311",
+      "id": "src_0310",
       "name": "爱奇艺漫",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4415,7 +4401,7 @@ window.SOURCE_DATA = {
       "index": 3
     },
     {
-      "id": "src_0312",
+      "id": "src_0311",
       "name": "画涯爱子",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4429,7 +4415,7 @@ window.SOURCE_DATA = {
       "index": 4
     },
     {
-      "id": "src_0313",
+      "id": "src_0312",
       "name": "快看漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4443,7 +4429,7 @@ window.SOURCE_DATA = {
       "index": 5
     },
     {
-      "id": "src_0314",
+      "id": "src_0313",
       "name": "快看漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4457,7 +4443,7 @@ window.SOURCE_DATA = {
       "index": 6
     },
     {
-      "id": "src_0315",
+      "id": "src_0314",
       "name": "酸奶漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4471,7 +4457,7 @@ window.SOURCE_DATA = {
       "index": 7
     },
     {
-      "id": "src_0316",
+      "id": "src_0315",
       "name": "酸奶漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4485,7 +4471,7 @@ window.SOURCE_DATA = {
       "index": 8
     },
     {
-      "id": "src_0317",
+      "id": "src_0316",
       "name": "收费漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4499,7 +4485,7 @@ window.SOURCE_DATA = {
       "index": 9
     },
     {
-      "id": "src_0318",
+      "id": "src_0317",
       "name": "爱漫客栈",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4513,7 +4499,7 @@ window.SOURCE_DATA = {
       "index": 10
     },
     {
-      "id": "src_0319",
+      "id": "src_0318",
       "name": "爱漫客栈",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4527,7 +4513,7 @@ window.SOURCE_DATA = {
       "index": 11
     },
     {
-      "id": "src_0320",
+      "id": "src_0319",
       "name": "酷爱漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4541,7 +4527,7 @@ window.SOURCE_DATA = {
       "index": 12
     },
     {
-      "id": "src_0321",
+      "id": "src_0320",
       "name": "新人漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4555,7 +4541,7 @@ window.SOURCE_DATA = {
       "index": 13
     },
     {
-      "id": "src_0322",
+      "id": "src_0321",
       "name": "漫漫漫画",
       "group": "正版漫画 书源",
       "category": "comic",
@@ -4569,7 +4555,7 @@ window.SOURCE_DATA = {
       "index": 14
     },
     {
-      "id": "src_0323",
+      "id": "src_0322",
       "name": "懒人听书（优+++）",
       "group": "听书 书源",
       "category": "audio",
@@ -4583,7 +4569,7 @@ window.SOURCE_DATA = {
       "index": 0
     },
     {
-      "id": "src_0324",
+      "id": "src_0323",
       "name": "番茄听书（优++）",
       "group": "听书 书源",
       "category": "audio",
@@ -4597,7 +4583,7 @@ window.SOURCE_DATA = {
       "index": 1
     },
     {
-      "id": "src_0325",
+      "id": "src_0324",
       "name": "爱听书王（优+）",
       "group": "听书 书源",
       "category": "audio",
@@ -4611,7 +4597,7 @@ window.SOURCE_DATA = {
       "index": 2
     },
     {
-      "id": "src_0326",
+      "id": "src_0325",
       "name": "饭角有声（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4625,7 +4611,7 @@ window.SOURCE_DATA = {
       "index": 3
     },
     {
-      "id": "src_0327",
+      "id": "src_0326",
       "name": "喜马拉雅（优+）",
       "group": "听书 书源",
       "category": "audio",
@@ -4639,7 +4625,7 @@ window.SOURCE_DATA = {
       "index": 4
     },
     {
-      "id": "src_0328",
+      "id": "src_0327",
       "name": "喜马拉雅（优+）",
       "group": "听书 书源",
       "category": "audio",
@@ -4653,7 +4639,7 @@ window.SOURCE_DATA = {
       "index": 5
     },
     {
-      "id": "src_0329",
+      "id": "src_0328",
       "name": "天下书音（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4667,7 +4653,7 @@ window.SOURCE_DATA = {
       "index": 6
     },
     {
-      "id": "src_0330",
+      "id": "src_0329",
       "name": "小米广播（优+）",
       "group": "听书 书源",
       "category": "audio",
@@ -4681,7 +4667,7 @@ window.SOURCE_DATA = {
       "index": 7
     },
     {
-      "id": "src_0331",
+      "id": "src_0330",
       "name": "猫耳听书（优+）",
       "group": "听书 书源",
       "category": "audio",
@@ -4695,7 +4681,7 @@ window.SOURCE_DATA = {
       "index": 8
     },
     {
-      "id": "src_0332",
+      "id": "src_0331",
       "name": "猫耳听书（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4709,7 +4695,7 @@ window.SOURCE_DATA = {
       "index": 9
     },
     {
-      "id": "src_0333",
+      "id": "src_0332",
       "name": "猫耳有声（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4723,7 +4709,7 @@ window.SOURCE_DATA = {
       "index": 10
     },
     {
-      "id": "src_0334",
+      "id": "src_0333",
       "name": "猫耳听书（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4737,7 +4723,7 @@ window.SOURCE_DATA = {
       "index": 11
     },
     {
-      "id": "src_0335",
+      "id": "src_0334",
       "name": "猫耳有声（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4751,7 +4737,7 @@ window.SOURCE_DATA = {
       "index": 12
     },
     {
-      "id": "src_0336",
+      "id": "src_0335",
       "name": "猫耳广播（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4765,7 +4751,7 @@ window.SOURCE_DATA = {
       "index": 13
     },
     {
-      "id": "src_0337",
+      "id": "src_0336",
       "name": "漫播听书（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4779,7 +4765,7 @@ window.SOURCE_DATA = {
       "index": 14
     },
     {
-      "id": "src_0338",
+      "id": "src_0337",
       "name": "爱上听书（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4793,7 +4779,7 @@ window.SOURCE_DATA = {
       "index": 15
     },
     {
-      "id": "src_0339",
+      "id": "src_0338",
       "name": "面包聆听（优）",
       "group": "听书 书源",
       "category": "audio",
@@ -4807,7 +4793,7 @@ window.SOURCE_DATA = {
       "index": 16
     },
     {
-      "id": "src_0340",
+      "id": "src_0339",
       "name": "五丁音乐（优+）",
       "group": "音乐 书源",
       "category": "music",
@@ -4821,7 +4807,7 @@ window.SOURCE_DATA = {
       "index": 0
     },
     {
-      "id": "src_0341",
+      "id": "src_0340",
       "name": "听蛙音乐（优+）",
       "group": "音乐 书源",
       "category": "music",
@@ -4835,7 +4821,7 @@ window.SOURCE_DATA = {
       "index": 1
     },
     {
-      "id": "src_0342",
+      "id": "src_0341",
       "name": "魔陌音乐（优）",
       "group": "音乐 书源",
       "category": "music",
@@ -4849,7 +4835,7 @@ window.SOURCE_DATA = {
       "index": 2
     },
     {
-      "id": "src_0343",
+      "id": "src_0342",
       "name": "荔枝音乐（优）",
       "group": "音乐 书源",
       "category": "music",
@@ -4863,7 +4849,7 @@ window.SOURCE_DATA = {
       "index": 3
     },
     {
-      "id": "src_0344",
+      "id": "src_0343",
       "name": "荔枝有声（优）",
       "group": "音乐 书源",
       "category": "music",
@@ -4877,7 +4863,7 @@ window.SOURCE_DATA = {
       "index": 4
     },
     {
-      "id": "src_0345",
+      "id": "src_0344",
       "name": "酷我音乐（优）",
       "group": "音乐 书源",
       "category": "music",
@@ -4891,7 +4877,7 @@ window.SOURCE_DATA = {
       "index": 5
     },
     {
-      "id": "src_0346",
+      "id": "src_0345",
       "name": "猫耳音乐（优）",
       "group": "音乐 书源",
       "category": "music",
@@ -4905,7 +4891,7 @@ window.SOURCE_DATA = {
       "index": 6
     },
     {
-      "id": "src_0347",
+      "id": "src_0346",
       "name": "茶杯狐狸（优+++）",
       "group": "影视 书源",
       "category": "video",
@@ -4919,7 +4905,7 @@ window.SOURCE_DATA = {
       "index": 0
     },
     {
-      "id": "src_0348",
+      "id": "src_0347",
       "name": "爱看影视（优++）",
       "group": "影视 书源",
       "category": "video",
@@ -4933,7 +4919,7 @@ window.SOURCE_DATA = {
       "index": 1
     },
     {
-      "id": "src_0349",
+      "id": "src_0348",
       "name": "番茄短剧（优++）",
       "group": "影视 书源",
       "category": "video",
@@ -4947,7 +4933,7 @@ window.SOURCE_DATA = {
       "index": 2
     },
     {
-      "id": "src_0350",
+      "id": "src_0349",
       "name": "稀饭影视（优++）",
       "group": "影视 书源",
       "category": "video",
@@ -4961,7 +4947,7 @@ window.SOURCE_DATA = {
       "index": 3
     },
     {
-      "id": "src_0351",
+      "id": "src_0350",
       "name": "短剧合集（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -4975,7 +4961,7 @@ window.SOURCE_DATA = {
       "index": 4
     },
     {
-      "id": "src_0352",
+      "id": "src_0351",
       "name": "月趣动漫（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -4989,7 +4975,7 @@ window.SOURCE_DATA = {
       "index": 5
     },
     {
-      "id": "src_0353",
+      "id": "src_0352",
       "name": "稀饭动漫（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -5003,7 +4989,7 @@ window.SOURCE_DATA = {
       "index": 6
     },
     {
-      "id": "src_0354",
+      "id": "src_0353",
       "name": "西瓜卡通（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -5017,7 +5003,7 @@ window.SOURCE_DATA = {
       "index": 7
     },
     {
-      "id": "src_0355",
+      "id": "src_0354",
       "name": "盗随动漫（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -5031,7 +5017,7 @@ window.SOURCE_DATA = {
       "index": 8
     },
     {
-      "id": "src_0356",
+      "id": "src_0355",
       "name": "聪明视频（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -5045,7 +5031,7 @@ window.SOURCE_DATA = {
       "index": 9
     },
     {
-      "id": "src_0357",
+      "id": "src_0356",
       "name": "网飞猫网（优+）",
       "group": "影视 书源",
       "category": "video",
@@ -5059,7 +5045,7 @@ window.SOURCE_DATA = {
       "index": 10
     },
     {
-      "id": "src_0358",
+      "id": "src_0357",
       "name": "优质资源（优）",
       "group": "影视 书源",
       "category": "video",
@@ -5073,7 +5059,7 @@ window.SOURCE_DATA = {
       "index": 11
     },
     {
-      "id": "src_0359",
+      "id": "src_0358",
       "name": "榴莲影视（优）",
       "group": "影视 书源",
       "category": "video",
@@ -5087,7 +5073,7 @@ window.SOURCE_DATA = {
       "index": 12
     },
     {
-      "id": "src_0360",
+      "id": "src_0359",
       "name": "艾格动漫（优）",
       "group": "影视 书源",
       "category": "video",
@@ -5101,7 +5087,7 @@ window.SOURCE_DATA = {
       "index": 13
     },
     {
-      "id": "src_0361",
+      "id": "src_0360",
       "name": "矮贼吧网（优）",
       "group": "影视 书源",
       "category": "video",
@@ -5115,7 +5101,7 @@ window.SOURCE_DATA = {
       "index": 14
     },
     {
-      "id": "src_0362",
+      "id": "src_0361",
       "name": "文才影视（TVBox）",
       "group": "影视 TVBox",
       "category": "video",
@@ -5129,7 +5115,7 @@ window.SOURCE_DATA = {
       "index": 15
     },
     {
-      "id": "src_0363",
+      "id": "src_0362",
       "name": "最大资源（CMS）",
       "group": "影视 CMS",
       "category": "video",
@@ -5143,7 +5129,7 @@ window.SOURCE_DATA = {
       "index": 16
     },
     {
-      "id": "src_0364",
+      "id": "src_0363",
       "name": "霸王游戏（优）",
       "group": "游戏 书源",
       "category": "game",
@@ -5157,7 +5143,7 @@ window.SOURCE_DATA = {
       "index": 0
     },
     {
-      "id": "src_0365",
+      "id": "src_0364",
       "name": "霸王街机（优）",
       "group": "游戏 书源",
       "category": "game",
@@ -5171,7 +5157,7 @@ window.SOURCE_DATA = {
       "index": 1
     },
     {
-      "id": "src_0366",
+      "id": "src_0365",
       "name": "盒子游戏（优）",
       "group": "游戏 书源",
       "category": "game",
@@ -5185,7 +5171,7 @@ window.SOURCE_DATA = {
       "index": 2
     },
     {
-      "id": "src_0367",
+      "id": "src_0366",
       "name": "坚果云盘（优++）",
       "group": "特殊 书源",
       "category": "special",
@@ -5199,7 +5185,7 @@ window.SOURCE_DATA = {
       "index": 0
     },
     {
-      "id": "src_0368",
+      "id": "src_0367",
       "name": "百度网盘（优++）",
       "group": "特殊 书源",
       "category": "special",
@@ -5213,7 +5199,7 @@ window.SOURCE_DATA = {
       "index": 1
     },
     {
-      "id": "src_0369",
+      "id": "src_0368",
       "name": "百度贴吧（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5227,7 +5213,7 @@ window.SOURCE_DATA = {
       "index": 2
     },
     {
-      "id": "src_0370",
+      "id": "src_0369",
       "name": "吾爱破解（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5241,7 +5227,7 @@ window.SOURCE_DATA = {
       "index": 3
     },
     {
-      "id": "src_0371",
+      "id": "src_0370",
       "name": "酷安应用（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5255,7 +5241,7 @@ window.SOURCE_DATA = {
       "index": 4
     },
     {
-      "id": "src_0372",
+      "id": "src_0371",
       "name": "微博书源（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5269,7 +5255,7 @@ window.SOURCE_DATA = {
       "index": 5
     },
     {
-      "id": "src_0373",
+      "id": "src_0372",
       "name": "微博评论（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5283,7 +5269,7 @@ window.SOURCE_DATA = {
       "index": 6
     },
     {
-      "id": "src_0374",
+      "id": "src_0373",
       "name": "优品文档（导+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5297,7 +5283,7 @@ window.SOURCE_DATA = {
       "index": 7
     },
     {
-      "id": "src_0375",
+      "id": "src_0374",
       "name": "书单推荐（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5311,7 +5297,7 @@ window.SOURCE_DATA = {
       "index": 8
     },
     {
-      "id": "src_0376",
+      "id": "src_0375",
       "name": "超星网站（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5325,7 +5311,7 @@ window.SOURCE_DATA = {
       "index": 9
     },
     {
-      "id": "src_0377",
+      "id": "src_0376",
       "name": "个性说网（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5339,7 +5325,7 @@ window.SOURCE_DATA = {
       "index": 10
     },
     {
-      "id": "src_0378",
+      "id": "src_0377",
       "name": "个性说网（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5353,7 +5339,7 @@ window.SOURCE_DATA = {
       "index": 11
     },
     {
-      "id": "src_0379",
+      "id": "src_0378",
       "name": "治能寄算（优+）",
       "group": "特殊 书源",
       "category": "special",
@@ -5367,7 +5353,7 @@ window.SOURCE_DATA = {
       "index": 12
     },
     {
-      "id": "src_0380",
+      "id": "src_0379",
       "name": "爱推书君（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5381,7 +5367,7 @@ window.SOURCE_DATA = {
       "index": 13
     },
     {
-      "id": "src_0381",
+      "id": "src_0380",
       "name": "爱推书君（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5395,7 +5381,7 @@ window.SOURCE_DATA = {
       "index": 14
     },
     {
-      "id": "src_0382",
+      "id": "src_0381",
       "name": "爱发电网（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5409,7 +5395,7 @@ window.SOURCE_DATA = {
       "index": 15
     },
     {
-      "id": "src_0383",
+      "id": "src_0382",
       "name": "青花鱼评（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5423,7 +5409,7 @@ window.SOURCE_DATA = {
       "index": 16
     },
     {
-      "id": "src_0384",
+      "id": "src_0383",
       "name": "乐乎文章（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5437,7 +5423,7 @@ window.SOURCE_DATA = {
       "index": 17
     },
     {
-      "id": "src_0385",
+      "id": "src_0384",
       "name": "天涯知识（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5451,7 +5437,7 @@ window.SOURCE_DATA = {
       "index": 18
     },
     {
-      "id": "src_0386",
+      "id": "src_0385",
       "name": "我爱读者（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5465,7 +5451,7 @@ window.SOURCE_DATA = {
       "index": 19
     },
     {
-      "id": "src_0387",
+      "id": "src_0386",
       "name": "爱推書君（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5479,7 +5465,7 @@ window.SOURCE_DATA = {
       "index": 20
     },
     {
-      "id": "src_0388",
+      "id": "src_0387",
       "name": "海词木稽（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5493,7 +5479,7 @@ window.SOURCE_DATA = {
       "index": 21
     },
     {
-      "id": "src_0389",
+      "id": "src_0388",
       "name": "海词精选（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5507,7 +5493,7 @@ window.SOURCE_DATA = {
       "index": 22
     },
     {
-      "id": "src_0390",
+      "id": "src_0389",
       "name": "海词词典（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5521,7 +5507,7 @@ window.SOURCE_DATA = {
       "index": 23
     },
     {
-      "id": "src_0391",
+      "id": "src_0390",
       "name": "百度图片（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5535,7 +5521,7 @@ window.SOURCE_DATA = {
       "index": 24
     },
     {
-      "id": "src_0392",
+      "id": "src_0391",
       "name": "百度知道（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5549,7 +5535,7 @@ window.SOURCE_DATA = {
       "index": 25
     },
     {
-      "id": "src_0393",
+      "id": "src_0392",
       "name": "百度知道（优）",
       "group": "特殊 书源",
       "category": "special",
@@ -5563,7 +5549,7 @@ window.SOURCE_DATA = {
       "index": 26
     },
     {
-      "id": "src_0394",
+      "id": "src_0393",
       "name": "百度贴吧（优）",
       "group": "特殊 书源",
       "category": "special",

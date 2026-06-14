@@ -2,6 +2,15 @@ const dns = require('dns').promises;
 const net = require('net');
 
 const PRIVATE_NETWORK_ERROR = 'Private network URLs are not allowed';
+const BLOCKED_REMOTE_HOSTS = new Set([
+    'm.rumanhua1.com',
+    'rumanhua1.com',
+]);
+
+function isBlockedRemoteHost(hostname) {
+    const host = String(hostname || '').toLowerCase();
+    return BLOCKED_REMOTE_HOSTS.has(host);
+}
 
 function isBlockedNetworkHost(hostname) {
     const host = String(hostname || '').toLowerCase();
@@ -18,6 +27,9 @@ function isBlockedNetworkHost(hostname) {
 }
 
 async function assertPublicNetworkHost(hostname, { allowPrivateNetworkFetch = false } = {}) {
+    if (isBlockedRemoteHost(hostname)) {
+        throw new Error(`Blocked unsafe remote host: ${hostname}`);
+    }
     if (allowPrivateNetworkFetch) return;
     if (isBlockedNetworkHost(hostname)) throw new Error(PRIVATE_NETWORK_ERROR);
     const addresses = await dns.lookup(hostname, { all: true, verbatim: false });
@@ -28,6 +40,7 @@ async function assertPublicNetworkHost(hostname, { allowPrivateNetworkFetch = fa
 
 module.exports = {
     PRIVATE_NETWORK_ERROR,
+    isBlockedRemoteHost,
     isBlockedNetworkHost,
     assertPublicNetworkHost,
 };
