@@ -1,15 +1,15 @@
 use std::{
     env,
     fs::OpenOptions,
-    io::Write,
+    io::{Read, Write},
     net::TcpStream,
     path::{Path, PathBuf},
     process::{Child, Command, Stdio},
     sync::{Arc, Mutex},
     thread,
-    time::{Duration, Instant},
+    time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
-use tauri::Manager;
+use tauri::{Manager, Url};
 
 struct ServerProcess(Arc<Mutex<Option<Child>>>);
 
@@ -20,10 +20,45 @@ fn dev_repo_root() -> PathBuf {
         .to_path_buf()
 }
 
-fn wait_for_server(port: u16, timeout: Duration) -> bool {
+fn backend_instance_id() -> String {
+    let millis = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|duration| duration.as_millis())
+        .unwrap_or_default();
+    format!("tiangong-{}-{}", std::process::id(), millis)
+}
+
+fn is_our_backend(port: u16, instance_id: Option<&str>) -> bool {
+    let mut stream = match TcpStream::connect(("127.0.0.1", port)) {
+        Ok(stream) => stream,
+        Err(_) => return false,
+    };
+    let _ = stream.set_read_timeout(Some(Duration::from_millis(900)));
+    let _ = stream.set_write_timeout(Some(Duration::from_millis(900)));
+    let request = format!(
+        "GET /api/version HTTP/1.1\r\nHost: 127.0.0.1:{}\r\nConnection: close\r\n\r\n",
+        port
+    );
+    if stream.write_all(request.as_bytes()).is_err() {
+        return false;
+    }
+    let mut body = String::new();
+    if stream.read_to_string(&mut body).is_err() {
+        return false;
+    }
+    if !body.contains("\"version\":\"3.2\"") || !body.contains("ruleParser") {
+        return false;
+    }
+    match instance_id {
+        Some(id) => !id.is_empty() && body.contains(id),
+        None => true,
+    }
+}
+
+fn wait_for_server(port: u16, instance_id: &str, timeout: Duration) -> bool {
     let started = Instant::now();
     while started.elapsed() < timeout {
-        if TcpStream::connect(("127.0.0.1", port)).is_ok() {
+        if is_our_backend(port, Some(instance_id)) {
             return true;
         }
         thread::sleep(Duration::from_millis(200));
@@ -38,6 +73,26 @@ fn release_resource_root(resource_dir: PathBuf) -> PathBuf {
     } else {
         resource_dir
     }
+}
+
+fn first_available_port(app_data_dir: &Path) -> u16 {
+    for port in 3456..=3475 {
+        if TcpStream::connect(("127.0.0.1", port)).is_err() {
+            return port;
+        }
+        if is_our_backend(port, None) {
+            log_desktop(
+                app_data_dir,
+                format!("Port {} is already used by another Tiangong backend; selecting a fresh port", port),
+            );
+        } else {
+            log_desktop(
+                app_data_dir,
+                format!("Port {} is occupied by another service; selecting a fresh port", port),
+            );
+        }
+    }
+    3456
 }
 
 fn log_desktop(app_data_dir: &Path, message: impl AsRef<str>) {
@@ -60,15 +115,14 @@ fn bundled_node(root: &Path) -> Option<PathBuf> {
     candidate.exists().then_some(candidate)
 }
 
-fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
-    if TcpStream::connect(("127.0.0.1", 3456)).is_ok() {
-        log_desktop(&app_data_dir, "Backend already running on 127.0.0.1:3456");
-        return None;
-    }
-
+fn start_server(root: PathBuf, app_data_dir: PathBuf) -> (u16, Option<Child>) {
+    let port = first_available_port(&app_data_dir);
+    let instance_id = backend_instance_id();
     let server_dir = root.join("server");
     let db_dir = app_data_dir.join("data");
+    let log_dir = app_data_dir.join("logs");
     let _ = std::fs::create_dir_all(&db_dir);
+    let _ = std::fs::create_dir_all(&log_dir);
     let node = bundled_node(&root)
         .or_else(|| env::var("TIANGONG_NODE").ok().map(PathBuf::from))
         .unwrap_or_else(|| PathBuf::from("node"));
@@ -84,15 +138,30 @@ fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
         ),
     );
 
+    let stdout = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(log_dir.join("backend.out.log"))
+        .map(Stdio::from)
+        .unwrap_or_else(|_| Stdio::null());
+    let stderr = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(log_dir.join("backend.err.log"))
+        .map(Stdio::from)
+        .unwrap_or_else(|_| Stdio::null());
+
     let child = Command::new(&node)
         .arg("index.js")
         .current_dir(&server_dir)
-        .env("PORT", "3456")
+        .env("PORT", port.to_string())
+        .env("HOST", "127.0.0.1")
         .env("NODE_ENV", "development")
         .env("DB_PATH", db_dir.join("yuedu.db"))
         .env("SOURCES_PATH", root.join("sources"))
-        .stdout(Stdio::null())
-        .stderr(Stdio::null())
+        .env("APP_INSTANCE_ID", &instance_id)
+        .stdout(stdout)
+        .stderr(stderr)
         .spawn();
 
     let child = match child {
@@ -107,12 +176,15 @@ fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
                     server_dir.exists()
                 ),
             );
-            return None;
+            return (port, None);
         }
     };
 
-    if wait_for_server(3456, Duration::from_secs(20)) {
-        log_desktop(&app_data_dir, "Backend ready on 127.0.0.1:3456");
+    if wait_for_server(port, &instance_id, Duration::from_secs(20)) {
+        log_desktop(
+            &app_data_dir,
+            format!("Backend ready on 127.0.0.1:{}", port),
+        );
     } else {
         log_desktop(
             &app_data_dir,
@@ -120,7 +192,7 @@ fn start_server(root: PathBuf, app_data_dir: PathBuf) -> Option<Child> {
         );
     }
 
-    Some(child)
+    (port, Some(child))
 }
 
 pub fn run() {
@@ -136,7 +208,19 @@ pub fn run() {
                 release_resource_root(app.path().resource_dir()?)
             };
             let app_data_dir = app.path().app_data_dir()?;
-            let child = start_server(root, app_data_dir);
+            let (port, child) = start_server(root, app_data_dir.clone());
+            if let Some(window) = app.get_webview_window("main") {
+                let url_text = format!("http://127.0.0.1:{}", port);
+                match Url::parse(&url_text) {
+                    Ok(url) => {
+                        let _ = window.navigate(url);
+                    }
+                    Err(error) => log_desktop(
+                        &app_data_dir,
+                        format!("Failed to parse backend URL {}: {}", url_text, error),
+                    ),
+                }
+            }
             let state = app.state::<ServerProcess>();
             if let Ok(mut server) = state.0.lock() {
                 *server = child;

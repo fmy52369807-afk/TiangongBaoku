@@ -62,7 +62,27 @@ app.use('/api/history', require('./routes/history'));
 
 // Version endpoint for cache verification
 app.get('/api/version', (req, res) => {
-    res.json({ version: '3.2', built: new Date().toISOString(), engine: 'ruleParser v2-css-fix' });
+    res.json({
+        version: '3.2',
+        built: new Date().toISOString(),
+        engine: 'ruleParser v2-css-fix',
+        instanceId: process.env.APP_INSTANCE_ID || '',
+    });
+});
+
+app.get('/api/health', (req, res) => {
+    const index = require('./routes/content-helpers').loadIndex();
+    res.json({
+        ok: true,
+        version: '3.2',
+        host: config.host,
+        port: Number(config.port),
+        sourcesPath: config.sourcesPath,
+        sourceCount: index.length,
+        node: process.version,
+        instanceId: process.env.APP_INSTANCE_ID || '',
+        time: new Date().toISOString(),
+    });
 });
 
 // ── SPA Fallback ─────────────────────────────────────
@@ -80,12 +100,12 @@ app.use((err, req, res, next) => {
 });
 
 // ── Start ────────────────────────────────────────────
-app.listen(config.port, () => {
+app.listen(config.port, config.host, () => {
     console.log('');
     console.log('═══════════════════════════════════════════');
     console.log('  📚 阅读+音乐 源管理器 服务端已启动 v3.2');
-    console.log(`  🌐 http://localhost:${config.port}`);
-    console.log(`  📡 API: http://localhost:${config.port}/api`);
+    console.log(`  🌐 http://${config.host}:${config.port}`);
+    console.log(`  📡 API: http://${config.host}:${config.port}/api`);
     console.log('═══════════════════════════════════════════');
     console.log('');
 });

@@ -92,11 +92,15 @@ function mergeSearchGroups(existing, incoming) {
 function renderSearchResults(data) {
   const groups = state.searchGroups.length ? state.searchGroups : (data.results || []);
   if (!groups.length) {
+    const scanText = `已扫描 ${data.nextSourceOffset || data.scannedSources || 0}/${data.totalSources || 0} 个源`;
     const extra = data.errors?.length ? `<br><small>部分源返回错误：${esc(data.errors.map(e => e.name || e.sourceId).join('、'))}</small>` : '';
+    const status = data.sourceReports?.length
+      ? `<div class="chapter-meta">${esc(scanText)}</div><div class="chapter-meta">命中 ${data.sourceReports.filter(item => item.status === 'ok').length} / 失败 ${data.sourceReports.filter(item => item.status === 'failed' || item.status === 'skipped').length}</div>`
+      : '';
     const more = data.hasMoreSources
       ? `<div class="action-row"><button class="btn primary" data-action="load-more-search" type="button">继续搜索下一批源</button><span class="chapter-meta">已扫描 ${data.nextSourceOffset || 0}/${data.totalSources || 0} 个源</span></div>`
       : '';
-    els.results.innerHTML = `<div class="empty">当前批次没有搜索到可打开的内容。${extra}</div>${renderSourceReports(data.sourceReports || [])}${more}`;
+    els.results.innerHTML = `<div class="empty">当前批次没有搜索到可打开的内容。${extra}</div>${status}${renderSourceReports(data.sourceReports || [])}${more}`;
     return;
   }
   let keyIndex = 0;

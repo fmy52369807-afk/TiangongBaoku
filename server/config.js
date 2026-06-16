@@ -13,6 +13,7 @@ if (isProduction && jwtSecret === defaultJwtSecret) {
 
 module.exports = {
     port: process.env.PORT || 3456,
+    host: process.env.HOST || '127.0.0.1',
     jwtSecret,
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
     dbPath: process.env.DB_PATH || path.join(__dirname, 'data', 'yuedu.db'),

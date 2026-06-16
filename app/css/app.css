@@ -83,7 +83,7 @@ body::after{
 }
 .app{
   height:100dvh;
-  grid-template-columns:236px minmax(420px,1fr) minmax(430px,590px);
+  grid-template-columns:clamp(212px,17vw,236px) minmax(0,1fr) minmax(340px,36vw,560px);
   gap:14px;
   padding:14px;
   background:transparent;
@@ -2224,6 +2224,7 @@ body::before{
 }
 .workbench{
   border-radius:32px;
+  container:workbench / inline-size;
 }
 .reader{
   border-radius:28px;
@@ -2437,6 +2438,7 @@ body::before{
     height:calc(100dvh - 20px);
   }
 }
+
 @media(max-width:760px){
   .app{
     display:block;
@@ -3182,7 +3184,7 @@ body::before{
 
 /* Immersive reading layout: paged mode behaves like a fixed book surface. */
 body.reader-reading .app{
-  grid-template-columns:72px minmax(320px,.72fr) minmax(760px,1.88fr);
+  grid-template-columns:72px minmax(280px,.56fr) minmax(0,1.88fr);
 }
 body.reader-reading .sidebar{
   padding-inline:8px;
@@ -4014,4 +4016,74 @@ body.recommend-landing .recommend-item em{
 body.home-landing .results-wrap > .summary,
 body.recommend-landing .results-wrap > .summary{
   display:none;
+}
+
+/* DPI and Windows scaling guard: keep the shell from squeezing into a faux desktop layout. */
+@media(max-width:1360px){
+  body:not(.home-landing):not(.recommend-landing):not(.reader-reading):not(.reader-fullscreen) .app{
+    grid-template-columns:208px minmax(0,1fr) minmax(320px,34vw,500px);
+    gap:10px;
+    padding:10px;
+  }
+  body:not(.home-landing):not(.recommend-landing):not(.reader-reading):not(.reader-fullscreen) .sidebar,
+  body:not(.home-landing):not(.recommend-landing):not(.reader-reading):not(.reader-fullscreen) .workbench,
+  body:not(.home-landing):not(.recommend-landing):not(.reader-reading):not(.reader-fullscreen) .reader{
+    height:calc(100dvh - 20px);
+  }
+}
+
+@media(max-width:1180px){
+  body:not(.home-landing):not(.recommend-landing):not(.reader-reading):not(.reader-fullscreen) .app{
+    grid-template-columns:220px minmax(0,1fr);
+  }
+  body:not(.home-landing):not(.recommend-landing):not(.reader-reading):not(.reader-fullscreen) .reader{
+    display:none;
+  }
+  body.reader-open:not(.reader-reading):not(.reader-fullscreen) .reader{
+    display:flex;
+  }
+  body.reader-open:not(.reader-reading):not(.reader-fullscreen) .app{
+    grid-template-columns:220px minmax(0,1fr);
+  }
+}
+
+@container workbench (max-width: 560px){
+  body:not(.home-landing):not(.recommend-landing) .topbar{
+    align-items:stretch;
+    flex-wrap:wrap;
+    gap:8px;
+    padding:14px 14px 8px;
+  }
+  body:not(.home-landing):not(.recommend-landing) .search-box{
+    flex:1 1 100%;
+    order:1;
+    grid-template-columns:minmax(0,1fr) auto;
+    min-height:0;
+    border-radius:20px;
+  }
+  body:not(.home-landing):not(.recommend-landing) .search-box::before{
+    display:none;
+  }
+  body:not(.home-landing):not(.recommend-landing) .search-box input{
+    grid-column:1 / -1;
+    height:40px;
+  }
+  body:not(.home-landing):not(.recommend-landing) .search-box select{
+    min-width:0;
+    width:100%;
+  }
+  body:not(.home-landing):not(.recommend-landing) .search-box .btn.primary{
+    min-width:72px;
+  }
+  body:not(.home-landing):not(.recommend-landing) .playlist-entry,
+  body:not(.home-landing):not(.recommend-landing) .back-home,
+  body:not(.home-landing):not(.recommend-landing) .topbar > .btn.icon{
+    order:2;
+    height:36px;
+  }
+  body:not(.home-landing):not(.recommend-landing) .playlist-entry,
+  body:not(.home-landing):not(.recommend-landing) .back-home{
+    flex:1 1 auto;
+    min-width:0;
+  }
 }

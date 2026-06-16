@@ -70,8 +70,8 @@ function renderVideoPayload(payload, urls) {
     <section class="video-card">
       <div class="video-stage">
         ${direct
-          ? `<video controls playsinline ${hls ? `data-hls-src="${esc(playUrl)}"` : `src="${esc(playUrl)}"`}></video>`
-          : `<iframe src="${esc(mediaUrl)}" title="${esc(title)}" referrerpolicy="no-referrer" allowfullscreen></iframe>`}
+          ? `<video controls playsinline webkit-playsinline ${hls ? `data-hls-src="${esc(playUrl)}"` : `src="${esc(playUrl)}"`}></video>`
+          : `<iframe src="${esc(mediaUrl)}" title="${esc(title)}" referrerpolicy="no-referrer" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>`}
       </div>
       <div class="video-info">
         <div>

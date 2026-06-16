@@ -145,7 +145,8 @@ function bindEvents() {
   $('#themeButton').addEventListener('click', () => applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
   document.addEventListener('keydown', event => {
     const tag = document.activeElement?.tagName || '';
-    if (event.key === 'Escape') closePanels();
+    const nativeFullscreen = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
+    if (event.key === 'Escape' && !nativeFullscreen) closePanels();
     if (state.activeTab === 'chapter' && state.readerMode === 'paged' && tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
       if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
         event.preventDefault();
