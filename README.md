@@ -1,8 +1,89 @@
 # 天工宝库 · TiangongBaoku
 
-一站式阅读、漫画、音乐、影视内容聚合引擎。基于 Legado 书源格式，提供跨源搜索、在线阅读、多媒体播放的全栈 Web 应用。
+一个基于 Legado 书源格式的本地内容聚合应用，支持小说、漫画、听书、音乐、影视、游戏及其他特殊内容源。
+
+项目采用原生 HTML/CSS/JavaScript 前端、Node.js + Express 后端、SQLite 数据库，并提供 Tauri Windows 桌面版支持。
+
+## 功能特性
+
+- 跨源搜索与分类浏览
+- 小说在线阅读，支持滑动式与翻页式阅读
+- 漫画图片阅读与单双页自适应
+- 听书、音乐播放和本地播放列表
+- HTML5 Video 与 HLS 影视播放
+- 用户注册、登录与 JWT 身份认证
+- 收藏和阅读历史
+- 浅色、深色主题及响应式布局
+- Legado 书源规则解析
+- JSONPath、CSS 选择器及 `@js:` 规则支持
+- Windows Tauri 桌面版及本地便携启动脚本
+
+## 内容源
+
+当前仓库包含 393 个内容源，其中 372 个处于启用状态：
+
+| 分类 | 总数 | 启用数 |
+| --- | ---: | ---: |
+| 小说 | 271 | 269 |
+| 漫画 | 50 | 44 |
+| 听书 | 17 | 14 |
+| 音乐 | 7 | 7 |
+| 影视 | 17 | 7 |
+| 游戏 | 3 | 3 |
+| 特殊工具 | 28 | 28 |
+
+内容源来自互联网公开的 Legado 书源配置。源站可用性会随时间变化，部分源可能失效、限流或需要登录。
+
+## 技术栈
+
+| 模块 | 技术 |
+| --- | --- |
+| 前端 | 原生 HTML、CSS、JavaScript |
+| 后端 | Node.js、Express |
+| 数据库 | SQLite、better-sqlite3 |
+| 认证 | JWT、bcryptjs |
+| 内容解析 | cheerio、jsonpath-plus |
+| 规则引擎 | 自研 Legado 兼容解析引擎 |
+| 媒体播放 | HTML5 Audio、HTML5 Video、HLS.js |
+| 桌面端 | Tauri 2、Rust |
+| 测试 | Node.js Built-in Test Runner |
+
+## 项目结构
+
+```text
+.
+├── app/                    # 前端单页应用
+│   ├── index.html
+│   ├── css/
+│   ├── js/
+│   └── vendor/
+├── server/                 # Express 后端
+│   ├── index.js            # 服务入口
+│   ├── config.js           # 服务配置
+│   ├── db/                 # SQLite 数据库与迁移
+│   ├── engine/             # Legado 规则引擎
+│   ├── middleware/         # JWT 认证
+│   └── routes/             # API 路由
+├── sources/                # 分类别内容源
+├── shared/                 # 前后端共享配置
+├── scripts/                # 构建、审计、清理和索引脚本
+├── docs/                   # 格式及审计文档
+├── src-tauri/              # Tauri 桌面端代码
+├── dist/                   # 分发及便携版文件
+├── start-yuedu.bat         # Windows 启动脚本
+├── stop-yuedu.bat          # Windows 停止脚本
+└── install-deps.bat        # Windows 依赖安装脚本
+```
 
 ## 快速开始
+
+### 环境要求
+
+- Node.js 18 或更高版本
+- npm
+- Windows 用户可直接使用项目提供的 `.bat` 脚本
+
+### 安装与启动
 
 ```bash
 cd server
@@ -10,208 +91,214 @@ npm install
 npm start
 ```
 
-浏览器打开 `http://localhost:3456`
+启动后访问：
 
-## 项目结构
-
-```
-.
-├── app/                             # 📱 前端 SPA (三栏布局)
-│   ├── index.html                   #   主页面 (浅色/深色主题)
-│   ├── css/
-│   │   └── app.css                  #   应用样式
-│   ├── js/
-│   │   ├── api-client.js            #   API 调用封装
-│   │   ├── category-meta.js         #   分类展示配置 (由 shared/categories.json 生成)
-│   │   ├── status-meta.js           #   状态展示配置
-│   │   ├── ui-storage.js            #   UI 偏好本地存储
-│   │   ├── app-state.js             #   全局状态
-│   │   ├── app-shell.js             #   应用外壳与导航
-│   │   ├── layout-ui.js             #   布局渲染
-│   │   ├── source-filters.js        #   源筛选
-│   │   ├── user-library.js          #   最近阅读与收藏
-│   │   ├── results-panel.js         #   搜索结果与详情面板
-│   │   ├── reader-modes.js          #   滑动/翻页阅读模式
-│   │   ├── reader-panel.js          #   阅读器面板
-│   │   ├── book-actions.js          #   书籍详情与收藏动作
-│   │   ├── reader-actions.js        #   目录与章节动作
-│   │   ├── app-events.js            #   页面事件绑定
-│   │   ├── app-bootstrap.js         #   启动流程
-│   │   ├── payload-renderers.js     #   多媒体渲染器
-│   │   ├── audio-player.js          #   音频播放器
-│   │   ├── main.js                  #   兼容入口占位
-│   │   └── data.js                  #   源数据包 (构建生成)
-│   └── vendor/
-│       └── hls.min.js               #   HLS 视频支持
-│
-├── shared/
-│   └── categories.json              #   前后端共享分类展示配置
-│
-├── server/                          # 🖥️ Express 后端
-│   ├── index.js                     #   服务入口
-│   ├── config.js                    #   配置 (端口/JWT/超时)
-│   ├── db/
-│   │   ├── database.js              #   SQLite 连接
-│   │   └── migrations.js            #   数据库建表
-│   ├── middleware/
-│   │   └── auth.js                  #   JWT 认证中间件
-│   ├── engine/
-│   │   ├── legadoEngine.js          #   统一规则引擎 (862行)
-│   │   ├── ruleParser.js            #   轻量规则解析器
-│   │   ├── jsRuntime.js             #   JavaScript 沙箱
-│   │   ├── httpClient.js            #   HTTP 代理 (gzip/SSL/重定向)
-│   │   └── sourceAdapters.js        #   分类适配器
-│   └── routes/
-│       ├── auth.js                  #   注册 / 登录 / 用户信息
-│       ├── sources.js               #   源浏览 / 分类
-│       ├── search.js                #   旧版跨源搜索 (有界并发)
-│       ├── content.js               #   内容路由 (搜索/详情/目录/正文，有界并发)
-│       ├── reader.js                #   旧版阅读器路由
-│       ├── music.js                 #   音乐搜索 / 播放 / 酷我 / 网易云
-│       ├── favorites.js             #   收藏管理
-│       └── history.js               #   阅读历史
-│
-├── sources/                         # 📦 源数据 (Legado 兼容格式)
-│   ├── index.json                   #   总索引
-│   ├── novel/                       #   📖 小说 (271条)
-│   ├── comic/                       #   🎨 漫画 (51条)
-│   ├── special/                     #   🔧 工具 (28条)
-│   ├── audio/                       #   🎧 听书 (17条)
-│   ├── video/                       #   🎬 影视 (17条)
-│   ├── music/                       #   🎵 音乐 (7条)
-│   └── game/                        #   🎮 游戏 (3条)
-│
-├── scripts/                         # 🛠️ 运维工具
-│   ├── build.js                     #   构建前端数据包
-│   ├── build_category_meta.js       #   生成前端分类配置脚本
-│   ├── split_sources.js             #   拆分源文件
-│   ├── audit_all_sources.js         #   批量审计源可用性
-│   ├── audit_runtime_api.js         #   运行时 API 审计
-│   ├── validate_reading_sources.js  #   验证阅读源
-│   ├── prune_dead_sources.js        #   清理失效源
-│   └── check_sources.js             #   静态源检查
-│
-├── dist/                            # 📦 分发包
-│   └── TiangongBaoku-PortableExe-*.zip   # 免 Node 便携版
-│
-├── docs/                            # 📚 文档
-│   ├── source_schema.md             #   Legado 源格式说明
-│   └── evc_analysis.md              #   EVC 文件分析
-│
-└── .gitignore
+```text
+http://127.0.0.1:3456
 ```
 
-## 技术栈
-
-| 层 | 技术 |
-|----|------|
-| 后端 | Node.js + Express |
-| 数据库 | better-sqlite3 |
-| 认证 | JWT (jsonwebtoken + bcryptjs) |
-| HTML 解析 | cheerio |
-| JSON 查询 | jsonpath-plus |
-| 规则引擎 | 自研 Legado 兼容引擎 (JSONPath + CSS + JS 沙箱) |
-| 前端 | 原生 HTML/CSS/JS SPA (三栏布局) |
-| 多媒体 | HTML5 Audio / HLS.js / 图片画廊 |
-
-## 功能
-
-### 已实现
-
-- **跨源搜索**: 并行搜索 50+ 源，支持分页加载更多
-- **分类浏览**: 7 个内容分类（小说/漫画/听书/音乐/影视/游戏/工具）
-- **在线阅读**: 详情→目录→正文，字体缩放，上下章翻页，全屏阅读
-- **漫画浏览**: 图片画廊模式
-- **音乐播放**: 音频播放器，多源聚合
-- **影视播放**: HLS 流媒体支持
-- **用户系统**: 注册/登录，JWT 认证
-- **收藏 & 历史**: 云端同步
-- **浅色/深色主题**: 一键切换
-- **响应式布局**: 桌面三栏 / 平板双栏 / 手机抽屉
-- **规则引擎**: 支持 JSONPath、CSS 选择器、`@js:` 脚本、`||` 备选规则、`##` 正则替换、`{{$.field}}` 模板、`[attr$=]` 属性选择器、`~=` 管道符选择器
-- **免 Node 便携版**: `dist/` 目录下提供打包好的 Windows exe
-
-### 快捷操作
-
-| 快捷键 | 功能 |
-|--------|------|
-| `/` | 聚焦搜索框 |
-| `Esc` | 关闭面板/清除搜索 |
-| `A+` / `A-` | 阅读字体缩放 |
-| 按钮「全屏」 | 阅读器全屏模式 |
-
-## API 端点
-
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| POST | `/api/auth/register` | 注册 |
-| POST | `/api/auth/login` | 登录 |
-| GET  | `/api/auth/me` | 用户信息 |
-| GET  | `/api/sources` | 源列表 (支持分页/分类筛选) |
-| GET  | `/api/sources/:id` | 源详情 |
-| GET  | `/api/sources/categories` | 分类统计 |
-| POST | `/api/search` | 旧版跨源搜索 |
-| POST | `/api/content/search` | 新版跨源搜索 (支持翻页) |
-| GET  | `/api/content/detail` | 书籍详情 |
-| GET  | `/api/content/entries` | 章节目录 |
-| GET  | `/api/content/payload` | 章节正文/漫画图片/音视频 |
-| GET  | `/api/music/search` | 音乐搜索 |
-| GET  | `/api/music/play` | 音乐播放链接 |
-| GET  | `/api/music/kuwo` | 酷我直连 |
-| GET  | `/api/music/wangyi` | 网易云直连 |
-| GET  | `/api/reader/book` | 旧版书籍详情 |
-| GET  | `/api/reader/toc` | 旧版目录 |
-| GET  | `/api/reader/chapter` | 旧版章节 |
-| GET  | `/api/favorites` | 收藏列表 |
-| POST | `/api/favorites` | 添加收藏 |
-| DELETE | `/api/favorites/:id` | 取消收藏 |
-| GET  | `/api/history` | 阅读历史 |
-| POST | `/api/history` | 记录阅读 |
-| GET  | `/api/version` | 服务版本 |
-
-## 源数据
-
-| 分类 | 数量 | 状态 |
-|------|------|------|
-| 📖 小说 | 271 | 5-8 个源搜索可用，八零小说阅读链路完整 |
-| 🎨 漫画 | 51 | 1 个源搜索可用，目录规则待修复 |
-| 🔧 工具 | 28 | 部分可用 |
-| 🎧 听书 | 17 | 待验证 |
-| 🎬 影视 | 17 | 1 个源搜索可用 |
-| 🎵 音乐 | 7 | 2 个源搜索可用 |
-| 🎮 游戏 | 3 | 待验证 |
-
-源数据来自 B站"星之墨辰"整理的 Legado 书源 v7.1，采用 Legado 兼容格式，可直接导入阅读 App。
-
-## 开发
+开发模式：
 
 ```bash
-# 安装依赖
-cd server && npm install
-
-# 开发模式 (热重载)
+cd server
 npm run dev
-
-# 构建前端数据包
-npm run build
-
-# 审计所有源
-node ../scripts/audit_all_sources.js
 ```
 
-常用环境变量：
+### Windows 快速启动
 
-| 变量 | 默认值 | 说明 |
-|------|--------|------|
-| `PORT` | `3456` | 服务端口 |
+在项目根目录双击 `start-yuedu.bat`。脚本会在依赖缺失时调用 `install-deps.bat`，然后启动服务并打开浏览器。
+
+需要停止服务时运行：
+
+```text
+stop-yuedu.bat
+```
+
+## Tauri 桌面版
+
+桌面版会自动启动内置后端，并在本地端口 `3456-3475` 范围内选择可用端口。用户数据库存放在应用数据目录中。
+
+安装项目依赖：
+
+```bash
+npm install
+cd server
+npm install
+cd ..
+```
+
+启动桌面开发版：
+
+```bash
+npm run tauri:dev
+```
+
+构建 Windows 安装包：
+
+```bash
+npm run tauri:build
+```
+
+构建命令会通过 `scripts/prepare_tauri_runtime.js` 准备内置 Node.js 运行时。桌面构建还需要 Rust、Tauri 的 Windows 构建依赖和 WebView2 环境。
+
+## 配置项
+
+后端可通过环境变量配置：
+
+| 环境变量 | 默认值 | 说明 |
+| --- | --- | --- |
+| `PORT` | `3456` | HTTP 服务端口 |
+| `HOST` | `127.0.0.1` | 监听地址 |
 | `DB_PATH` | `server/data/yuedu.db` | SQLite 数据库路径 |
-| `REQUEST_TIMEOUT_MS` | `15000` | 上游请求超时 |
-| `SEARCH_CONCURRENCY` | `8` | 跨源搜索最大并发数 |
+| `SOURCES_PATH` | `sources` | 内容源目录 |
+| `JWT_SECRET` | 开发用内置值 | JWT 密钥 |
+| `JWT_EXPIRES_IN` | `7d` | JWT 有效期 |
+| `REQUEST_TIMEOUT_MS` | `15000` | 上游请求超时时间 |
+| `JS_RUNTIME_TIMEOUT_MS` | `5000` | 规则脚本执行超时时间 |
+| `MAX_SEARCH_RESULTS` | `20` | 最大搜索结果数 |
+| `SEARCH_CONCURRENCY` | `8` | 搜索并发数 |
+| `CORS_ORIGIN` | `*` | CORS 来源 |
+| `ALLOW_PRIVATE_NETWORK_FETCH` | `false` | 是否允许请求内网地址 |
+| `REJECT_UNAUTHORIZED` | 生产环境为 `true` | 是否校验 HTTPS 证书 |
 
-## 许可
+生产环境必须设置自定义 JWT 密钥，否则服务会拒绝启动：
 
-本项目的源配置均来自互联网公开资源，仅供学习研究使用。请勿用于商业用途。
+```powershell
+$env:NODE_ENV="production"
+$env:JWT_SECRET="请替换为高强度随机字符串"
+cd server
+npm start
+```
 
----
+## API
 
-🤖 天工宝库 · TiangongBaoku
+### 用户认证
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `POST` | `/api/auth/register` | 注册用户 |
+| `POST` | `/api/auth/login` | 用户登录 |
+| `GET` | `/api/auth/me` | 获取当前用户 |
+
+### 内容源
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `GET` | `/api/sources` | 获取内容源列表 |
+| `GET` | `/api/sources/:id` | 获取内容源详情 |
+| `GET` | `/api/sources/categories` | 获取分类统计 |
+| `GET` | `/api/sources/hot` | 获取热门内容源 |
+
+### 内容访问
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `POST` | `/api/content/search` | 新版跨源搜索 |
+| `GET/POST` | `/api/content/detail` | 获取内容详情 |
+| `GET/POST` | `/api/content/entries` | 获取章节、目录或媒体列表 |
+| `GET/POST` | `/api/content/payload` | 获取正文、图片或媒体内容 |
+| `GET` | `/api/content/hls` | HLS 媒体代理 |
+| `GET` | `/api/content/image` | 图片代理 |
+| `POST` | `/api/search` | 旧版跨源搜索 |
+| `GET` | `/api/reader/book` | 旧版书籍详情 |
+| `GET` | `/api/reader/toc` | 旧版目录 |
+| `GET` | `/api/reader/chapter` | 旧版章节 |
+
+### 音乐
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `GET` | `/api/music/search` | 音乐搜索 |
+| `GET` | `/api/music/play` | 获取播放地址 |
+| `GET` | `/api/music/kuwo` | 酷我音乐接口 |
+| `GET` | `/api/music/wangyi` | 网易云音乐接口 |
+
+### 用户数据
+
+以下接口需要携带 JWT：
+
+```http
+Authorization: Bearer <token>
+```
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `GET` | `/api/favorites` | 获取收藏 |
+| `POST` | `/api/favorites` | 添加收藏 |
+| `DELETE` | `/api/favorites/:sourceId` | 删除收藏 |
+| `GET` | `/api/history` | 获取阅读历史 |
+| `POST` | `/api/history` | 写入阅读历史 |
+
+服务状态接口：
+
+```text
+GET /api/health
+GET /api/version
+```
+
+## 内容源维护
+
+重新生成源索引：
+
+```bash
+node scripts/rebuild_index.js
+```
+
+静态检查或联网检查内容源：
+
+```bash
+node scripts/check_sources.js
+node scripts/check_sources.js --connectivity
+```
+
+批量审计和验证阅读源：
+
+```bash
+node scripts/audit_all_sources.js
+node scripts/validate_reading_sources.js --keyword 剑来 --limit 20
+```
+
+清理前进行预览：
+
+```bash
+node scripts/clean_sources.js --dry-run
+```
+
+构建前端数据和分类配置：
+
+```bash
+node scripts/build_category_meta.js
+node scripts/build.js
+```
+
+更多源格式说明参见 [`docs/source_schema.md`](docs/source_schema.md)。
+
+## 测试
+
+测试位于 `server/tests`：
+
+```bash
+cd server
+npm test
+```
+
+当前测试覆盖并发任务控制、分类配置生成、内网地址代理拦截、HTTP 请求安全策略和漫画源回退解析。
+
+## 安全说明
+
+- 默认仅监听 `127.0.0.1`
+- 默认禁止代理访问内网和本机地址
+- 生产环境必须设置 `JWT_SECRET`
+- 内容源规则中的 JavaScript 会在受限运行环境中执行
+- 不建议未经额外保护直接将服务暴露到公网
+- 公网部署时应配置 HTTPS、反向代理、访问控制和严格的 CORS 来源
+
+## 免责声明
+
+本项目主要用于学习、研究和个人内容聚合。
+
+内容源来自互联网公开配置，项目本身不托管第三方内容，也不保证外部站点的稳定性、合法性或持续可用性。使用者应遵守所在地区的法律法规、第三方网站服务条款及版权要求，请勿将本项目用于未经授权的内容传播或商业用途。
+
+## 许可证
+
+项目的 `package.json` 当前声明为 ISC License。仓库尚未提供独立的 `LICENSE` 文件，正式分发前建议补充该文件，并明确项目代码、内容源配置和第三方资源各自的授权范围。
