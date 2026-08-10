@@ -80,7 +80,7 @@ node scripts/verify_sources.js --sample 28 --out docs/source-verification.json
 
 ## 本地运行
 
-环境：Node.js 18+（推荐 20 LTS）、npm；桌面端另需 Rust、WebView2 和 Tauri 依赖。
+环境：Node.js 20+、npm；桌面端另需 Rust、WebView2 和 Tauri 依赖。
 
 ```powershell
 npm ci
@@ -118,7 +118,7 @@ npm test
 node scripts/audit_public_release.js --ci
 ```
 
-当前离线套件为 **10/10 通过**，覆盖规则解析、URL/模板、@js 沙箱、并发上限、SSRF 网络策略、HLS 重写、漫画 fallback、健康/版本 API、Demo 统一 Payload 和分类元数据。GitHub Actions 在 Node 18/20/22 矩阵中执行同一套测试；真实外部源检查需人工触发。
+当前离线套件为 **10/10 通过**，覆盖规则解析、URL/模板、@js 沙箱、并发上限、SSRF 网络策略、HLS 重写、漫画 fallback、健康/版本 API、Demo 统一 Payload 和分类元数据。GitHub Actions 在 Node 20/22 矩阵中执行同一套测试；真实外部源检查需人工触发。
 
 ## 安全与合规边界
 

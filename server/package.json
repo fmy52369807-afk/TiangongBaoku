@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "Express backend for the TiangongBaoku Legado-compatible execution layer",
   "main": "index.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
