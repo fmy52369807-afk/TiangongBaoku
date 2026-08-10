@@ -10,16 +10,17 @@ const cors = require('cors');
 const path = require('path');
 const config = require('./config');
 const { getDb } = require('./db/database');
+const packageInfo = require('../package.json');
 
-// Initialize database
-getDb();
+function createApp() {
+    // Initialize database when the application is constructed so tests can inject DB_PATH.
+    getDb();
+    const app = express();
 
-const app = express();
-
-// ── Middleware ───────────────────────────────────────
-app.use(cors({ origin: config.corsOrigin }));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
+    // ── Middleware ───────────────────────────────────────
+    app.use(cors({ origin: config.corsOrigin }));
+    app.use(express.json({ limit: '10mb' }));
+    app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
 // Security headers
 app.use((req, res, next) => {
@@ -51,6 +52,7 @@ app.use(express.static(path.join(__dirname, '..', 'app'), {
 }));
 
 // ── API Routes ───────────────────────────────────────
+if (config.demoMode) app.use(require('./routes/demo'));
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/sources', require('./routes/sources'));
 app.use('/api/search', require('./routes/search'));
@@ -63,9 +65,11 @@ app.use('/api/history', require('./routes/history'));
 // Version endpoint for cache verification
 app.get('/api/version', (req, res) => {
     res.json({
-        version: '3.2',
+        product: 'TiangongBaoku',
+        version: packageInfo.version,
         built: new Date().toISOString(),
         engine: 'ruleParser v2-css-fix',
+        demoMode: config.demoMode,
         instanceId: process.env.APP_INSTANCE_ID || '',
     });
 });
@@ -74,11 +78,13 @@ app.get('/api/health', (req, res) => {
     const index = require('./routes/content-helpers').loadIndex();
     res.json({
         ok: true,
-        version: '3.2',
+        product: 'TiangongBaoku',
+        version: packageInfo.version,
         host: config.host,
         port: Number(config.port),
         sourcesPath: config.sourcesPath,
         sourceCount: index.length,
+        demoMode: config.demoMode,
         node: process.version,
         instanceId: process.env.APP_INSTANCE_ID || '',
         time: new Date().toISOString(),
@@ -94,18 +100,24 @@ app.get('*', (req, res, next) => {
 });
 
 // ── Error Handler ────────────────────────────────────
-app.use((err, req, res, next) => {
-    console.error('[Server] Unhandled error:', err);
-    res.status(500).json({ error: '服务器内部错误' });
-});
+    app.use((err, req, res, next) => {
+        console.error('[Server] Unhandled error:', err);
+        res.status(500).json({ error: '服务器内部错误' });
+    });
+    return app;
+}
 
-// ── Start ────────────────────────────────────────────
-app.listen(config.port, config.host, () => {
-    console.log('');
-    console.log('═══════════════════════════════════════════');
-    console.log('  📚 阅读+音乐 源管理器 服务端已启动 v3.2');
-    console.log(`  🌐 http://${config.host}:${config.port}`);
-    console.log(`  📡 API: http://${config.host}:${config.port}/api`);
-    console.log('═══════════════════════════════════════════');
-    console.log('');
-});
+if (require.main === module) {
+    const app = createApp();
+    app.listen(config.port, config.host, () => {
+        console.log('');
+        console.log('═══════════════════════════════════════════');
+        console.log(`  TiangongBaoku 服务端已启动 v${packageInfo.version}`);
+        console.log(`  http://${config.host}:${config.port}`);
+        console.log(`  API: http://${config.host}:${config.port}/api`);
+        console.log('═══════════════════════════════════════════');
+        console.log('');
+    });
+}
+
+module.exports = { createApp };

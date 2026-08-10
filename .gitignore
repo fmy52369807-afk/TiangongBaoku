@@ -19,7 +19,11 @@ docs/source_check_report.json
 *.bak[0-9]*
 .npm-cache/
 .playwright-cli/
-output/
+output/*
+!output/playwright/
+output/playwright/*
+!output/playwright/portfolio-*.png
+output/playwright/portfolio-desktop.png
 
 # Logs
 *.log
@@ -38,6 +42,12 @@ runtime/node/
 .env
 .env.*
 !.env.example
+*.db
+*.db-shm
+*.db-wal
+server/data/
+runtime/
+dist/
 .DS_Store
 Thumbs.db
 .vscode/

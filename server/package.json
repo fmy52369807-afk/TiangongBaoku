@@ -1,7 +1,7 @@
 {
-  "name": "yuedu-server",
-  "version": "1.0.0",
-  "description": "阅读+音乐 全栈应用后端",
+  "name": "tiangongbaoku-server",
+  "version": "0.2.0",
+  "description": "Express backend for the TiangongBaoku Legado-compatible execution layer",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",

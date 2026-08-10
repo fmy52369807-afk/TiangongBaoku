@@ -1,0 +1,250 @@
+{
+  "generatedAt": "2026-08-10T14:06:37.941Z",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpus": 20
+  },
+  "inventory": {
+    "configured": 393,
+    "enabled": 372,
+    "verified": 7,
+    "note": "verified 仅表示本次固定关键词 demo 的搜索返回可解析条目；不是内容授权或长期可用性证明。"
+  },
+  "sample": {
+    "requested": 28,
+    "selected": 27,
+    "keyword": "demo",
+    "timeoutMs": 2500,
+    "stratifiedBy": "category",
+    "counts": {
+      "failed": 10,
+      "timeout": 3,
+      "skipped": 6,
+      "ok": 7,
+      "empty": 1
+    },
+    "latencyP50Ms": 568.7,
+    "latencyP95Ms": 2736.7,
+    "parseSuccessRate": 0.259
+  },
+  "results": [
+    {
+      "sourceId": "src_0322",
+      "category": "audio",
+      "status": "failed",
+      "latencyMs": 438.6,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0323",
+      "category": "audio",
+      "status": "timeout",
+      "latencyMs": 2512.4,
+      "itemCount": 0,
+      "reason": "timeout"
+    },
+    {
+      "sourceId": "src_0324",
+      "category": "audio",
+      "status": "skipped",
+      "latencyMs": 3,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0325",
+      "category": "audio",
+      "status": "skipped",
+      "latencyMs": 3.7,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0272",
+      "category": "comic",
+      "status": "failed",
+      "latencyMs": 1273.5,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0273",
+      "category": "comic",
+      "status": "skipped",
+      "latencyMs": 5.8,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0274",
+      "category": "comic",
+      "status": "failed",
+      "latencyMs": 532.4,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0276",
+      "category": "comic",
+      "status": "timeout",
+      "latencyMs": 3579.4,
+      "itemCount": 0,
+      "reason": "timeout"
+    },
+    {
+      "sourceId": "src_0363",
+      "category": "game",
+      "status": "ok",
+      "latencyMs": 864,
+      "itemCount": 5,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0364",
+      "category": "game",
+      "status": "ok",
+      "latencyMs": 269.6,
+      "itemCount": 5,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0365",
+      "category": "game",
+      "status": "failed",
+      "latencyMs": 284.1,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0339",
+      "category": "music",
+      "status": "ok",
+      "latencyMs": 568.7,
+      "itemCount": 10,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0340",
+      "category": "music",
+      "status": "empty",
+      "latencyMs": 471.9,
+      "itemCount": 0,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0341",
+      "category": "music",
+      "status": "ok",
+      "latencyMs": 737.5,
+      "itemCount": 20,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0342",
+      "category": "music",
+      "status": "timeout",
+      "latencyMs": 2736.7,
+      "itemCount": 0,
+      "reason": "timeout"
+    },
+    {
+      "sourceId": "src_0001",
+      "category": "novel",
+      "status": "failed",
+      "latencyMs": 1212,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0002",
+      "category": "novel",
+      "status": "skipped",
+      "latencyMs": 12.1,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0003",
+      "category": "novel",
+      "status": "skipped",
+      "latencyMs": 15,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0004",
+      "category": "novel",
+      "status": "failed",
+      "latencyMs": 2583.9,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0366",
+      "category": "special",
+      "status": "skipped",
+      "latencyMs": 7.3,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0367",
+      "category": "special",
+      "status": "failed",
+      "latencyMs": 218.8,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0368",
+      "category": "special",
+      "status": "failed",
+      "latencyMs": 110.7,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0369",
+      "category": "special",
+      "status": "failed",
+      "latencyMs": 1003.8,
+      "itemCount": 0,
+      "reason": "failed"
+    },
+    {
+      "sourceId": "src_0347",
+      "category": "video",
+      "status": "ok",
+      "latencyMs": 2586.3,
+      "itemCount": 10,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0353",
+      "category": "video",
+      "status": "ok",
+      "latencyMs": 1758,
+      "itemCount": 30,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0357",
+      "category": "video",
+      "status": "ok",
+      "latencyMs": 2114.6,
+      "itemCount": 20,
+      "reason": ""
+    },
+    {
+      "sourceId": "src_0358",
+      "category": "video",
+      "status": "failed",
+      "latencyMs": 1192.7,
+      "itemCount": 0,
+      "reason": "failed"
+    }
+  ]
+}

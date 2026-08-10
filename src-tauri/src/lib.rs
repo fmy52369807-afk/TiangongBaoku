@@ -46,7 +46,7 @@ fn is_our_backend(port: u16, instance_id: Option<&str>) -> bool {
     if stream.read_to_string(&mut body).is_err() {
         return false;
     }
-    if !body.contains("\"version\":\"3.2\"") || !body.contains("ruleParser") {
+    if !body.contains("\"product\":\"TiangongBaoku\"") || !body.contains("ruleParser") {
         return false;
     }
     match instance_id {

@@ -1,7 +1,7 @@
 {
-  "name": "yuedu",
-  "version": "1.0.0",
-  "description": "一站式阅读、漫画、音乐、影视内容聚合引擎。基于 Legado 书源格式，提供跨源搜索、在线阅读、多媒体播放的全栈 Web 应用。",
+  "name": "tiangongbaoku",
+  "version": "0.2.0",
+  "description": "Independent Legado-compatible content aggregation workbench with cross-source search, normalized payloads, SQLite persistence, media proxying, and a Tauri desktop shell.",
   "main": "index.js",
   "directories": {
     "doc": "docs"
@@ -13,18 +13,22 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "npm run tauri:prepare-runtime && tauri build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "demo": "cross-env DEMO_MODE=true node server/index.js",
+    "benchmark": "node scripts/benchmark_startup.js --out docs/runtime-metrics.json",
+    "verify:sources": "node scripts/verify_sources.js --sample 28 --out docs/source-verification.json",
+    "test": "npm --prefix server test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fmy52369807-afk/TiangongBaoku.git"
   },
-  "keywords": [],
+  "keywords": ["legado", "content-aggregation", "rule-engine", "tauri", "express", "sqlite"],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
-    "@tauri-apps/cli": "^2.0.0"
+    "@tauri-apps/cli": "^2.0.0",
+    "cross-env": "^7.0.3"
   },
   "bugs": {
     "url": "https://github.com/fmy52369807-afk/TiangongBaoku/issues"

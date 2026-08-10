@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-08-10T13:27:42.462Z",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpus": 20
+  },
+  "sourceInventory": {
+    "configured": 393,
+    "enabled": 372,
+    "verified": null,
+    "verifiedNote": "No external connectivity probe was run. Use scripts/check_sources.js for an opt-in, timestamped sample.",
+    "byCategory": {
+      "novel": {
+        "configured": 271,
+        "enabled": 269
+      },
+      "comic": {
+        "configured": 50,
+        "enabled": 44
+      },
+      "audio": {
+        "configured": 17,
+        "enabled": 14
+      },
+      "music": {
+        "configured": 7,
+        "enabled": 7
+      },
+      "video": {
+        "configured": 17,
+        "enabled": 7
+      },
+      "game": {
+        "configured": 3,
+        "enabled": 3
+      },
+      "special": {
+        "configured": 28,
+        "enabled": 28
+      }
+    }
+  },
+  "localRuleMicrobenchmark": {
+    "iterations": 100,
+    "p50Ms": 0.049,
+    "p95Ms": 0.177,
+    "sample": "template/css/jsonpath/url fixtures"
+  }
+}

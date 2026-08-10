@@ -1,28 +1,61 @@
-# 天工宝库 · TiangongBaoku
+# TiangongBaoku
 
-一个基于 Legado 书源格式的本地内容聚合应用，支持小说、漫画、听书、音乐、影视、游戏及其他特殊内容源。
+TiangongBaoku 是一个面向个人研究与工程展示的内容聚合工作台：用一个 Node.js/Express 模块化单体承载小说、漫画、听书、音乐、影视和工具型源的统一检索与消费体验，并提供 Windows Tauri 2 桌面壳。
 
-项目采用原生 HTML/CSS/JavaScript 前端、Node.js + Express 后端、SQLite 数据库，并提供 Tauri Windows 桌面版支持。
+它与开源软件“阅读”（Legado）的关系是**格式兼容，而不是代码复用**。项目参考 Legado 书源字段和规则语义，独立实现了 Node.js 版轻量执行层，当前仓库没有引入 Legado Android/Kotlin 原版引擎。
 
-## 功能特性
+## 求职定位
 
-- 跨源搜索与分类浏览
-- 小说在线阅读，支持滑动式与翻页式阅读
-- 漫画图片阅读与单双页自适应
-- 听书、音乐播放和本地播放列表
-- HTML5 Video 与 HLS 影视播放
-- 用户注册、登录与 JWT 身份认证
-- 收藏和阅读历史
-- 浅色、深色主题及响应式布局
-- Legado 书源规则解析
-- JSONPath、CSS 选择器及 `@js:` 规则支持
-- Windows Tauri 桌面版及本地便携启动脚本
+适合在简历中表述为：
 
-## 内容源
+> 参考 Legado 书源规范，独立实现 Node.js 兼容执行层，支持 CSS Selector、JSONPath、模板变量、受限 JavaScript 规则和部分 `java.*` 适配 API；通过并发上限、单源故障隔离、统一 Payload、SQLite 持久化和媒体/HLS 代理，把异构内容源接入统一 Web/Tauri 客户端。
 
-当前仓库包含 393 个内容源，其中 372 个处于启用状态：
+不要将本项目描述为“完整复刻阅读引擎”、原创书源协议、微服务或高并发生产系统。
 
-| 分类 | 总数 | 启用数 |
+## 架构
+
+```mermaid
+flowchart LR
+  UI[原生 HTML/CSS/JS Web UI] --> API[Express API]
+  DESKTOP[Tauri 2 Windows Shell] --> API
+  API --> AUTH[JWT/Auth Middleware]
+  API --> SEARCH[跨源搜索 Orchestrator\n并发上限 + 单源隔离]
+  API --> CONTENT[内容路由\n详情/目录/正文/媒体]
+  SEARCH --> ENGINE[Legado-compatible Execution Layer]
+  CONTENT --> ENGINE
+  ENGINE --> RULE[Rule Parser\nCSS/JSONPath/Template/@js]
+  ENGINE --> HTTP[HTTP Client + Network Policy]
+  HTTP --> SOURCES[(sources/index.json\nLegado source files)]
+  API --> DB[(SQLite / better-sqlite3)]
+  CONTENT --> PROXY[Image/Media/HLS Proxy\nSSRF guard + URL rewrite]
+```
+
+分层是模块化单体，而非拆分部署的微服务：
+
+| 层 | 代码位置 | 责任 |
+| --- | --- | --- |
+| Presentation | `app/` | 搜索、详情、阅读器、漫画、音频/视频播放器、统一状态 |
+| API | `server/routes/` | 认证、源管理、搜索、内容、收藏、历史、媒体接口 |
+| Orchestration | `server/routes/search.js`、`server/routes/content.js` | 跨源 fan-out/fan-in、超时、结果归一化、失败隔离 |
+| Execution | `server/engine/` | 读取书源、构造 URL、请求页面、执行规则链和受限 JS |
+| Persistence | `server/db/` | SQLite schema、迁移、用户收藏/历史/缓存 |
+| Desktop | `src-tauri/` | Tauri 2 壳、运行时准备、Windows 打包 |
+
+### 规则执行链路
+
+`source JSON -> URL/template expansion -> HTTP policy check -> fetch -> ruleBookInfo/ruleSearch/ruleToc/ruleContent -> CSS/JSONPath/@js evaluation -> URL normalization -> Unified Payload -> renderer`
+
+兼容范围包括常用 `class.*/tag.*@text|@href|@src`、JSONPath、`||` 备选规则、`{{key}}/{{page}}` 模板、正则替换，以及沙箱中的部分 `java.getString/getElements/base64/md5/cookie/source/cache` API。复杂 Android/Java、登录交互和站点专有加密不保证兼容。
+
+### 统一 Payload 与媒体
+
+所有搜索和详情结果都会映射到统一字段（`id/title/author/coverUrl/intro/source/category/items`），前端渲染器不依赖某一个站点 DOM。图片、音频、视频和 HLS 经过代理时执行 HTTP/HTTPS 校验、私网解析拦截、重定向上限和 HLS 相对 URI 重写；默认拒绝 localhost、RFC1918、链路本地和解析到私网的域名。
+
+## 源统计与实测指标
+
+源索引统计的是**配置数量**，不是保证可访问的网站数量：
+
+| 类别 | 配置 | 启用 |
 | --- | ---: | ---: |
 | 小说 | 271 | 269 |
 | 漫画 | 50 | 44 |
@@ -31,274 +64,92 @@
 | 影视 | 17 | 7 |
 | 游戏 | 3 | 3 |
 | 特殊工具 | 28 | 28 |
+| **合计** | **393** | **372** |
 
-内容源来自互联网公开的 Legado 书源配置。源站可用性会随时间变化，部分源可能失效、限流或需要登录。
+2026-08-10 实测环境：Windows x64、Node v24.15.0、20 个逻辑处理器。
 
-## 技术栈
+| 指标 | 样本 | 结果 |
+| --- | --- | --- |
+| 本地规则微基准 | 100 次；模板/CSS/JSONPath/URL 各 1 个 fixture | P50 **0.049ms**；P95 **0.177ms** |
+| Demo 冷启动 | 7 次；进程启动到 `/api/health` 返回 200；临时 SQLite | P50 **662.4ms**；P95 **923.6ms** |
+| 外部源搜索小样本 | 分类别抽取 27 个启用源；固定关键词；单源超时 2500ms | 7 成功、1 空结果、10 失败、3 超时、6 跳过；P50 **568.7ms**；P95 **2736.7ms**；成功率 **25.9%** |
 
-| 模块 | 技术 |
-| --- | --- |
-| 前端 | 原生 HTML、CSS、JavaScript |
-| 后端 | Node.js、Express |
-| 数据库 | SQLite、better-sqlite3 |
-| 认证 | JWT、bcryptjs |
-| 内容解析 | cheerio、jsonpath-plus |
-| 规则引擎 | 自研 Legado 兼容解析引擎 |
-| 媒体播放 | HTML5 Audio、HTML5 Video、HLS.js |
-| 桌面端 | Tauri 2、Rust |
-| 测试 | Node.js Built-in Test Runner |
+因此本次只能声明：393 个配置、372 个启用配置、**27 个样本中 7 个可验证搜索成功**。`verified` 不等于全部启用源可用，也不证明详情/正文长期可用、内容授权或站点 SLA。延迟按全部样本从调用到完成/失败统计，受公网和目标站状态影响。原始匿名报告见 [`docs/source-metrics.json`](docs/source-metrics.json)、[`docs/runtime-metrics.json`](docs/runtime-metrics.json) 和 [`docs/source-verification.json`](docs/source-verification.json)。
 
-## 项目结构
+可复现命令：
 
-```text
-.
-├── app/                    # 前端单页应用
-│   ├── index.html
-│   ├── css/
-│   ├── js/
-│   └── vendor/
-├── server/                 # Express 后端
-│   ├── index.js            # 服务入口
-│   ├── config.js           # 服务配置
-│   ├── db/                 # SQLite 数据库与迁移
-│   ├── engine/             # Legado 规则引擎
-│   ├── middleware/         # JWT 认证
-│   └── routes/             # API 路由
-├── sources/                # 分类别内容源
-├── shared/                 # 前后端共享配置
-├── scripts/                # 构建、审计、清理和索引脚本
-├── docs/                   # 格式及审计文档
-├── src-tauri/              # Tauri 桌面端代码
-├── dist/                   # 分发及便携版文件
-├── start-yuedu.bat         # Windows 启动脚本
-├── stop-yuedu.bat          # Windows 停止脚本
-└── install-deps.bat        # Windows 依赖安装脚本
+```powershell
+node scripts/collect_source_metrics.js --out docs/source-metrics.json
+node scripts/benchmark_startup.js --iterations 7 --out docs/runtime-metrics.json
+node scripts/verify_sources.js --sample 28 --out docs/source-verification.json
 ```
 
-## 快速开始
+联网验证不在 CI 中默认运行。重跑结果会随网络和第三方源变化，报告不会保存目标地址、请求头或凭据。
 
-### 环境要求
+## 本地运行
 
-- Node.js 18 或更高版本
-- npm
-- Windows 用户可直接使用项目提供的 `.bat` 脚本
+环境：Node.js 18+（推荐 20 LTS）、npm；桌面端另需 Rust、WebView2 和 Tauri 依赖。
 
-### 安装与启动
-
-```bash
-cd server
-npm install
-npm start
+```powershell
+npm ci
+npm ci --prefix server
+Copy-Item .env.example .env
+# 生产或公网部署前必须替换 JWT_SECRET，并收紧 CORS_ORIGIN
+npm run server
 ```
 
-启动后访问：
+打开 <http://127.0.0.1:3456>，健康检查：<http://127.0.0.1:3456/api/health>。
 
-```text
-http://127.0.0.1:3456
+### 匿名 Demo
+
+```powershell
+npm run demo
 ```
 
-开发模式：
+`DEMO_MODE` 提供 5 个本地合成 fixture，覆盖搜索、详情、目录以及小说文字、漫画图片、听书/音乐静音 WAV、视频本地页面的统一 Payload 链路。它不请求第三方内容，也不包含受保护正文、账号或个人数据；它只证明前后端链路可演示，不证明真实外部源可用或拥有内容授权。
 
-```bash
-cd server
-npm run dev
-```
+可复现截图脚本位于 `scripts/capture_portfolio_screenshots.js`。本次发布环境中的 Playwright CLI/Chromium 启动连续超时，因此没有把旧截图作为 v0.2.0 演示图发布；Demo API 与离线集成测试均已通过。
 
-### Windows 快速启动
+桌面开发与构建：
 
-在项目根目录双击 `start-yuedu.bat`。脚本会在依赖缺失时调用 `install-deps.bat`，然后启动服务并打开浏览器。
-
-需要停止服务时运行：
-
-```text
-stop-yuedu.bat
-```
-
-## Tauri 桌面版
-
-桌面版会自动启动内置后端，并在本地端口 `3456-3475` 范围内选择可用端口。用户数据库存放在应用数据目录中。
-
-安装项目依赖：
-
-```bash
-npm install
-cd server
-npm install
-cd ..
-```
-
-启动桌面开发版：
-
-```bash
+```powershell
 npm run tauri:dev
-```
-
-构建 Windows 安装包：
-
-```bash
 npm run tauri:build
 ```
 
-构建命令会通过 `scripts/prepare_tauri_runtime.js` 准备内置 Node.js 运行时。桌面构建还需要 Rust、Tauri 的 Windows 构建依赖和 WebView2 环境。
+v0.2.0 已在上述 Windows 环境完成 Tauri release 构建，生成 x64 NSIS 安装包。安装包随 GitHub Release 发布，SHA-256 为 `E155970BF68AE4D0BD2D3C5038C3389CD7E681CC78553883456D49EE8F2023B9`；兼容范围与已知限制见 [`docs/release-notes-v0.2.0.md`](docs/release-notes-v0.2.0.md)。
 
-## 配置项
-
-后端可通过环境变量配置：
-
-| 环境变量 | 默认值 | 说明 |
-| --- | --- | --- |
-| `PORT` | `3456` | HTTP 服务端口 |
-| `HOST` | `127.0.0.1` | 监听地址 |
-| `DB_PATH` | `server/data/yuedu.db` | SQLite 数据库路径 |
-| `SOURCES_PATH` | `sources` | 内容源目录 |
-| `JWT_SECRET` | 开发用内置值 | JWT 密钥 |
-| `JWT_EXPIRES_IN` | `7d` | JWT 有效期 |
-| `REQUEST_TIMEOUT_MS` | `15000` | 上游请求超时时间 |
-| `JS_RUNTIME_TIMEOUT_MS` | `5000` | 规则脚本执行超时时间 |
-| `MAX_SEARCH_RESULTS` | `20` | 最大搜索结果数 |
-| `SEARCH_CONCURRENCY` | `8` | 搜索并发数 |
-| `CORS_ORIGIN` | `*` | CORS 来源 |
-| `ALLOW_PRIVATE_NETWORK_FETCH` | `false` | 是否允许请求内网地址 |
-| `REJECT_UNAUTHORIZED` | 生产环境为 `true` | 是否校验 HTTPS 证书 |
-
-生产环境必须设置自定义 JWT 密钥，否则服务会拒绝启动：
+## 测试与 CI
 
 ```powershell
-$env:NODE_ENV="production"
-$env:JWT_SECRET="请替换为高强度随机字符串"
-cd server
-npm start
-```
-
-## API
-
-### 用户认证
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `POST` | `/api/auth/register` | 注册用户 |
-| `POST` | `/api/auth/login` | 用户登录 |
-| `GET` | `/api/auth/me` | 获取当前用户 |
-
-### 内容源
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `GET` | `/api/sources` | 获取内容源列表 |
-| `GET` | `/api/sources/:id` | 获取内容源详情 |
-| `GET` | `/api/sources/categories` | 获取分类统计 |
-| `GET` | `/api/sources/hot` | 获取热门内容源 |
-
-### 内容访问
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `POST` | `/api/content/search` | 新版跨源搜索 |
-| `GET/POST` | `/api/content/detail` | 获取内容详情 |
-| `GET/POST` | `/api/content/entries` | 获取章节、目录或媒体列表 |
-| `GET/POST` | `/api/content/payload` | 获取正文、图片或媒体内容 |
-| `GET` | `/api/content/hls` | HLS 媒体代理 |
-| `GET` | `/api/content/image` | 图片代理 |
-| `POST` | `/api/search` | 旧版跨源搜索 |
-| `GET` | `/api/reader/book` | 旧版书籍详情 |
-| `GET` | `/api/reader/toc` | 旧版目录 |
-| `GET` | `/api/reader/chapter` | 旧版章节 |
-
-### 音乐
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `GET` | `/api/music/search` | 音乐搜索 |
-| `GET` | `/api/music/play` | 获取播放地址 |
-| `GET` | `/api/music/kuwo` | 酷我音乐接口 |
-| `GET` | `/api/music/wangyi` | 网易云音乐接口 |
-
-### 用户数据
-
-以下接口需要携带 JWT：
-
-```http
-Authorization: Bearer <token>
-```
-
-| 方法 | 路径 | 说明 |
-| --- | --- | --- |
-| `GET` | `/api/favorites` | 获取收藏 |
-| `POST` | `/api/favorites` | 添加收藏 |
-| `DELETE` | `/api/favorites/:sourceId` | 删除收藏 |
-| `GET` | `/api/history` | 获取阅读历史 |
-| `POST` | `/api/history` | 写入阅读历史 |
-
-服务状态接口：
-
-```text
-GET /api/health
-GET /api/version
-```
-
-## 内容源维护
-
-重新生成源索引：
-
-```bash
-node scripts/rebuild_index.js
-```
-
-静态检查或联网检查内容源：
-
-```bash
-node scripts/check_sources.js
-node scripts/check_sources.js --connectivity
-```
-
-批量审计和验证阅读源：
-
-```bash
-node scripts/audit_all_sources.js
-node scripts/validate_reading_sources.js --keyword 剑来 --limit 20
-```
-
-清理前进行预览：
-
-```bash
-node scripts/clean_sources.js --dry-run
-```
-
-构建前端数据和分类配置：
-
-```bash
-node scripts/build_category_meta.js
-node scripts/build.js
-```
-
-更多源格式说明参见 [`docs/source_schema.md`](docs/source_schema.md)。
-
-## 测试
-
-测试位于 `server/tests`：
-
-```bash
-cd server
 npm test
+node scripts/audit_public_release.js --ci
 ```
 
-当前测试覆盖并发任务控制、分类配置生成、内网地址代理拦截、HTTP 请求安全策略和漫画源回退解析。
+当前离线套件为 **10/10 通过**，覆盖规则解析、URL/模板、@js 沙箱、并发上限、SSRF 网络策略、HLS 重写、漫画 fallback、健康/版本 API、Demo 统一 Payload 和分类元数据。GitHub Actions 在 Node 18/20/22 矩阵中执行同一套测试；真实外部源检查需人工触发。
 
-## 安全说明
+## 安全与合规边界
 
-- 默认仅监听 `127.0.0.1`
-- 默认禁止代理访问内网和本机地址
-- 生产环境必须设置 `JWT_SECRET`
-- 内容源规则中的 JavaScript 会在受限运行环境中执行
-- 不建议未经额外保护直接将服务暴露到公网
-- 公网部署时应配置 HTTPS、反向代理、访问控制和严格的 CORS 来源
+- 生产环境必须设置高熵 `JWT_SECRET`、HTTPS、严格 `CORS_ORIGIN`、反向代理和限流；`ALLOW_PRIVATE_NETWORK_FETCH=true` 只允许受控内网开发场景。
+- 不要提交 `.env`、Cookie、Authorization、API Key、数据库、日志、个人账号或运行时缓存。发布前运行 `node scripts/audit_public_release.js --ci`。
+- 仓库只提供解析与聚合技术，不托管或保证第三方内容的版权、可用性或合法性。使用者必须遵守目标站点条款、robots、版权和当地法律，并对自己导入的源负责。
+- Legado/“阅读”名称和规范归其各自项目与贡献者所有；本项目是独立兼容实现，不隶属于原项目。
+- 历史审计、第三方源风险和清理记录见 [`docs/public-release-audit.md`](docs/public-release-audit.md)。
 
-## 免责声明
+## 故障排查
 
-本项目主要用于学习、研究和个人内容聚合。
+| 现象 | 建议 |
+| --- | --- |
+| 源列表为空 | 检查 `SOURCES_PATH`、`sources/index.json` JSON 格式和 `enabled` 字段 |
+| 单个源超时 | 查看日志中的源名和阶段；降低 `SEARCH_CONCURRENCY`，不要放宽私网策略 |
+| 正文为空 | 站点 HTML/接口规则已变化，先用本地 fixture 验证规则，再决定是否停用该源 |
+| 图片/HLS 播放失败 | 检查源 URL、重定向和 CORS；代理会拒绝私网、非 HTTP(S) 和过多重定向 |
+| 生产启动报 JWT_SECRET 错误 | 设置随机 `JWT_SECRET`，不要使用 README 或示例中的占位值 |
 
-内容源来自互联网公开配置，项目本身不托管第三方内容，也不保证外部站点的稳定性、合法性或持续可用性。使用者应遵守所在地区的法律法规、第三方网站服务条款及版权要求，请勿将本项目用于未经授权的内容传播或商业用途。
+## 项目边界与后续方向
 
-## 许可证
+当前目标是可读、可测试、可演示的个人工程作品，不承诺多租户、分布式调度、离线版权内容或生产 SLA。后续可演进方向包括规则 AST 缓存、熔断/健康评分、可观测性、端到端匿名 fixture 演示和可审计的源供应链。
 
-项目的 `package.json` 当前声明为 ISC License。仓库尚未提供独立的 `LICENSE` 文件，正式分发前建议补充该文件，并明确项目代码、内容源配置和第三方资源各自的授权范围。
+## License
+
+代码采用 ISC License，见 [`LICENSE`](LICENSE)。第三方依赖和外部源各自遵循其许可证与服务条款；源配置不等于内容授权。

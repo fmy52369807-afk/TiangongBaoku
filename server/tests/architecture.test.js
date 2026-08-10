@@ -12,6 +12,7 @@ const {
     extractAntbywImageUrls,
     isBadComicImageUrl,
 } = require('../routes/comic-fallback');
+const { rewriteHlsPlaylist, contentTypeFromMediaUrl } = require('../routes/proxy');
 
 const root = path.join(__dirname, '..', '..');
 
@@ -66,6 +67,14 @@ test('http client uses the same private network policy as media proxy', async ()
         () => fetchUrl('http://127.0.0.1:3456/api/version', {}, 100),
         /Private network URLs are not allowed/
     );
+});
+
+test('HLS playlists rewrite relative segments and URI attributes through the proxy', () => {
+    const playlist = '#EXTM3U\n#EXT-X-KEY:METHOD=AES-128,URI="keys/key.bin"\nsegment-01.ts\nhttps://cdn.example.test/segment-02.ts';
+    const rewritten = rewriteHlsPlaylist(playlist, 'https://media.example.test/live/master.m3u8');
+    assert.match(rewritten, /\/api\/content\/hls\?url=/);
+    assert.doesNotMatch(rewritten, /segment-01\.ts\n/);
+    assert.equal(contentTypeFromMediaUrl('https://media.example.test/a.m3u8'), 'application/vnd.apple.mpegurl; charset=utf-8');
 });
 
 test('antbyw comic fallback normalizes relative read urls and filters loader assets', () => {

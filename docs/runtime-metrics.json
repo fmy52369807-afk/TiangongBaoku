@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-08-10T14:06:03.021Z",
+  "environment": {
+    "node": "v24.15.0",
+    "platform": "win32",
+    "arch": "x64",
+    "cpus": 20
+  },
+  "coldStartup": {
+    "iterations": 7,
+    "readyEndpoint": "/api/health",
+    "p50Ms": 662.4,
+    "p95Ms": 923.6,
+    "samplesMs": [
+      632.4,
+      632.9,
+      633.3,
+      662.4,
+      662.4,
+      666.8,
+      923.6
+    ],
+    "note": "从 spawn server/index.js 到 DEMO_MODE 健康检查返回 200；临时 SQLite；本地 Windows 进程测量。"
+  }
+}
