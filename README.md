@@ -1,16 +1,8 @@
 # TiangongBaoku
 
-TiangongBaoku 是一个面向个人研究与工程展示的内容聚合工作台：用一个 Node.js/Express 模块化单体承载小说、漫画、听书、音乐、影视和工具型源的统一检索与消费体验，并提供 Windows Tauri 2 桌面壳。
+TiangongBaoku 是一个内容聚合工作台：用一个 Node.js/Express 模块化单体承载小说、漫画、听书、音乐、影视和工具型源的统一检索与消费体验，并提供 Windows Tauri 2 桌面壳。
 
 它与开源软件“阅读”（Legado）的关系是**格式兼容，而不是代码复用**。项目参考 Legado 书源字段和规则语义，独立实现了 Node.js 版轻量执行层，当前仓库没有引入 Legado Android/Kotlin 原版引擎。
-
-## 求职定位
-
-适合在简历中表述为：
-
-> 参考 Legado 书源规范，独立实现 Node.js 兼容执行层，支持 CSS Selector、JSONPath、模板变量、受限 JavaScript 规则和部分 `java.*` 适配 API；通过并发上限、单源故障隔离、统一 Payload、SQLite 持久化和媒体/HLS 代理，把异构内容源接入统一 Web/Tauri 客户端。
-
-不要将本项目描述为“完整复刻阅读引擎”、原创书源协议、微服务或高并发生产系统。
 
 ## 架构
 
@@ -108,7 +100,7 @@ npm run demo
 
 `DEMO_MODE` 提供 5 个本地合成 fixture，覆盖搜索、详情、目录以及小说文字、漫画图片、听书/音乐静音 WAV、视频本地页面的统一 Payload 链路。它不请求第三方内容，也不包含受保护正文、账号或个人数据；它只证明前后端链路可演示，不证明真实外部源可用或拥有内容授权。
 
-可复现截图脚本位于 `scripts/capture_portfolio_screenshots.js`。本次发布环境中的 Playwright CLI/Chromium 启动连续超时，因此没有把旧截图作为 v0.2.0 演示图发布；Demo API 与离线集成测试均已通过。
+演示截图脚本位于 `scripts/capture_portfolio_screenshots.js`。本次发布环境中的 Playwright CLI/Chromium 启动连续超时，因此没有把旧截图作为 v0.2.0 演示图发布；Demo API 与离线集成测试均已通过。
 
 桌面开发与构建：
 
@@ -148,7 +140,7 @@ node scripts/audit_public_release.js --ci
 
 ## 项目边界与后续方向
 
-当前目标是可读、可测试、可演示的个人工程作品，不承诺多租户、分布式调度、离线版权内容或生产 SLA。后续可演进方向包括规则 AST 缓存、熔断/健康评分、可观测性、端到端匿名 fixture 演示和可审计的源供应链。
+当前目标是可读、可测试、可演示的单机应用，不承诺多租户、分布式调度、离线版权内容或生产 SLA。后续可演进方向包括规则 AST 缓存、熔断/健康评分、可观测性、端到端匿名 fixture 演示和可审计的源供应链。
 
 ## License
 
